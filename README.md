@@ -8,9 +8,9 @@ PetPals is an animal “dating” application that will work to best pair potent
 
 ## Authors
 
-Kristy Kha
-Samantha Lin
-Yuk Shu Shukie Li
-Jonathan Chan
++ Kristy Kha
++ Samantha Lin
++ Yuk Shu Shukie Li
++ Jonathan Chan
 
 Part of the OSU Capstone Project Fall 2023
