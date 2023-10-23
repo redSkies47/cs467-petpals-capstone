@@ -40,7 +40,7 @@ CREATE TABLE `Genders` (
 );
 
 -- Create Dispositions table
-CREATE TABLE `Dispostions` (
+CREATE TABLE `Dispositions` (
     `id_disposition` int AUTO_INCREMENT UNIQUE NOT NULL,
     `description` varchar(50) NOT NULL,
     PRIMARY KEY (`id_disposition`)
@@ -49,9 +49,9 @@ CREATE TABLE `Dispostions` (
 -- Create Animals table
 CREATE TABLE `Animals` (
     `id_animal` int AUTO_INCREMENT UNIQUE NOT NULL,
-    `id_availability` int DEFAULT 0, /* Available */
-    `id_species` int DEFAULT 0, /* Other */
-    `id_breed` int DEFAULT 0, /* Other */
+    `id_availability` int DEFAULT 1, /* Available */
+    `id_species` int DEFAULT 1, /* Other */
+    `id_breed` int DEFAULT 1, /* Other */
     `name` varchar(45) NOT NULL,
     `birth_date` date NOT NULL,
     `id_gender` int NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE `Credentials` (
 -- Create Accounts table
 CREATE TABLE `Accounts` (
     `id_account` int AUTO_INCREMENT UNIQUE NOT NULL,
-    `id_credential` int NOT NULL,
+    `id_credential` int DEFAULT 1, /* Public */
     `email` varchar(100) NOT NULL,
     `password` varchar(30) NOT NULL,
     `name` varchar(100),
@@ -118,6 +118,104 @@ CREATE TABLE `Shelters` (
     PRIMARY KEY (`id_shelter`)
 );
 
+
+-- -----------------------------------------------------------------------------
+-- Insert categorical data into tables
+-- -----------------------------------------------------------------------------
+
+-- Insert Availabilities categories
+INSERT INTO `Availabilities` (`description`)
+VALUES
+('Available'), /* id_availability = 1, to use as default value in Animals */
+('Not Available'),
+('Pending'),
+('Adopted');
+
+-- Insert Species categories
+INSERT INTO `Species` (`description`)
+VALUES
+('Other'), /* id_species = 1, to use as default value in Animals */
+('Dog'),
+('Cat');
+
+-- -- Insert Breeds categories
+INSERT INTO `Breeds` (`id_species`, `description`)
+VALUES
+(1, 'Other'), /* id_breed = 1, to use as default value in Animals */
+(2, 'Pit Bull'),
+(2, 'Labrador Retriever'),
+(2, 'Chihuahua'),
+(2, 'Boxer'),
+(2, 'German Shepherd Dog'),
+(2, 'Beagle'),
+(2, 'Dachshund'),
+(2, 'Border Collie'),
+(2, 'Australian Cattle Dog'),
+(2, 'Jack Russell Terrier'),
+(2, 'Australian Shepherd'),
+(2, 'Shih Tzu'),
+(2, 'Rottweiler'),
+(2, 'Siberian Husky'),
+(2, 'French Bulldog'),
+(2, 'Golden Retriever'),
+(2, 'Poodle'),
+(2, 'Bulldog'),
+(2, 'German Shorthaired Pointer'),
+(2, 'Pembroke Welsh Corgi'),
+(2, 'Yorkshire Terrier'),
+(2, 'Cavalier King Charles Spaniel'),
+(2, 'Doberman Pinscher'),
+(2, 'Miniature Schnauzer'),
+(2, 'Cane Corso'),
+(2, 'Great Dane'),
+(3, 'Domestic Shorthair'),
+(3, 'Domestic Longhair'),
+(3, 'Maine Coon'),
+(3, 'Ragdoll'),
+(3, 'American Shorthair'),
+(3, 'Siamese'),
+(3, 'Russian Blue'),
+(3, 'Bengal'),
+(3, 'Persian'),
+(3, 'Bombay'),
+(3, 'Devon Rex'),
+(3, 'Exotic Shorthair'),
+(3, 'British Shorthair'),
+(3, 'Abyssinian'),
+(3, 'Scottish Fold'),
+(3, 'Sphynx'),
+(3, 'Siberian'),
+(3, 'Norwegian Forest Cat'),
+(3, 'Oriental Shorthair'),
+(3, 'Cornish Rex'),
+(3, 'Selkirk Rex'),
+(3, 'Birman');
+
+-- Insert Genders categories
+INSERT INTO `Genders` (`description`)
+VALUES
+('Male - Intact'),
+('Female - Intact'),
+('Male - Neutered'),
+('Female - Spayed');
+
+-- Insert Dispositions categories
+INSERT INTO `Dispositions` (`description`)
+VALUES
+('Good with other animals'),
+('Good with children'),
+('Animal must be leashed at all times'),
+('High energy needs'),
+('Low energy needs'),
+('High grooming needs'),
+('Low grooming needs'),
+('Vocal');
+
+-- Insert Credentials categories
+INSERT INTO `Credentials` (`description`)
+VALUES
+('public'), /* id_credential = 1, to use as default value in Accounts */
+('administrative');
 
 -- -----------------------------------------------------------------------------
 -- Re-enable commits and foreign key checks
