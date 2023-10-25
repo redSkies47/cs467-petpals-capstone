@@ -1,0 +1,91 @@
+#:import utils kivy.utils
+<MyGridLayout>
+    canvas.before:
+        Color:
+            rgba: (171/255, 196/255, 212/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    GridLayout:
+        cols:1
+        size: root.width, root.height
+
+        padding: 150
+        spacing: 50
+
+        Image:
+            source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+            allow_stretch: True
+            keep_ratio: True
+
+        GridLayout:
+            cols:2
+
+
+            Label:
+                text: "Please enter your name:"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            TextInput:
+                multiline:False
+            Label:
+                text: "Please enter your E-mail:"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            TextInput:
+                multiline:False
+            Label:
+                text: "Please enter a password:"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            TextInput:
+                multiline:False
+            Label:
+                text: "Please confirm your password:"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            TextInput:
+                multiline:False
+
+        Button:
+            text: "Create Account"
+            size_hint_y: None
+            height:70
+            font_size: 30
+            on_press: root.pressacc()
+            background_normal: ''
+            background_color: utils.get_color_from_hex('#00BBE0')
+        
+        Button:
+            text: "Back To Login"
+            size_hint_y: None
+            height:70
+            font_size: 30
+            on_press: root.pressacc()
+            background_normal: ''
+            background_color: utils.get_color_from_hex('#DE173F')
+

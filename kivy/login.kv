@@ -1,0 +1,58 @@
+Screen:
+
+    MDCard:
+        size_hint: None, None
+        size: 350, 600
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+        MDBoxLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            FitImage:
+                source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+                pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                allow_stretch: True
+                keep_ratio: True
+                size_hint_y: None
+                size_hint_x: None
+                width: self.parent.width
+                height: self.parent.width
+
+    MDTextField:
+        mode: "round"
+        id: user
+        hint_text: "Enter E-mail"
+        hint_font_size: 15
+        icon_right: "account"
+        size_hint_x: None
+        width: 250
+        font_size: 20
+        pos_hint: {"center_x": 0.5, "center_y": 0.45}
+
+    MDTextField:
+        mode: "round"
+        id: password
+        hint_text: "Enter Password"
+        icon_right: "eye-off"
+        size_hint_x: None
+        width: 250
+        font_size: 20
+        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+        password: True
+
+    MDRoundFlatButton:
+        text: "Log In"
+        font_size: 12
+        pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+    MDRoundFlatButton:
+        text: "Create Account"
+        font_size: 12
+        pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+    Widget:
+        size_hint_y: None
+        height: 10
