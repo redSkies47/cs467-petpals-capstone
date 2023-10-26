@@ -7,7 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
-Builder.load_file('createacc.kv')
+Builder.load_file('../kv_design_language/createacc.kv')
 email = ObjectProperty(None)
 password = ObjectProperty(None)
 
@@ -29,14 +29,14 @@ class MyGridLayout(Widget):
 
     #     self.add_widget(self.top_grid)
 
-    #     self.login = Button(text="Login", 
+    #     self.login = Button(text="Login",
     #         font_size=30,
     #         size_hint_y = None,
     #         height = 75)
     #     self.login.bind(on_press=self.presslog)
     #     self.add_widget(self.login)
 
-    #     self.account = Button(text="Create Account", 
+    #     self.account = Button(text="Create Account",
     #         font_size=30,
     #         size_hint_y = None,
     #         height = 75)
@@ -45,7 +45,7 @@ class MyGridLayout(Widget):
 
     def presslog(self):
         self.add_widget(Label(text="Login Successful"))
-    
+
     def pressacc(self):
         self.add_widget(Label(text="One moment please"))
 
