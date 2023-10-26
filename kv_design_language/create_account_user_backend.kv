@@ -1,0 +1,54 @@
+#:kivy 2.2.1
+
+<CreateAccountBoxLayout>
+
+    email_input: email_input
+    password1_input: password1_input
+    password2_input: password2_input
+    name_input: name_input
+
+    BoxLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        # Create account form fields
+        GridLayout:
+            cols: 2
+
+            # Email
+            Label:
+                text: '* Email: '
+            TextInput:
+                id: email_input
+                multiline: False
+
+            # Password
+            Label:
+                text: '* Password: '
+            TextInput:
+                id: password1_input
+                multiline: False
+
+            # Confirm password
+            Label:
+                text: '* Confirm Password: '
+            TextInput:
+                id: password2_input
+                multiline: False
+
+            # Name
+            Label:
+                text: 'Name: '
+            TextInput:
+                id: name_input
+                multiline: False
+
+        # Submit create account form
+        Button:
+            text: 'Submit'
+            on_press: root.create_account()
+
+        # Back to login page
+        Button:
+            text: 'Back to Login'
+            # DUMMY: no backend functionality
