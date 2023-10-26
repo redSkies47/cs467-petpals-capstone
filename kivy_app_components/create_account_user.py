@@ -7,7 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty
-Builder.load_file('../kv_design_language/createacc.kv')
+Builder.load_file('../kv_design_language/create_account_user.kv')
 email = ObjectProperty(None)
 password = ObjectProperty(None)
 

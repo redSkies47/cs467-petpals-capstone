@@ -15,6 +15,20 @@ def find_account(email, db):
         selectID_result = db.query(selectID_cmd, selectID_params)
         return selectID_result
 
+def add_account(email, password, name, db):
+        """
+        Adds a new public Account to the database with the given values for its attributes.
+
+        :param str email: email of the new Account
+        :param str password: password of the new Account
+        :param str name: name associated with the new Account
+        :param Database db: database to be queried
+        :return: None
+        """
+        addAccount_cmd = "INSERT INTO Accounts (email, password, name) VALUES (%s, %s, %s)"
+        addAccount_params = (email, password, name)
+        db.query(addAccount_cmd, addAccount_params)
+
 def verify_password(id_account, password, db):
         """
         Returns True if the given password matches the stored password for the Account. Returns False otherwise.
