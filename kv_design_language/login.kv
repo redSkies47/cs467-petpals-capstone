@@ -1,6 +1,9 @@
 #:kivy 2.2.1
 
-Screen:
+LoginScreen:
+
+    email_input: email_input
+    password_input: password_input
 
     MDCard:
         size_hint: None, None
@@ -25,7 +28,7 @@ Screen:
 
     MDTextField:
         mode: "round"
-        id: user
+        id: email_input
         hint_text: "Enter E-mail"
         hint_font_size: 15
         icon_right: "account"
@@ -36,7 +39,7 @@ Screen:
 
     MDTextField:
         mode: "round"
-        id: password
+        id: password_input
         hint_text: "Enter Password"
         icon_right: "eye-off"
         size_hint_x: None
@@ -49,6 +52,7 @@ Screen:
         text: "Log In"
         font_size: 12
         pos_hint: {"center_x": 0.5, "center_y": 0.25}
+        on_press: root.login()
 
     MDRoundFlatButton:
         text: "Create Account"
