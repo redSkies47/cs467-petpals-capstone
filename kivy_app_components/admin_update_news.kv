@@ -1,0 +1,61 @@
+
+<admin_update_news@Screen>:
+    name: "admin_update_news"
+
+    MDCard:
+        md_bg_color: (0/255, 0/255, 0/255, 1)
+        size_hint: 1, 1
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+    MDRoundFlatButton:
+        
+        md_bg_color: 255/255,233/255,234/255,1
+        text_color: 56/255,45/255,94/255,1
+        text: "ADMIN_UPDATE_NEWS"
+        font_size: self.width * 0.075
+        size_hint_x: 0.85
+        size_hint_y: 0.275
+        pos_hint: {"center_x": 0.5, "center_y": 0.775}
+        on_press: app.root.current = "admin_landing"
+
+    MDRoundFlatButton:
+        md_bg_color: 255/255,233/255,234/255,1
+        text_color: 56/255,45/255,94/255,1
+        text: "Add Animal"
+        font_size: self.width * 0.075
+        size_hint_x: 0.65
+        size_hint_y: 0.125
+        pos_hint: {"center_x": 0.5, "center_y": 0.33}
+        on_release: root.toAddAnimal()
+
+    MDRoundFlatButton:
+        md_bg_color: 255/255,233/255,234/255,1
+        text_color: 56/255,45/255,94/255,1
+        text: "Edit/Delete Animal"
+        font_size: self.width * 0.075
+        size_hint_x: 0.65
+        size_hint_y: 0.125
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
+        on_release: root.toEditDeleteAnimal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
