@@ -9,15 +9,15 @@ class admin_update_news(Screen):
 
     # TODO: backend variables for metadata
 
-    def toUpdateNews(self):
-        print("Update News")
+    def toButton1(self):
+        print("button 1")
         #TODO: navigate to admin side - update news page
 
-    def toAddAnimal(self):
+    def toButton2(self):
         # Builder.load_file('admin_update_news.kv')
-        print("Add Animal")
+        print("button 2")
         #TODO: navigate to admin side - add/edit animal page
 
-    def toEditDeleteAnimal(self):
-        print("Edit/Delete Animal")
+    def toButton3(self):
+        print("button 3")
         #TODO: navigate to admin side - delete animal page
