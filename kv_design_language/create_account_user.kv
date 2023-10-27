@@ -2,6 +2,12 @@
 #:import utils kivy.utils
 
 <MyGridLayout>
+
+    name_input: name_input
+    email_input: email_input
+    password1_input: password1_input
+    password2_input: password2_input
+
     canvas.before:
         Color:
             rgba: (171/255, 196/255, 212/255, 1)
@@ -35,6 +41,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: name_input
                 multiline:False
             Label:
                 text: "Please enter your E-mail:"
@@ -47,6 +54,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: email_input
                 multiline:False
             Label:
                 text: "Please enter a password:"
@@ -59,6 +67,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: password1_input
                 multiline:False
             Label:
                 text: "Please confirm your password:"
@@ -71,6 +80,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: password2_input
                 multiline:False
 
         Button:
@@ -78,7 +88,7 @@
             size_hint_y: None
             height:70
             font_size: 30
-            on_press: root.pressacc()
+            on_press: root.create_account()
             background_normal: ''
             background_color: utils.get_color_from_hex('#00BBE0')
 
