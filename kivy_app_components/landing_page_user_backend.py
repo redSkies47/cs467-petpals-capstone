@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 
 import database
 from database.db_interface import Database
-from database.accounts_dml import *
+from database.news_dml import *
 
 
 # --- Set Up --- #
@@ -40,8 +40,18 @@ class LandingBoxLayout(Widget):
     Contains the structure and functionality of the Landing page.
     """
     def __init__(self, **kwargs):
-        super(LandingBoxLayout, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+        (self.news_title, self.news_body) = self.get_news()
+        super(LandingBoxLayout, self).__init__(**kwargs)
+
+    def get_news(self):
+        """
+        Returns a representation of the most recently added News item as a tuple (title, body).
+        """
+        news_item = get_all_news(self.db)[-1]
+        news_title = news_item[2]
+        news_body = news_item[3]
+        return (news_title, news_body)
 
 
 # --- Main Method --- #

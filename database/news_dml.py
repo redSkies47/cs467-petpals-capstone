@@ -24,7 +24,7 @@ def get_all_news(db):
         :return: [(id_news, date, title, body)]
         """
         selectAllNews_cmd = "SELECT * FROM News"
-        selectAllNews_params = ()  # how to deal with no params?
+        selectAllNews_params = tuple()
         selectAllNews_result = db.query(selectAllNews_cmd, selectAllNews_params)
         return selectAllNews_result
 

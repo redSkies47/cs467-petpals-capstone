@@ -2,5 +2,38 @@
 
 <LandingBoxLayout>
 
-    Label:
-        text: 'LANDING PAGE'
+    BoxLayout:
+        size: root.width, root.height
+        orientation: 'vertical'
+
+        # News Item
+        Label:
+            text: root.news_title
+        Label:
+            text: root.news_body
+            text_size: self.size
+
+        # Empty Separator
+        Label:
+
+        # Browse Dogs
+        Button:
+            text: 'Dogs'
+            # DUMMY: no backend functionality
+        # Browse Cats
+        Button:
+            text: 'Cats'
+            # DUMMY: no backend functionality
+        # Browse Other
+        Button:
+            text: 'Other'
+            # DUMMY: no backend functionality
+
+        # Empty Separator
+        Label:
+
+        # Navigation Bar
+        Button:
+            text: 'Navigation Bar'
+            # DUMMY: no backend functionality
+
