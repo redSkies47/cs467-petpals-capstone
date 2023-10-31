@@ -29,6 +29,58 @@ def add_account(email, password, name, db):
         addAccount_params = (email, password, name)
         db.query(addAccount_cmd, addAccount_params)
 
+def update_account_name(id_account, name, db):
+        """
+        Updates the Account's name with the given value.
+
+        :param int id_account: ID of the Account
+        :param str name: new name
+        :param Database db: database to be queried
+        :return: None
+        """
+        updateAccountName_cmd = "UPDATE Accounts SET name = %s WHERE id_account = %s"
+        updateAccountName_params = (name, id_account)
+        db.query(updateAccountName_cmd, updateAccountName_params)
+
+def update_account_email(id_account, email, db):
+        """
+        Updates the Account's name with the given value.
+
+        :param int id_account: ID of the Account
+        :param str email: new email
+        :param Database db: database to be queried
+        :return: None
+        """
+        updateAccountEmail_cmd = "UPDATE Accounts SET email = %s WHERE id_account = %s"
+        updateAccountEmail_params = (email, id_account)
+        db.query(updateAccountEmail_cmd, updateAccountEmail_params)
+
+def update_account_password(id_account, password, db):
+        """
+        Updates the Account's password with the given value.
+
+        :param int id_account: ID of the Account
+        :param str password: new password
+        :param Database db: database to be queried
+        :return: None
+        """
+        updateAccountPassword_cmd = "UPDATE Accounts SET password = %s WHERE id_account = %s"
+        updateAccountPassword_params = (password, id_account)
+        db.query(updateAccountPassword_cmd, updateAccountPassword_params)
+
+def delete_account(id_account, db):
+        """
+        Deletes the Account.
+
+        :param int id_account: ID of the Account
+        :param Database db: database to be queried
+        :return: None
+        """
+        deleteAccount_cmd = "DELETE FROM Accounts WHERE id_account = %s"
+        deleteAccount_params = (id_account,)
+        db.query(deleteAccount_cmd, deleteAccount_params)
+
+
 def verify_password(id_account, password, db):
         """
         Returns True if the given password matches the stored password for the Account. Returns False otherwise.
