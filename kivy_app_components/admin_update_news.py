@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 from database.db_interface import Database
 from database.accounts_dml import *
+from database import news_dml
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -25,7 +26,18 @@ DB_NAME = os.getenv('DB_NAME')
 
 class admin_update_news(Screen):
 
-    # TODO: backend variables for metadata
+    news_content = ObjectProperty()
+
+    DB_HOST = DB_HOST
+    DB_USER = DB_USER
+    DB_PASSWORD = DB_PASSWORD
+    DB_NAME = DB_NAME
+
+    def getNews(self):
+        db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+        news_obj = news_dml.get_all_news(db)
+        for x in news_obj[0]:
+            self.ids.news_content.text += str(x) + "\n"
 
     def toCancel(self):
         print("backend toCancel")
