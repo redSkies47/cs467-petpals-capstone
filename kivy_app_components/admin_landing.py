@@ -33,19 +33,18 @@ class admin_landing(MDApp):
         self.DB_NAME = DB_NAME
 
     def build(self):
+        # for temporary rendering, expect screen to adapt to device res
         Window.size = (295, 620)
-        self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "LightBlue"
+        # self.theme_cls.theme_style = "Light"
+        # self.theme_cls.primary_palette = "LightBlue"
         return Builder.load_file('../kv_design_language/admin_landing.kv')
 
     def toUpdateNews(self):
         print("Update News")
-        # TODO: navigate to admin side - update news page
+        # redundant: configured screens to swap without triggering backend
 
     def toAddAnimal(self):
         print("Add Animal")
-        print(" ***backend user credentials: ", self.DB_HOST,
-              self.DB_USER, self.DB_PASSWORD, self.DB_NAME)
         # TODO: navigate to admin side - add/edit animal page
 
     def toEditDeleteAnimal(self):
