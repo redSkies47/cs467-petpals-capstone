@@ -1,0 +1,72 @@
+<admin_update_news@Screen>:
+    name: "admin_update_news"
+
+    MDCard:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint: 1, 1
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+        MDBoxLayout:
+            md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10,10,10,10]
+            size_hint_x: 0.9
+            size_hint_y: 0.8
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDBoxLayout:
+                md_bg_color: (255/255,233/255,234/255,1)
+                radius: [10,10,10,10]
+                size_hint_x: 0.6
+                size_hint_y: 0.15
+                pos_hint: {"center_x": 0.5, "center_y": 0.1}
+
+                MDRoundFlatButton:
+                    md_bg_color: 222/255,23/255,63/255,1
+                    text_color: 255/255,255/255,255/255,1
+                    text: "Cancel"
+                    font_size: self.width * 0.18
+                    size_hint_x: 1/4
+                    size_hint_y: 0.8
+                    pos_hint: {"center_x": 0.25, "center_y": 0.4}
+                    on_press: root.toCancel()
+
+                MDRoundFlatButton:
+                    md_bg_color: 0/255,187/255,224/255,1
+                    text_color: 0/255,0/255,0/255,1
+                    text: "Clear"
+                    font_size: self.width * 0.18
+                    size_hint_x: 1/4
+                    size_hint_y: 0.8
+                    pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                    on_press: root.toClear()
+
+                MDRoundFlatButton:
+                    md_bg_color: 56/255,45/255,94/255,1
+                    text_color: 255/255,255/255,255/255,1
+                    text: "Save"
+                    font_size: self.width * 0.18
+                    size_hint_x: 1/4
+                    size_hint_y: 0.8
+                    pos_hint: {"center_x": 0.75, "center_y": 0.4}
+                    on_press: root.toSave()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
