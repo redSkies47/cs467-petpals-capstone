@@ -1,13 +1,5 @@
-#:kivy 2.2.1
-#:import utils kivy.utils
-
-<MyGridLayout>
-
-    name_input: name_input
-    email_input: email_input
-    password1_input: password1_input
-    password2_input: password2_input
-
+<CreateAccountWindow>:
+    name: "CreateAccount"
     canvas.before:
         Color:
             rgba: (171/255, 196/255, 212/255, 1)
@@ -22,10 +14,9 @@
         spacing: 50
 
         Image:
-            source: '../images/petpals_logo.png'
+            source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
             allow_stretch: True
             keep_ratio: True
-
         GridLayout:
             cols:2
 
@@ -41,7 +32,6 @@
                         size: self.size
                         pos: self.pos
             TextInput:
-                id: name_input
                 multiline:False
             Label:
                 text: "Please enter your E-mail:"
@@ -54,7 +44,6 @@
                         size: self.size
                         pos: self.pos
             TextInput:
-                id: email_input
                 multiline:False
             Label:
                 text: "Please enter a password:"
@@ -67,7 +56,6 @@
                         size: self.size
                         pos: self.pos
             TextInput:
-                id: password1_input
                 multiline:False
             Label:
                 text: "Please confirm your password:"
@@ -80,7 +68,6 @@
                         size: self.size
                         pos: self.pos
             TextInput:
-                id: password2_input
                 multiline:False
 
         Button:
@@ -88,16 +75,19 @@
             size_hint_y: None
             height:70
             font_size: 30
-            on_press: root.create_account()
             background_normal: ''
-            background_color: utils.get_color_from_hex('#00BBE0')
-
+            background_color: (0, 187/255, 224/255, 1)
+            on_release:
+                app.root.current = "landing"
+                root.manager.transition.direction = "left"
+            
         Button:
             text: "Back To Login"
             size_hint_y: None
             height:70
             font_size: 30
-            on_press: root.pressacc()
             background_normal: ''
-            background_color: utils.get_color_from_hex('#DE173F')
-
+            background_color: (222/255, 23/255, 63/255, 1)
+            on_release:
+                app.root.current = "login"
+                root.manager.transition.direction = "right"

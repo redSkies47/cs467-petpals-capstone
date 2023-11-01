@@ -1,0 +1,267 @@
+#:import Factory kivy.factory.Factory
+
+<MyPopup@Popup>:
+    title: "Account changes confirmed"
+    auto_dismiss: False
+    size_hint: (None, None)
+    size: (500, 250)
+    Button:
+        background_normal: ''
+        background_color: (0, 187/255, 224/255, 1)
+        size_hint: (.3, .3)
+        anchor_x: 'center'
+        anchor_y: 'center'
+        text: 'Done'
+        on_release: root.dismiss()
+
+<LandingWindow>:
+    name: "landing"
+    Screen:
+        MDBoxLayout:
+            orientation: 'vertical'
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'top'
+                padding: 20
+                FitImage:
+                    source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+                    size_hint: None, None
+                    size: 250, 250
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+        MDFillRoundFlatButton:
+            text: "Dogs"
+            font_size: 12
+            text_color: (1,1,1,1)
+            size_hint: None, None
+            width: root.width*0.2
+            height: root.height*0.05
+            md_bg_color: (0, 187/255, 224/255, 1)
+            pos_hint: {"center_x": 0.5, "center_y": 0.40}
+            on_release:
+                app.root.current = "CreateAccount"
+                root.manager.transition.direction = "right"
+
+        MDFillRoundFlatButton:
+            text: "Cats"
+            font_size: 12
+            text_color: (1,1,1,1)
+            size_hint: None, None
+            width: root.width*0.2
+            height: root.height*0.05
+            md_bg_color: (0, 187/255, 224/255, 1)
+            pos_hint: {"center_x": 0.5, "center_y": 0.30}
+            on_release:
+                app.root.current = "CreateAccount"
+                root.manager.transition.direction = "right"
+    
+        MDFillRoundFlatButton:
+            text: "Other"
+            font_size: 12
+            text_color: (1,1,1,1)
+            size_hint: None, None
+            width: root.width*0.2
+            height: root.height*0.05
+            md_bg_color: (222/255, 23/255, 63/255, 1)
+            pos_hint: {"center_x": 0.5, "center_y": 0.20}
+
+        MDBottomNavigation:
+            panel_color: (255/255, 233/255, 234/255, 1)
+
+            MDBottomNavigationItem:
+                name: 'home'
+                text: 'Home Page'
+                icon: 'home'
+                font_size: 15
+                on_tab_press:
+                    root.clearchange()
+                    root.cleardelete()
+
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    md_bg_color: (171/255, 196/255, 212/255, 1)
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'top'
+                        padding: 20
+                        FitImage:
+                            source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+                            size_hint: None, None
+                            size: 250, 250
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+
+                MDRectangleFlatButton:
+                    text: "PR Blurb Here"
+                    font_size: 20
+                    text_color: (56/255, 45/255, 94/255, 1)
+                    size_hint: None, None
+                    width: root.width*0.5
+                    height: root.height*0.25
+                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+                MDFillRoundFlatButton:
+                    text: "Dogs"
+                    font_size: 12
+                    text_color: (56/255, 45/255, 94/255, 1)
+                    size_hint: None, None
+                    width: root.width*0.2
+                    height: root.height*0.05
+                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+                MDFillRoundFlatButton:
+                    text: "Cats"
+                    font_size: 12
+                    text_color: (56/255, 45/255, 94/255, 1)
+                    size_hint: None, None
+                    width: root.width*0.2
+                    height: root.height*0.05
+                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.25}
+            
+                MDFillRoundFlatButton:
+                    text: "Other"
+                    font_size: 12
+                    text_color: (56/255, 45/255, 94/255, 1)
+                    size_hint: None, None
+                    width: root.width*0.2
+                    height: root.height*0.05
+                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+
+            MDBottomNavigationItem:
+                name: 'account'
+                text: 'Account'
+                icon: 'account'
+
+                GridLayout:
+                    cols:1
+                    size: root.width, root.height
+
+                    padding: 70
+                    spacing: 30
+
+                    GridLayout:
+                        cols:2        
+                        size: root.width, root.height
+
+                        padding: 15
+                        spacing: 25
+
+
+                        Label:
+                            text: "Change your name? \nPlease enter your new name:"
+                            color: (56/255, 45/255, 94/255, 1)
+                            background_color: (255/255, 233/255, 234/255, 1)
+                            canvas.before:
+                                Color:
+                                    rgba: self.background_color
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                        TextInput:
+                            multiline:False
+                        Label:
+                            text: "Change email? \nPlease enter your new E-mail:"
+                            color: (56/255, 45/255, 94/255, 1)
+                            background_color: (255/255, 233/255, 234/255, 1)
+                            canvas.before:
+                                Color:
+                                    rgba: self.background_color
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                        TextInput:
+                            multiline:False
+                        Label:
+                            text: "Change password? \nPlease enter your current password:"
+                            color: (56/255, 45/255, 94/255, 1)
+                            background_color: (255/255, 233/255, 234/255, 1)
+                            canvas.before:
+                                Color:
+                                    rgba: self.background_color
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                        TextInput:
+                            multiline:False
+                        Label:
+                            text: "Please enter your new password."
+                            color: (56/255, 45/255, 94/255, 1)
+                            background_color: (255/255, 233/255, 234/255, 1)
+                            canvas.before:
+                                Color:
+                                    rgba: self.background_color
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                        TextInput:
+                            multiline:False
+                        Label:
+                            text: "Please confirm your new password."
+                            color: (56/255, 45/255, 94/255, 1)
+                            background_color: (255/255, 233/255, 234/255, 1)
+                            canvas.before:
+                                Color:
+                                    rgba: self.background_color
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                        TextInput:
+                            multiline:False
+                        
+                    Button:
+                        text: "Submit Changes"
+                        size_hint_y: None
+                        height:45
+                        font_size: 20
+                        background_normal: ''
+                        background_color: (0, 187/255, 224/255, 1)
+                        on_release: 
+                            root.cleardelete()
+                            root.clearchange() 
+                            root.press_change()
+
+                    Button:
+                        text: "Delete Account"
+                        size_hint_y: None
+                        height:45
+                        font_size: 20
+                        background_normal: ''
+                        background_color: (222/255, 23/255, 63/255, 1)
+                        on_release:
+                            root.clearchange()
+                            root.cleardelete() 
+                            root.press_delete()
+
+                    Button:
+                        text: "Log Out"
+                        size_hint_y: None
+                        height:45
+                        font_size: 20
+                        background_normal: ''
+                        background_color: (0, 187/255, 224/255, 1)
+                        on_release:
+                            root.clearchange()
+                            root.cleardelete()  
+                            app.root.current = "login"
+                            root.manager.transition.direction = "right"
+
+            MDBottomNavigationItem:
+                name: 'screen 3'
+                text: 'Liked List'
+                icon: 'paw'
+                on_tab_press:
+                    root.clearchange()
+                    root.cleardelete()
+
+                Label:
+                    text: "will fill later"
+
+
+        Widget:
+            size_hint_y: None
+            height: 10
