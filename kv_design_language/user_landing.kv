@@ -16,6 +16,11 @@
         on_release: root.dismiss()
 
 <LandingWindow>:
+
+    name_input: name_input
+    email_input: email_input
+    password_input: password_input
+
     name: "landing"
     Screen:
         MDBoxLayout:
@@ -164,6 +169,7 @@
                                     size: self.size
                                     pos: self.pos
                         TextInput:
+                            id: name_input
                             multiline:False
                         Label:
                             text: "Change email? \nPlease enter your new E-mail:"
@@ -176,6 +182,7 @@
                                     size: self.size
                                     pos: self.pos
                         TextInput:
+                            id: email_input
                             multiline:False
                         Label:
                             text: "Change password? \nPlease enter your current password:"
@@ -188,30 +195,7 @@
                                     size: self.size
                                     pos: self.pos
                         TextInput:
-                            multiline:False
-                        Label:
-                            text: "Please enter your new password."
-                            color: (56/255, 45/255, 94/255, 1)
-                            background_color: (255/255, 233/255, 234/255, 1)
-                            canvas.before:
-                                Color:
-                                    rgba: self.background_color
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                        TextInput:
-                            multiline:False
-                        Label:
-                            text: "Please confirm your new password."
-                            color: (56/255, 45/255, 94/255, 1)
-                            background_color: (255/255, 233/255, 234/255, 1)
-                            canvas.before:
-                                Color:
-                                    rgba: self.background_color
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                        TextInput:
+                            id: password_input
                             multiline:False
 
                     Button:
@@ -221,22 +205,11 @@
                         font_size: 20
                         background_normal: ''
                         background_color: (0, 187/255, 224/255, 1)
+                        on_press: root.update_account()
                         on_release:
                             root.cleardelete()
                             root.clearchange()
                             root.press_change()
-
-                    Button:
-                        text: "Delete Account"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (222/255, 23/255, 63/255, 1)
-                        on_release:
-                            root.clearchange()
-                            root.cleardelete()
-                            root.press_delete()
 
                     Button:
                         text: "Log Out"
@@ -245,11 +218,26 @@
                         font_size: 20
                         background_normal: ''
                         background_color: (0, 187/255, 224/255, 1)
+                        on_press: root.logout()
                         on_release:
                             root.clearchange()
                             root.cleardelete()
                             app.root.current = "login"
                             root.manager.transition.direction = "right"
+
+                    Button:
+                        text: "Delete Account"
+                        size_hint_y: None
+                        height:45
+                        font_size: 20
+                        background_normal: ''
+                        background_color: (222/255, 23/255, 63/255, 1)
+                        on_press: root.delete_account()
+                        on_release:
+                            root.clearchange()
+                            root.cleardelete()
+                            root.press_delete()
+                            # PLACEHOLDER: should also go back to login screen?
 
             MDBottomNavigationItem:
                 name: 'screen 3'

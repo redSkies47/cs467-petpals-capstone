@@ -119,6 +119,9 @@ class CreateAccountWindow(Screen):
         print('Successful account creation!')
 
 class LandingWindow(Screen):
+    name_input = ObjectProperty(None)       # update account form - name
+    email_input = ObjectProperty(None)      # update account form - email
+    password_input = ObjectProperty(None)   # update account form - password
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
@@ -139,6 +142,55 @@ class LandingWindow(Screen):
         news_title = news_item[2]
         news_body = news_item[3]
         return (news_title, news_body)
+
+    def update_account(self):
+        """
+        Updates the current Account. Unsuccessful update if the new email is already registered. Fields that are left blank are unmodified.
+        """
+        name = self.name_input.text
+        email = self.email_input.text
+        password = self.password_input.text
+
+        # Update name, if entered
+        if name != '':
+            update_account_name(LoginScreen.id_account, name, LoginScreen.db)
+            # PLACEHOLDER: success message
+            print('Successfully updated the account name!')
+        # Update email, if entered
+        if email != '':
+            # If email is already registered
+            accounts = find_account(email, LoginScreen.db)
+            if len(accounts) > 0:
+                # PLACEHOLDER: error message
+                print('Error: Failed to update account email. Email is already registered to an account.')
+            else:
+                update_account_email(LoginScreen.id_account, email, LoginScreen.db)
+                # PLACEHOLDER: success message
+                print('Successfully updated the account email!')
+        # Update password, if entered
+        if password != '':
+            update_account_password(LoginScreen.id_account, password, LoginScreen.db)
+            # PLACEHOLDER: success message
+            print('Successfully updated the account password!')
+
+    def delete_account(self):
+        """
+        Deletes the current Account.
+        """
+        # PLACEHOLDER: warning message
+        print('Wait! Are you sure you want to delete this account?')
+
+        # PLACEHOLDER: If confirmed yes... delete account
+        delete_account(LoginScreen.id_account, LoginScreen.db)
+        LoginScreen.id_account = None
+        # PLACEHOLDER: success message
+        print('Successfully deleted the account!')
+
+    def logout(self):
+        """
+        Logs out of the current Account.
+        """
+        LoginScreen.id_account = None
 
     def press_change(self):
         self.add_widget(self.change_label)
