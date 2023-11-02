@@ -1,6 +1,12 @@
 #:kivy 2.2.1
 
 <CreateAccountWindow>:
+
+    name_input: name_input
+    email_input: email_input
+    password1_input: password1_input
+    password2_input: password2_input
+
     name: "CreateAccount"
     canvas.before:
         Color:
@@ -34,6 +40,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: name_input
                 multiline:False
             Label:
                 text: "Please enter your E-mail:"
@@ -46,6 +53,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: email_input
                 multiline:False
             Label:
                 text: "Please enter a password:"
@@ -58,6 +66,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: password1_input
                 multiline:False
             Label:
                 text: "Please confirm your password:"
@@ -70,6 +79,7 @@
                         size: self.size
                         pos: self.pos
             TextInput:
+                id: password2_input
                 multiline:False
 
         Button:
@@ -79,9 +89,11 @@
             font_size: 30
             background_normal: ''
             background_color: (0, 187/255, 224/255, 1)
-            on_release:
-                app.root.current = "landing"
-                root.manager.transition.direction = "left"
+            on_press: root.create_account()
+            # PLACEHOLDER: should only navigate to landing page upon successful account creation
+            # on_release:
+            #     app.root.current = "landing"
+            #     root.manager.transition.direction = "left"
 
         Button:
             text: "Back To Login"

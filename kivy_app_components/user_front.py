@@ -40,8 +40,8 @@ class LoginScreen(MDApp):
         return Builder.load_file('../kv_design_language/user_front.kv')
 
 class LoginWindow(Screen):
-    email_input = ObjectProperty(None)      # login form - email field
-    password_input = ObjectProperty(None)   # login form - password field
+    email_input = ObjectProperty(None)      # login form - email
+    password_input = ObjectProperty(None)   # login form - password
     def __init__(self, **kwargs):
         super(LoginWindow, self).__init__(**kwargs)
 
@@ -79,7 +79,43 @@ class LoginWindow(Screen):
 
 
 class CreateAccountWindow(Screen):
-    pass
+    name_input = ObjectProperty(None)       # account form - name
+    email_input = ObjectProperty(None)      # account form - email
+    password1_input = ObjectProperty(None)  # account form - password
+    password2_input = ObjectProperty(None)  # account form - confirm password
+    def __init__(self, **kwargs):
+        super(CreateAccountWindow, self).__init__(**kwargs)
+
+    def create_account(self):
+        """
+        Creates a new public Account. Successful creation if the required fields (email, password) are filled out correctly. Unsuccessful creation if any of the required fields are left blank, email is already registered, or passwords do not match.
+        """
+        name = self.name_input.text
+        email = self.email_input.text
+        password1 = self.password1_input.text
+        password2 = self.password2_input.text
+
+        # If any required fields are left blank
+        if email == '' or password1 == '' or password2 == '':
+            # PLACEHOLDER: error message
+            print('Error: Failed to create account. Missing required field(s).')
+            return
+        # If email is already registered
+        accounts = find_account(email, LoginScreen.db)
+        if len(accounts) > 0:
+            # PLACEHOLDER: error message
+            print('Error: Failed to create account. Email is already registered to an account.')
+            return
+        # If passwords do not match
+        if password1 != password2:
+            # PLACEHOLDER: error message
+            print('Error: Failed to create account. Passwords do not match.')
+            return
+
+        # Create account
+        add_account(email, password1, name, LoginScreen.db)
+        # PLACEHOLDER: success message
+        print('Successful account creation!')
 
 class LandingWindow(Screen):
     def __init__(self, **kwargs):
