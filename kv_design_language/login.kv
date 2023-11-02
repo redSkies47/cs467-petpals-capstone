@@ -1,3 +1,5 @@
+#:kivy 2.2.1
+
 <LoginWindow>:
     name: "login"
     Screen:
@@ -9,7 +11,7 @@
                 anchor_y: 'top'
                 padding: 20
                 FitImage:
-                    source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+                    source: '../images/petpals_logo.png'
                     size_hint: None, None
                     size: 400, 400
                     pos_hint: {'center_x': 0.5, 'center_y': 0.75}
@@ -60,7 +62,7 @@
             on_release:
                 app.root.current = "CreateAccount"
                 root.manager.transition.direction = "left"
-            
+
 
         Widget:
             size_hint_y: None
