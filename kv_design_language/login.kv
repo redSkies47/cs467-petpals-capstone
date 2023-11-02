@@ -52,9 +52,9 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.25}
             on_press: root.login()
             # PLACEHOLDER: should only navigate to landing page upon successful USER login
-            # on_release:
-            #     app.root.current = "landing"
-            #     root.manager.transition.direction = "left"
+            on_release:
+                app.root.current = "landing"
+                root.manager.transition.direction = "left"
 
         MDFillRoundFlatButton:
             text: "Create Account"

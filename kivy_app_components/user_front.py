@@ -14,6 +14,7 @@ from kivymd.app import MDApp
 import database
 from database.db_interface import Database
 from database.accounts_dml import *
+from database.news_dml import *
 
 
 # --- Set Up ---#
@@ -119,7 +120,7 @@ class CreateAccountWindow(Screen):
 
 class LandingWindow(Screen):
     def __init__(self, **kwargs):
-        super(LandingWindow, self).__init__(**kwargs)
+        (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
@@ -128,6 +129,17 @@ class LandingWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
+        super(LandingWindow, self).__init__(**kwargs)
+
+    def get_news(self):
+        """
+        Returns a representation of the most recently added News item as a tuple (title, body).
+        """
+        news_item = get_all_news(LoginScreen.db)[-1]
+        news_title = news_item[2]
+        news_body = news_item[3]
+        return (news_title, news_body)
+
     def press_change(self):
         self.add_widget(self.change_label)
 
