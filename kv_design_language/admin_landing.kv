@@ -1,10 +1,15 @@
 #:include kv_design_language/admin_update_news.kv
 #:import NoTransition kivy.uix.screenmanager.NoTransition
-
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
 
 ScreenManager:
-    transition: NoTransition()
-
+    transition: SlideTransition(direction='up')
 
     Screen:
         name: "admin_landing"
