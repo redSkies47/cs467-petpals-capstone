@@ -50,11 +50,8 @@
             height: root.height*0.05
             md_bg_color: (222/255, 23/255, 63/255, 1)
             pos_hint: {"center_x": 0.5, "center_y": 0.25}
-            on_press: root.login()
-            # PLACEHOLDER: should only navigate to landing page upon successful USER login
             on_release:
-                app.root.current = "landing"
-                root.manager.transition.direction = "left"
+                root.login()
 
         MDFillRoundFlatButton:
             text: "Create Account"
@@ -66,6 +63,7 @@
             md_bg_color: (0, 187/255, 224/255, 1)
             pos_hint: {"center_x": 0.5, "center_y": 0.15}
             on_release:
+                root.clear_labels()
                 app.root.current = "CreateAccount"
                 root.manager.transition.direction = "left"
 

@@ -45,6 +45,20 @@ class LoginWindow(Screen):
     password_input = ObjectProperty(None)   # login form - password
     def __init__(self, **kwargs):
         super(LoginWindow, self).__init__(**kwargs)
+        self.bademail_label = Label(text='Error: Failed to login. Email is not registered to an account.',
+                              color = (255/255, 0/255, 0/255, 1),
+                              font_size = 25,
+                              pos_hint = {"center_x": 0.5, "center_y": .95})
+        self.badpass_label = Label(text='Error: Failed to login. Password is incorrect.',
+                              color = (255/255, 0/255, 0/255, 1),
+                              font_size = 25,
+                              pos_hint = {"center_x": 0.5, "center_y": .95})
+    
+    def clear_labels(self):
+        if self.bademail_label:
+            self.remove_widget(self.bademail_label)
+        if self.badpass_label:
+            self.remove_widget(self.badpass_label)
 
     def login(self):
         """
@@ -52,29 +66,41 @@ class LoginWindow(Screen):
         """
         email = self.email_input.text
         password = self.password_input.text
+        def bad_email_label():
+            self.add_widget(self.bademail_label)
+        def bad_pass_label():
+            self.add_widget(self.badpass_label)
 
+        def clear_labels():
+            if self.bademail_label:
+                self.remove_widget(self.bademail_label)
+            if self.badpass_label:
+                self.remove_widget(self.badpass_label)
         # If email is not registered
         accounts = find_account(email, LoginScreen.db)
         if len(accounts) == 0:
-            # PLACEHOLDER: error message
             print('Error: Failed to login. Email is not registered to an account.')
-            return
+            bad_email_label()
+            return 
         # If password is incorrect
         id_account = accounts[0][0]
         if not verify_password(id_account, password, LoginScreen.db):
-            # PLACEHOLDER: error message
+            clear_labels()
             print('Error: Failed to login. Password is incorrect.')
+            bad_pass_label()
             return
-
         # Successful login
         # If admin account
         if is_admin(id_account, LoginScreen.db):
             # PLACEHOLDER: navigate to Admin Landing page
             print('Successful admin login!')
+            clear_labels()
         # Else (public account)
         else:
-            # PLACEHOLDER: navigate to User Landing page
             print('Successful user login!')
+            clear_labels()
+            self.manager.current = "landing"
+            self.manager.transition.direction = "left"
         # Store id_account
         LoginScreen.id_account = id_account
 
