@@ -1,6 +1,5 @@
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
-from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
@@ -9,11 +8,6 @@ from dotenv import load_dotenv
 from database.db_interface import Database
 from database.accounts_dml import *
 from database import news_dml
-from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivy.core.window import Window
-from kivy.uix.screenmanager import Screen, ScreenManager
-
 # --- Set Up ---#
 
 # Assign environment variables
@@ -26,30 +20,58 @@ DB_NAME = os.getenv('DB_NAME')
 
 class admin_update_news(Screen):
 
-    news_content = ObjectProperty()
+    def __init__(self, **kwargs):
+        super(admin_update_news, self).__init__(**kwargs)
+        self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+        self.news = []
+        self.curr_news = 0
 
-    DB_HOST = DB_HOST
-    DB_USER = DB_USER
-    DB_PASSWORD = DB_PASSWORD
-    DB_NAME = DB_NAME
+    news_date = ObjectProperty()
+    news_title = ObjectProperty()
+    news_body = ObjectProperty()
 
     def getNews(self):
-        db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-        news_obj = news_dml.get_all_news(db)
-        for x in news_obj[0]:
-            self.ids.news_content.text += str(x) + "\n"
+        news_object = news_dml.get_all_news(self.db)
+        for news in news_object:
+            curr_news = []
+            for col in news:
+                curr_news.append(col)
+            self.news.append(curr_news)
+        self.populateNews()
+
+    def populateNews(self):
+        self.ids.news_date.text = str(self.news[self.curr_news][1])
+        self.ids.news_title.text = self.news[self.curr_news][2]
+        self.ids.news_body.text = self.news[self.curr_news][3]
+
+    def prev(self):
+        self.curr_news = len(self.news) - \
+            1 if self.curr_news == 0 else self.curr_news - 1
+        self.populateNews()
+
+    def next(self):
+        self.curr_news = 0 if self.curr_news == len(
+            self.news) - 1 else self.curr_news + 1
+        self.populateNews()
 
     def toCancel(self):
-        print("backend toCancel")
-        # TODO: navigate to admin side - update news page
-        # print(" ***backend user credentials: ", DB_HOST,
-        #       DB_USER, DB_PASSWORD, DB_NAME)
+        self.populateNews()
 
     def toSave(self):
-        # Builder.load_file('admin_update_news.kv')
-        print("backend toSave")
-        # TODO: navigate to admin side - add/edit animal page
+
+        news_entry = self.news[self.curr_news][0]
+        news_date = self.ids.news_date.text
+        news_title = self.ids.news_title.text
+        news_body = self.ids.news_body.text
+
+        news_dml.update_one_news(
+            news_entry, news_date, news_title, news_body, self.db)
+
+        self.news[self.curr_news][1] = self.ids.news_date.text
+        self.news[self.curr_news][2] = self.ids.news_title.text
+        self.news[self.curr_news][3] = self.ids.news_body.text
 
     def toClear(self):
-        print("backend toClear")
-        # TODO: navigate to admin side - delete animal page
+        self.ids.news_date.text = ""
+        self.ids.news_title.text = ""
+        self.ids.news_body.text = ""
