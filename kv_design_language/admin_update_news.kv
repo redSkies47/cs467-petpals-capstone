@@ -8,23 +8,60 @@
         md_bg_color: (171/255, 196/255, 212/255, 1)
         size_hint: 1, 1
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
-        # elevation: 10
-        # padding: 25
-        # spacing: 25
         orientation: 'vertical'
 
-    MDBoxLayout: # new summary container
+    MDBoxLayout: # news Date container
 
         md_bg_color: (255/255,233/255,234/255,1)
-        radius: [10,10,10,10]
+        radius: [10,10,0,0]
         size_hint_x: 0.8
-        size_hint_y: 0.85
-        pos_hint: {"center_x": 0.5, "center_y": 0.525}
+        # size_hint_y: 0.05
+        size_hint_y: 0.075
+        pos_hint: {"center_x": 0.5, "center_y": 0.925}
+
+        MDTextField: # news Date
+            id: news_date
+            md_bg_color: (0/255,0/255,0/255,1)
+            hint_text: "Date:"
+            text_color: 0/255,0/255,0/255,1
+            size_hint_x: 1
+            size_hint_y: None
+            multiline: True
+            readonly: False
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    MDBoxLayout: # news Title container
+
+        md_bg_color: (255/255,233/255,234/255,1)
+        radius: [0,0,0,0]
+        size_hint_x: 0.8
+        size_hint_y: 0.075
+        pos_hint: {"center_x": 0.5, "center_y": 0.86125}
+
+        MDTextField: # news Title
+            id: news_title
+            md_bg_color: (0/255,0/255,0/255,1)
+            hint_text: "Title:"
+            text_color: 0/255,0/255,0/255,1
+            size_hint_x: 1
+            size_hint_y: None
+            multiline: True
+            readonly: False
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+    MDBoxLayout: # news summary container
+
+        md_bg_color: (255/255,233/255,234/255,1)
+        radius: [0,0,0,0]
+        size_hint_x: 0.8
+        # size_hint_y: 0.691125
+        size_hint_y: 0.721125
+        pos_hint: {"center_x": 0.5, "center_y": 0.468125}
 
         MDTextField: # news summary
-            id: news_content
+            id: news_body
             md_bg_color: (0/255,0/255,0/255,1)
-            #theme_text_color: "Primary"
+            hint_text: "News summary:"
             text: ""
             text_color: 0/255,0/255,0/255,1
             size_hint_x: 1
@@ -33,181 +70,178 @@
             readonly: False
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-    MDBoxLayout: # cancel container
+    MDBoxLayout: # << container
 
-        md_bg_color: 222/255,23/255,63/255,1
-        radius: [10,0,0,10]
+        md_bg_color: (255/255,233/255,234/255,1)
+        radius: [0,0,0,0]
 
+        # size_hint_x: 4/10
         size_hint_x: 4/15
-        size_hint_y: 0.1
-        pos_hint: {"center_x": 0.235, "center_y": 0.1}
+        size_hint_y: 0.05
+        # pos_hint: {"center_x": 0.3, "center_y": 0.125}
+        pos_hint: {"center_x": 0.235, "center_y": 0.125}
 
         MDRectangleFlatButton:
             line: 4
-            line_color: 222/255,23/255,63/255,1
-            md_bg_color: 222/255,23/255,63/255,1
-            text_color: 255/255,255/255,255/255,1
-            text: "CANCEL"
+            line_color: (255/255,233/255,234/255,1)
+            md_bg_color: (255/255,233/255,234/255,1)
+            text_color: 0/255,0/255,0/255,0.5
+            text: "<<"
             font_style: "Button"
-            font_size: self.width * 0.17
+            font_size: self.height * 1.5
             size_hint_x: 1
-            size_hint_y: 0.75
+            size_hint_y: 0.5
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_press: root.toCancel()
+            on_press: root.prev()
 
-    MDBoxLayout: # clear container
+            # MDIconButton:
+            #     icon: "arrow-left"
+            #     user_font_size: "24sp"
+            #     pos_hint: {'center_y': 0.5}
 
-        md_bg_color: 0/255,187/255,224/255,1
+
+    MDBoxLayout: # home (admin-landing) container
+
+        md_bg_color: (255/255,233/255,234/255,1)
         radius: [0,0,0,0]
 
+        # size_hint_x: 4/10
         size_hint_x: 4/15
-        size_hint_y: 0.1
-        pos_hint: {"center_x": 0.5, "center_y": 0.1}
+        size_hint_y: 0.05
+        # pos_hint: {"center_x": 0.3, "center_y": 0.125}
+        pos_hint: {"center_x": 0.5, "center_y": 0.125}
+
+        MDRectangleFlatButton:
+            line: 4
+            line_color: (255/255,233/255,234/255,1)
+            md_bg_color: (255/255,233/255,234/255,1)
+            text_color: 0/255,0/255,0/255,0.5
+            # text: "<<"
+            # font_style: "Button"
+            # font_size: self.height * 1.5
+            size_hint_x: 1
+            size_hint_y: 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                icon: "home"
+                user_font_size: "24sp"
+                pos_hint: {'center_y': 0.5}
+                on_press: app.root.current = "admin_landing"
+
+
+    MDBoxLayout: # >> container
+
+        md_bg_color: (255/255,233/255,234/255,1)
+        radius: [0,0,0,0]
+
+        # size_hint_x: 4/10
+        size_hint_x: 4/15
+        size_hint_y: 0.05
+        # pos_hint: {"center_x": 0.7, "center_y": 0.125}
+        pos_hint: {"center_x": 0.765, "center_y": 0.125}
+
+        MDRectangleFlatButton:
+            line: 4
+            line_color: (255/255,233/255,234/255,1)
+            md_bg_color: (255/255,233/255,234/255,1)
+            text_color: 0/255,0/255,0/255,0.5
+            text: ">>"
+            font_style: "Button"
+            font_size: self.height * 1.5
+            size_hint_x: 1
+            size_hint_y: 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press: root.next()
+
+            # MDIconButton:
+            #     icon: "arrow-right"
+            #     user_font_size: "24sp"
+            #     pos_hint: {'center_y': 0.5}
+
+    MDBoxLayout: # cancel container
+
+        md_bg_color: 0/255,187/255,224/255,1
+        radius: [0,0,0,10]
+
+        size_hint_x: 4/15
+        size_hint_y: 0.05
+        pos_hint: {"center_x": 0.235, "center_y": 0.075}
 
         MDRectangleFlatButton:
             line: 4
             line_color: 0/255,187/255,224/255,1
             md_bg_color: 0/255,187/255,224/255,1
-            text_color: 0/255,0/255,0/255,1
-            text: "CLEAR"
-            font_style: "Button"
-            font_size: self.width * 0.17
-            size_hint_x: 1
-            size_hint_y: 0.75
+            text_color: 255/255,255/255,255/255,1
+            # text: "CANCEL"
+            # font_style: "Button"
+            # font_size: self.width * 0.17
+            size_hint_x: 0.8
+            size_hint_y: 0.5
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_press: root.toClear()
+            # on_press: root.toCancel()
+
+            MDIconButton:
+                icon: "arrow-left"
+                user_font_size: "24sp"
+                pos_hint: {'center_y': 0.5}
+                on_press: root.toCancel()
+
+
+    MDBoxLayout: # clear container
+
+        md_bg_color: 222/255,23/255,63/255,1
+        radius: [0,0,0,0]
+
+        size_hint_x: 4/15
+        size_hint_y: 0.05
+        pos_hint: {"center_x": 0.5, "center_y": 0.075}
+
+        MDRectangleFlatButton:
+            line: 4
+            line_color: 222/255,23/255,63/255,1
+            md_bg_color: 222/255,23/255,63/255,1
+            text_color: 0/255,0/255,0/255,1
+            # text: "CLEAR"
+            # font_style: "Button"
+            # font_size: self.width * 0.17
+            size_hint_x: 0.4
+            size_hint_y: 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # on_press: root.toClear()
+
+            MDIconButton:
+                icon: "delete"
+                user_font_size: "24sp"
+                pos_hint: {'center_y': 0.5}
+                on_press: root.toClear()
 
     MDBoxLayout: # save container
 
         md_bg_color: 56/255,45/255,94/255,1
-        radius: [0,10,10,0]
+        radius: [0,0,10,0]
 
         size_hint_x: 4/15
-        size_hint_y: 0.1
-        pos_hint: {"center_x": 0.765, "center_y": 0.1}
+        size_hint_y: 0.05
+        pos_hint: {"center_x": 0.765, "center_y": 0.075}
 
         MDRectangleFlatButton:
             line: 4
             line_color: 56/255,45/255,94/255,1
             md_bg_color: 56/255,45/255,94/255,1
             text_color: 255/255,255/255,255/255,1
-            text: "SAVE"
-            font_style: "Button"
-            font_size: self.width * 0.17
-            size_hint_x: 1
-            size_hint_y: 0.8
+            # text: "SAVE"
+            # font_style: "Button"
+            # font_size: self.width * 0.17
+            size_hint_x: 0.8
+            size_hint_y: 0.5
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_press: root.toSave()
+            # on_press: root.toSave()
 
-
-
-        #     md_bg_color: (0/255,0/255,0/255,1)
-        #     radius: [10,10,10,10]
-        #     size_hint_x: 1
-        #     size_hint_y: 1
-        #     pos_hint: {"center_x": 0.1, "center_y": 0.5}
-        #     # pos_hint_x: 0.2
-
-        # MDRoundFlatButton:
-        #     md_bg_color: 0/255,187/255,224/255,1
-        #     text_color: 0/255,0/255,0/255,1
-        #     text: "Clear"
-        #     font_size: self.width * 0.18
-        #     size_hint_x: 1/3
-        #     size_hint_y: 0.8
-        #     pos_hint: {"center_x": 0.5, "center_y": 0.4}
-        #     on_press: root.toClear()
-
-        # MDRoundFlatButton:
-        #     md_bg_color: 56/255,45/255,94/255,1
-        #     text_color: 255/255,255/255,255/255,1
-        #     text: "Save"
-        #     font_size: self.width * 0.18
-        #     size_hint_x: 1/3
-        #     size_hint_y: 0.8
-        #     pos_hint: {"center_x": 0.75, "center_y": 0.4}
-        #     on_press: root.toSave()
-
-    #     MDTextField: # news summary
-    #         md_bg_color: (0/255,0/255,0/255,1)
-    #         #theme_text_color: "Primary"
-    #         text: "asdasdasdasdasdasdasdasdasddsfsdf\n asdasdasdasdasdasdasdasdasddsfsdf\n"
-    #         text_color: 0/255,0/255,0/255,1
-    #         size_hint_x: 1
-    #         size_hint_y: 0.6
-    #         multiline: True
-    #         readonly: False
-    #         pos_hint: {"center_x": 0.5, "center_y": 0.7}
-
-    # MDBoxLayout: # main area
-    #     md_bg_color: (255/255,233/255,234/255,1)
-    #     radius: [10,10,10,10]
-    #     size_hint_x: 0.9
-    #     size_hint_y: 0.8
-    #     pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-        # MDBoxLayout: # button container
-        #     md_bg_color: (0/255,0/255,0/255,1)
-        #     text_color: 0/255,0/255,0/255,1
-        #     font_size: self.width * 0.18
-        #     radius: [10,10,10,10]
-        #     size_hint_x: 1
-        #     size_hint_y: 0.1
-        #     pos_hint: {"center_x": 0.5, "center_y": 0.3}
-
-        # MDBoxLayout: # button container
-        #     md_bg_color: (255/255,233/255,234/255,1)
-        #     # text_color: 0/255,0/255,0/255,1
-        #     # font_size: self.width * 0.18
-        #     #text: "essay essay essay essay essay essay essay essay essay \n"
-        #     radius: [10,10,10,10]
-        #     size_hint_x: 0.6
-        #     size_hint_y: 0.15
-        #     pos_hint: {"center_x": 0.5, "center_y": 0.1}
-
-        #     MDRoundFlatButton:
-        #         md_bg_color: 222/255,23/255,63/255,1
-        #         text_color: 255/255,255/255,255/255,1
-        #         text: "Cancel"
-        #         font_size: self.width * 0.18
-        #         size_hint_x: 1/4
-        #         size_hint_y: 0.8
-        #         pos_hint: {"center_x": 0.25, "center_y": 0.4}
-        #         on_press: root.toCancel()
-
-        #     MDRoundFlatButton:
-        #         md_bg_color: 0/255,187/255,224/255,1
-        #         text_color: 0/255,0/255,0/255,1
-        #         text: "Clear"
-        #         font_size: self.width * 0.18
-        #         size_hint_x: 1/4
-        #         size_hint_y: 0.8
-        #         pos_hint: {"center_x": 0.5, "center_y": 0.4}
-        #         on_press: root.toClear()
-
-        #     MDRoundFlatButton:
-        #         md_bg_color: 56/255,45/255,94/255,1
-        #         text_color: 255/255,255/255,255/255,1
-        #         text: "Save"
-        #         font_size: self.width * 0.18
-        #         size_hint_x: 1/4
-        #         size_hint_y: 0.8
-        #         pos_hint: {"center_x": 0.75, "center_y": 0.4}
-        #         on_press: root.toSave()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            MDIconButton:
+                icon: "bookmark"
+                user_font_size: "24sp"
+                pos_hint: {'center_y': 0.5}
+                on_press: root.toSave()
 
 
