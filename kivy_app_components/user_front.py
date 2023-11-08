@@ -4,12 +4,17 @@ from dotenv import load_dotenv
 
 import kivy
 from kivy.lang import Builder
+from kivy.lang.builder import Builder
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 import kivymd
 from kivymd.app import MDApp
+from kivy.core.window import Window
+from kivy.uix.carousel import Carousel
+from kivy.uix.image import AsyncImage
+from kivy.uix.button import Button
 
 import database
 from database.db_interface import Database
@@ -53,7 +58,7 @@ class LoginWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
-    
+        
     def clear_labels(self):
         if self.bademail_label:
             self.remove_widget(self.bademail_label)
@@ -230,6 +235,96 @@ class LandingWindow(Screen):
     def cleardelete(self):
         if self.delete_label:
             self.remove_widget(self.delete_label)
+
+class DogBrowseWindow(Screen):
+    name_input = ObjectProperty(None)       # update account form - name
+    email_input = ObjectProperty(None)      # update account form - email
+    password_input = ObjectProperty(None)   # update account form - password
+    def __init__(self, **kwargs):
+        (self.news_title, self.news_body) = self.get_news()
+        self.change_label = Label(text="Changes Submitted!",
+                              color = (255/255, 0/255, 0/255, 1),
+                              font_size = 25,
+                              pos_hint = {"center_x": 0.5, "center_y": .95})
+        self.delete_label = Label(text="Account Deleted.",
+                              color = (255/255, 0/255, 0/255, 1),
+                              font_size = 25,
+                              pos_hint = {"center_x": 0.5, "center_y": .95})
+        super(DogBrowseWindow, self).__init__(**kwargs)
+
+    def get_news(self):
+        """
+        Returns a representation of the most recently added News item as a tuple (title, body).
+        """
+        news_item = get_all_news(LoginScreen.db)[-1]
+        news_title = news_item[2]
+        news_body = news_item[3]
+        return (news_title, news_body)
+
+    def update_account(self):
+        """
+        Updates the current Account. Unsuccessful update if the new email is already registered. Fields that are left blank are unmodified.
+        """
+        name = self.name_input.text
+        email = self.email_input.text
+        password = self.password_input.text
+
+        # Update name, if entered
+        if name != '':
+            update_account_name(LoginScreen.id_account, name, LoginScreen.db)
+            # PLACEHOLDER: success message
+            print('Successfully updated the account name!')
+        # Update email, if entered
+        if email != '':
+            # If email is already registered
+            accounts = find_account(email, LoginScreen.db)
+            if len(accounts) > 0:
+                # PLACEHOLDER: error message
+                print('Error: Failed to update account email. Email is already registered to an account.')
+            else:
+                update_account_email(LoginScreen.id_account, email, LoginScreen.db)
+                # PLACEHOLDER: success message
+                print('Successfully updated the account email!')
+        # Update password, if entered
+        if password != '':
+            update_account_password(LoginScreen.id_account, password, LoginScreen.db)
+            # PLACEHOLDER: success message
+            print('Successfully updated the account password!')
+
+    def delete_account(self):
+        """
+        Deletes the current Account.
+        """
+        # PLACEHOLDER: warning message
+        print('Wait! Are you sure you want to delete this account?')
+
+        # PLACEHOLDER: If confirmed yes... delete account
+        delete_account(LoginScreen.id_account, LoginScreen.db)
+        LoginScreen.id_account = None
+        # PLACEHOLDER: success message
+        print('Successfully deleted the account!')
+
+    def logout(self):
+        """
+        Logs out of the current Account.
+        """
+        LoginScreen.id_account = None
+
+    def press_change(self):
+        self.add_widget(self.change_label)
+
+    def press_delete(self):
+        self.add_widget(self.delete_label)
+
+    def clearchange(self):
+        if self.change_label:
+            self.remove_widget(self.change_label)
+    def cleardelete(self):
+        if self.delete_label:
+            self.remove_widget(self.delete_label)
+
+class Dog1(Screen):
+    pass
 
 class WindowManager(ScreenManager):
     pass
