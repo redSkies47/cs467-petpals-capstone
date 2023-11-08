@@ -1,8 +1,8 @@
 #:kivy 2.2.1
 #:import Factory kivy.factory.Factory
 
-<Dog1>
-    name: "dog1"
+<DogProfile>
+    name: "dogprofile"
     Screen:
 	BoxLayout:
 		orientation: "vertical"
@@ -10,11 +10,6 @@
 		
 		Carousel:
 			direction: "right"
-
-			Image:
-				source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
-			Image:
-				source: '/Users/KristyKha_1/Desktop/landing_news.png'
 
             GridLayout:
                 cols:1
@@ -36,6 +31,13 @@
                     font_size: 35
                     pos_hint: {"center_x": 0.5, "center_y": .75}
                 Button:
+                    text: "Add to Liked List"
+                    size_hint: .3, .3
+                    font_size: 50
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    background_normal: ''
+                    background_color: (0, 187/255, 224/255, 1)
+                Button:
                     text: "Back To Browse"
                     size_hint: .3, .3
                     font_size: 50
@@ -45,6 +47,11 @@
                     on_release:
                         app.root.current = "dogbrowse"
                         root.manager.transition.direction = "right"
+
+			Image:
+				source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+			Image:
+				source: '/Users/KristyKha_1/Desktop/landing_news.png'
 
 
 
@@ -68,33 +75,36 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
-
                 GridLayout:
-                    cols:3
-                    rows:3
+                    cols:1
+                    size: root.width, root.height
+
                     padding: 150
-                    spacing: 30
+                    spacing: 50
                     Button:
-                        text:"1"
+                        text:"Show Results"
+                        size_hint_y: None
+                        height:80
+                        font_size: 30
+                        background_normal: ''
+                        background_color: (222/255, 23/255, 63/255, 1)
                         on_release:
-                            app.root.current = "dog1"
-                            root.manager.transition.direction = "left"
+                            root.add_dog()
+                    GridLayout:
+                        id: grid
+                        cols:2
+                        padding: 150
+                        spacing: 30
                     Button:
-                        text:"2"
-                    Button:
-                        text:"3"
-                    Button:
-                        text:"4"
-                    Button:
-                        text:"5"
-                    Button:
-                        text:"6"
-                    Button:
-                        text:"7"
-                    Button:
-                        text:"8"
-                    Button:
-                        text:"9"
+                        text: "Back To Search"
+                        size_hint_y: None
+                        height:80
+                        font_size: 30
+                        background_normal: ''
+                        background_color: (222/255, 23/255, 63/255, 1)
+                        on_release:
+                            app.root.current = "dogsearch"
+                            root.manager.transition.direction = "right"
 
             MDBottomNavigationItem:
                 name: 'home'
@@ -278,3 +288,148 @@
         Widget:
             size_hint_y: None
             height: 10
+
+<DogSearch>
+    name: "dogsearch"
+    canvas.before:
+        Color:
+            rgba: (171/255, 196/255, 212/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 150
+        spacing: 50
+        Label:
+            text: "Search For Dogs by Breed, Disposition, and Recency"
+            color: (56/255, 45/255, 94/255, 1)
+            background_color: (255/255, 233/255, 234/255, 1)
+            canvas.before:
+                Color:
+                    rgba: self.background_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        
+        GridLayout:
+            cols: 2
+
+            Label:
+                text: "Golden Retriever"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                on_active: root.checkbox_breed(self, self.active, "Golden Retriever")
+            Label:
+                text: "Poodle"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                on_active: root.checkbox_breed(self, self.active, "Poodle")
+
+            Label:
+                text: "Good with other animals"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                on_active: root.checkbox_disposition(self, self.active, "Good with other animals")
+            Label:
+                text: "Good with children"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                on_active: root.checkbox_disposition(self, self.active, "Good with children")
+            Label:
+                text: "Animal must be leashed at all times"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                on_active: root.checkbox_disposition(self, self.active, "Animal must be leashed at all times")
+
+            Label:
+                text: "List by most recent"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                group: "recency"
+                on_active: root.checkbox_recency(self, self.active, "most recent")
+            Label:
+                text: "List by least recent"
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                font_size: 30
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            CheckBox:
+                group: "recency"
+                on_active: root.checkbox_recency(self, self.active, "least recent")
+
+        Button:
+            id: 'add dog'
+            text: "Search Now"
+            size_hint_y: None
+            height:70
+            font_size: 30
+            background_normal: ''
+            background_color: (0, 187/255, 224/255, 1)
+            on_release:
+                app.root.current = "dogbrowse"
+                root.manager.transition.direction = "left"
+        Button:
+            text: "Back To Home"
+            size_hint_y: None
+            height:70
+            font_size: 30
+            background_normal: ''
+            background_color: (222/255, 23/255, 63/255, 1)
+            on_release:
+                app.root.current = "landing"
+                root.manager.transition.direction = "right"

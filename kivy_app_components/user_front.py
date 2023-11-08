@@ -32,12 +32,10 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
 
-# --- App Components ---#
-class MainApp(App):
-    def build(self):
-        return Builder.load_file('../kv_design_language/user_front.kv')
+dog_list = ["dogname1", "dogname2"]
 
-class LoginScreen(MDApp):
+# --- App Components ---#
+class MainApp(MDApp):
     db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
     id_account = None
     def build(self):
@@ -82,21 +80,21 @@ class LoginWindow(Screen):
             if self.badpass_label:
                 self.remove_widget(self.badpass_label)
         # If email is not registered
-        accounts = find_account(email, LoginScreen.db)
+        accounts = find_account(email, MainApp.db)
         if len(accounts) == 0:
             print('Error: Failed to login. Email is not registered to an account.')
             bad_email_label()
             return 
         # If password is incorrect
         id_account = accounts[0][0]
-        if not verify_password(id_account, password, LoginScreen.db):
+        if not verify_password(id_account, password, MainApp.db):
             clear_labels()
             print('Error: Failed to login. Password is incorrect.')
             bad_pass_label()
             return
         # Successful login
         # If admin account
-        if is_admin(id_account, LoginScreen.db):
+        if is_admin(id_account, MainApp.db):
             # PLACEHOLDER: navigate to Admin Landing page
             print('Successful admin login!')
             clear_labels()
@@ -107,7 +105,7 @@ class LoginWindow(Screen):
             self.manager.current = "landing"
             self.manager.transition.direction = "left"
         # Store id_account
-        LoginScreen.id_account = id_account
+        MainApp.id_account = id_account
 
 
 class CreateAccountWindow(Screen):
@@ -133,7 +131,7 @@ class CreateAccountWindow(Screen):
             print('Error: Failed to create account. Missing required field(s).')
             return
         # If email is already registered
-        accounts = find_account(email, LoginScreen.db)
+        accounts = find_account(email, MainApp.db)
         if len(accounts) > 0:
             # PLACEHOLDER: error message
             print('Error: Failed to create account. Email is already registered to an account.')
@@ -145,7 +143,7 @@ class CreateAccountWindow(Screen):
             return
 
         # Create account
-        add_account(email, password1, name, LoginScreen.db)
+        add_account(email, password1, name, MainApp.db)
         # PLACEHOLDER: success message
         print('Successful account creation!')
 
@@ -169,7 +167,7 @@ class LandingWindow(Screen):
         """
         Returns a representation of the most recently added News item as a tuple (title, body).
         """
-        news_item = get_all_news(LoginScreen.db)[-1]
+        news_item = get_all_news(MainApp.db)[-1]
         news_title = news_item[2]
         news_body = news_item[3]
         return (news_title, news_body)
@@ -184,23 +182,23 @@ class LandingWindow(Screen):
 
         # Update name, if entered
         if name != '':
-            update_account_name(LoginScreen.id_account, name, LoginScreen.db)
+            update_account_name(MainApp.id_account, name, MainApp.db)
             # PLACEHOLDER: success message
             print('Successfully updated the account name!')
         # Update email, if entered
         if email != '':
             # If email is already registered
-            accounts = find_account(email, LoginScreen.db)
+            accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
                 print('Error: Failed to update account email. Email is already registered to an account.')
             else:
-                update_account_email(LoginScreen.id_account, email, LoginScreen.db)
+                update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
                 print('Successfully updated the account email!')
         # Update password, if entered
         if password != '':
-            update_account_password(LoginScreen.id_account, password, LoginScreen.db)
+            update_account_password(MainApp.id_account, password, MainApp.db)
             # PLACEHOLDER: success message
             print('Successfully updated the account password!')
 
@@ -212,8 +210,8 @@ class LandingWindow(Screen):
         print('Wait! Are you sure you want to delete this account?')
 
         # PLACEHOLDER: If confirmed yes... delete account
-        delete_account(LoginScreen.id_account, LoginScreen.db)
-        LoginScreen.id_account = None
+        delete_account(MainApp.id_account, MainApp.db)
+        MainApp.id_account = None
         # PLACEHOLDER: success message
         print('Successfully deleted the account!')
 
@@ -221,7 +219,7 @@ class LandingWindow(Screen):
         """
         Logs out of the current Account.
         """
-        LoginScreen.id_account = None
+        MainApp.id_account = None
 
     def press_change(self):
         self.add_widget(self.change_label)
@@ -240,6 +238,7 @@ class DogBrowseWindow(Screen):
     name_input = ObjectProperty(None)       # update account form - name
     email_input = ObjectProperty(None)      # update account form - email
     password_input = ObjectProperty(None)   # update account form - password
+
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
@@ -256,7 +255,7 @@ class DogBrowseWindow(Screen):
         """
         Returns a representation of the most recently added News item as a tuple (title, body).
         """
-        news_item = get_all_news(LoginScreen.db)[-1]
+        news_item = get_all_news(MainApp.db)[-1]
         news_title = news_item[2]
         news_body = news_item[3]
         return (news_title, news_body)
@@ -271,23 +270,23 @@ class DogBrowseWindow(Screen):
 
         # Update name, if entered
         if name != '':
-            update_account_name(LoginScreen.id_account, name, LoginScreen.db)
+            update_account_name(MainApp.id_account, name, MainApp.db)
             # PLACEHOLDER: success message
             print('Successfully updated the account name!')
         # Update email, if entered
         if email != '':
             # If email is already registered
-            accounts = find_account(email, LoginScreen.db)
+            accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
                 print('Error: Failed to update account email. Email is already registered to an account.')
             else:
-                update_account_email(LoginScreen.id_account, email, LoginScreen.db)
+                update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
                 print('Successfully updated the account email!')
         # Update password, if entered
         if password != '':
-            update_account_password(LoginScreen.id_account, password, LoginScreen.db)
+            update_account_password(MainApp.id_account, password, MainApp.db)
             # PLACEHOLDER: success message
             print('Successfully updated the account password!')
 
@@ -299,8 +298,8 @@ class DogBrowseWindow(Screen):
         print('Wait! Are you sure you want to delete this account?')
 
         # PLACEHOLDER: If confirmed yes... delete account
-        delete_account(LoginScreen.id_account, LoginScreen.db)
-        LoginScreen.id_account = None
+        delete_account(MainApp.id_account, MainApp.db)
+        MainApp.id_account = None
         # PLACEHOLDER: success message
         print('Successfully deleted the account!')
 
@@ -308,7 +307,7 @@ class DogBrowseWindow(Screen):
         """
         Logs out of the current Account.
         """
-        LoginScreen.id_account = None
+        MainApp.id_account = None
 
     def press_change(self):
         self.add_widget(self.change_label)
@@ -323,8 +322,37 @@ class DogBrowseWindow(Screen):
         if self.delete_label:
             self.remove_widget(self.delete_label)
 
-class Dog1(Screen):
+    def show_profile(self, *args):
+        self.manager.current = "dogprofile"
+        self.manager.transition.direction = "left"
+    def add_dog(self):
+        for dog in dog_list:
+            dog_card = Button(text= dog)
+            dog_card.bind(on_release = self.show_profile) 
+            self.ids.grid.add_widget(dog_card) 
+
+class DogProfile(Screen):
     pass
+
+class DogSearch(Screen):
+    breed_list = []
+    disposition_list = []
+    recency_list = []
+    def checkbox_breed(self, instance, value, breed):
+        if value == True:
+            DogSearch.breed_list.append(breed)
+        else:
+            DogSearch.breed_list.remove(breed)
+    def checkbox_disposition(self, instance, value, disposition):
+        if value == True:
+            DogSearch.disposition_list.append(disposition)
+        else:
+            DogSearch.disposition_list.remove(disposition)
+    def checkbox_recency(self, instance, value, recency):
+        if value == True:
+            DogSearch.disposition_list.append(recency)
+        else:
+            DogSearch.disposition_list.remove(recency)
 
 class WindowManager(ScreenManager):
     pass
@@ -332,4 +360,4 @@ class WindowManager(ScreenManager):
 
 # --- Main Method --- #
 if __name__ == '__main__':
-    LoginScreen().run()
+    MainApp().run()
