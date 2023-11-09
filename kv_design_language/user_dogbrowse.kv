@@ -2,12 +2,22 @@
 #:import Factory kivy.factory.Factory
 
 <DogProfile>
+    # id_dog: 0
+    # availability: ''
+    # name: ''
+    # birthdate: ''
+    # gender: ''
+    # breed: ''
+    # size_in_lbs: ''
+    # date_created: ''
+    # summary: ''
+
     name: "dogprofile"
     Screen:
 	BoxLayout:
 		orientation: "vertical"
 		size: root.width, root.height
-		
+
 		Carousel:
 			direction: "right"
 
@@ -18,9 +28,9 @@
                 padding: 150
                 spacing: 50
 
-                Label:
-                    text: "Breed: Cavapoo \nAvailability: Available! \nI would love a furever home!"
-                    color: (56/255, 45/255, 94/255, 1)
+                # Dog Information
+                GridLayout:
+                    cols: 1
                     background_color: (255/255, 233/255, 234/255, 1)
                     canvas.before:
                         Color:
@@ -30,6 +40,39 @@
                             pos: self.pos
                     font_size: 35
                     pos_hint: {"center_x": 0.5, "center_y": .75}
+                    # Availability
+                    Label:
+                        text: "Availability: " + root.availability
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Name
+                    Label:
+                        text: "Name: " + root.dog_name
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Birthdate
+                    Label:
+                        text: "Birthdate: " + root.birthdate
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Gender
+                    Label:
+                        text: "Gender: " + root.gender
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Breed
+                    Label:
+                        text: "Breed: " + root.breed
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Size
+                    Label:
+                        text: "Size: " + root.size_in_lbs + " lbs"
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Summary
+                    Label:
+                        text: "Summary:\n" + root.summary
+                        color: (56/255, 45/255, 94/255, 1)
+                    # Date Created
+                    Label:
+                        text: "At the shelter since: " + root.date_created
+                        color: (56/255, 45/255, 94/255, 1)
+
                 Button:
                     text: "Add to Liked List"
                     size_hint: .3, .3
@@ -312,7 +355,7 @@
                 Rectangle:
                     size: self.size
                     pos: self.pos
-        
+
         GridLayout:
             cols: 2
 

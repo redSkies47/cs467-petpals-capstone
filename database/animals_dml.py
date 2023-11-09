@@ -49,13 +49,20 @@ def delete_animal(id_animal, db):
 
 def find_animal_by_id(id_animal, db):
         """
-        Returns an animal matching the id_animal from the Animals. Returns an empty list if no such Animal exists.
+        Returns an animal matching the id_animal from the Animals. Returns an empty list if no such Animal exists. Converts foreign keys to their corresponding values.
 
         :param int id_animal: ID of the target Animal
         :param Database db: database to be queried
-        :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created)]
+        :return: [(id_animal, availability, species, breed, name, birth_date, gender, size, summary, date_created)]
         """
-        selectIDAnimal_cmd = "SELECT * FROM Animals WHERE id_animal = %s"
+        selectIDAnimal_cmd = "SELECT Animals.id_animal, Availabilities.description AS availability, Species.description AS species, Breeds.description AS breed, Animals.name, Animals.birth_date, Genders.description AS gender, Animals.size, Animals.summary, Animals.date_created \
+        FROM Animals \
+            INNER JOIN Availabilities ON Availabilities.id_availability = Animals.id_availability \
+            INNER JOIN Species ON Species.id_species = Animals.id_species \
+            INNER JOIN Breeds ON Breeds.id_breed = Animals.id_breed \
+            INNER JOIN Genders ON Genders.id_gender = Animals.id_gender \
+        WHERE id_animal = %s"
+        # selectIDAnimal_cmd = "SELECT * FROM Animals WHERE id_animal = %s"
         selectIDAnimal_params = (id_animal,)
         selectIDAnimal_result = db.query(selectIDAnimal_cmd, selectIDAnimal_params)
         return selectIDAnimal_result
@@ -71,6 +78,18 @@ def get_all_animals(db):
         selectAllAnimals_params = ()
         selectAllAnimals_result = db.query(selectAllAnimals_cmd, selectAllAnimals_params)
         return selectAllAnimals_result
+
+def get_all_dogs(db):
+        """
+        Returns a list containing all the dogs. Returns an empty list if no dogs exist.
+
+        :param Database db: database to be queried
+        :return:
+        """
+        selectAllDogs_cmd = "SELECT * FROM Animals WHERE id_species = 2"
+        selectAllDogs_params = tuple()
+        selectAllDogs_result = db.query(selectAllDogs_cmd, selectAllDogs_params)
+        return selectAllDogs_result
 
 def get_animal_disposition_by_id(id_animal, db):
         """

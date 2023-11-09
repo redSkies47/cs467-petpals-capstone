@@ -9,6 +9,8 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
+from kivy.properties import NumericProperty
+from kivy.properties import StringProperty
 import kivymd
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -20,6 +22,7 @@ import database
 from database.db_interface import Database
 from database.accounts_dml import *
 from database.news_dml import *
+from database.animals_dml import *
 
 
 # --- Set Up ---#
@@ -31,8 +34,6 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-
-dog_list = ["dogname1", "dogname2"]
 
 # --- App Components ---#
 class MainApp(MDApp):
@@ -56,7 +57,7 @@ class LoginWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
-        
+
     def clear_labels(self):
         if self.bademail_label:
             self.remove_widget(self.bademail_label)
@@ -84,7 +85,7 @@ class LoginWindow(Screen):
         if len(accounts) == 0:
             print('Error: Failed to login. Email is not registered to an account.')
             bad_email_label()
-            return 
+            return
         # If password is incorrect
         id_account = accounts[0][0]
         if not verify_password(id_account, password, MainApp.db):
@@ -322,17 +323,51 @@ class DogBrowseWindow(Screen):
         if self.delete_label:
             self.remove_widget(self.delete_label)
 
-    def show_profile(self, *args):
+    def show_dog_profile(self, id_dog):
+        self.parent.ids['dog_profile'].set_id(id_dog)
         self.manager.current = "dogprofile"
         self.manager.transition.direction = "left"
+
     def add_dog(self):
+        # Retrieve all dogs
+        dog_list = get_all_dogs(MainApp.db)
+        # Add each dog card
         for dog in dog_list:
-            dog_card = Button(text= dog)
-            dog_card.bind(on_release = self.show_profile) 
-            self.ids.grid.add_widget(dog_card) 
+            dog_name = dog[4]
+            dog_id = dog[0]
+            dog_card = Button(text=dog_name)
+            dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+            self.ids.grid.add_widget(dog_card)
 
 class DogProfile(Screen):
-    pass
+    id_dog = NumericProperty(None)
+    availability = StringProperty('')
+    dog_name = StringProperty('')
+    birthdate = StringProperty('')
+    gender = StringProperty('')
+    breed = StringProperty('')
+    size_in_lbs = StringProperty('')
+    date_created = StringProperty('')
+    summary = StringProperty('')
+
+    def __init__(self, **kwargs):
+        super(DogProfile, self).__init__(**kwargs)
+
+    def set_id(self, id):
+        self.id_dog = id
+        self.populate_information()
+
+    def populate_information(self):
+        dog_info = find_animal_by_id(self.id_dog, MainApp.db)[0]
+        self.availability = dog_info[1]
+        self.breed = dog_info[3]
+        self.dog_name = dog_info[4]
+        self.birthdate = str(dog_info[5])
+        self.gender = dog_info[6]
+        self.size_in_lbs = str(dog_info[7])
+        self.summary = dog_info[8]
+        self.date_created = str(dog_info[9])
+
 
 class DogSearch(Screen):
     breed_list = []
