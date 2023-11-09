@@ -49,9 +49,9 @@
                         root.manager.transition.direction = "right"
 
 			Image:
-				source: '/Users/KristyKha_1/Desktop/PetPals_logo.png'
+				source: '../images/petpals_logo.png'
 			Image:
-				source: '/Users/KristyKha_1/Desktop/landing_news.png'
+				source: '../images/petpals_logo.png'
 
 
 
@@ -329,6 +329,14 @@
                         pos: self.pos
             CheckBox:
                 on_active: root.checkbox_breed(self, self.active, "Golden Retriever")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
             Label:
                 text: "Poodle"
                 color: (56/255, 45/255, 94/255, 1)
@@ -342,6 +350,14 @@
                         pos: self.pos
             CheckBox:
                 on_active: root.checkbox_breed(self, self.active, "Poodle")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
 
             Label:
                 text: "Good with other animals"
@@ -356,6 +372,14 @@
                         pos: self.pos
             CheckBox:
                 on_active: root.checkbox_disposition(self, self.active, "Good with other animals")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
             Label:
                 text: "Good with children"
                 color: (56/255, 45/255, 94/255, 1)
@@ -369,6 +393,14 @@
                         pos: self.pos
             CheckBox:
                 on_active: root.checkbox_disposition(self, self.active, "Good with children")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
             Label:
                 text: "Animal must be leashed at all times"
                 color: (56/255, 45/255, 94/255, 1)
@@ -382,6 +414,14 @@
                         pos: self.pos
             CheckBox:
                 on_active: root.checkbox_disposition(self, self.active, "Animal must be leashed at all times")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
 
             Label:
                 text: "List by most recent"
@@ -397,6 +437,14 @@
             CheckBox:
                 group: "recency"
                 on_active: root.checkbox_recency(self, self.active, "most recent")
+                color: (1, 1, 1, 2)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
             Label:
                 text: "List by least recent"
                 color: (56/255, 45/255, 94/255, 1)
@@ -411,6 +459,15 @@
             CheckBox:
                 group: "recency"
                 on_active: root.checkbox_recency(self, self.active, "least recent")
+                color: (1, 1, 1, 2)
+                background_normal: ''
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
 
         Button:
             id: 'add dog'
