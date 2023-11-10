@@ -1,4 +1,5 @@
 from kivy_app_components.admin_update_news import admin_update_news
+from kivy_app_components.admin_add_animal import admin_add_animal
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import os
@@ -39,16 +40,10 @@ class admin_landing(MDApp):
         # self.theme_cls.primary_palette = "LightBlue"
         return Builder.load_file('../kv_design_language/admin_landing.kv')
 
-    def toUpdateNews(self):
-        print("Update News")
-        # redundant: configured screens to swap without triggering backend
-
-    def toAddAnimal(self):
-        print("Add Animal")
-        # TODO: navigate to admin side - add/edit animal page
-
     def toEditDeleteAnimal(self):
         print("Edit/Delete Animal")
+        # admin_data_global.image_url += "admin_landing_"
+        # print("*******************", admin_data_global.image_url)
         # TODO: navigate to admin side - delete animal page
 
 
