@@ -1,4 +1,3 @@
-from plyer import filechooser
 from kivy.metrics import dp
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
