@@ -39,8 +39,6 @@ class admin_update_news(Screen):
         self.ids.news_date.text = str(self.news[self.curr_news][1])
         self.ids.news_title.text = self.news[self.curr_news][2]
         self.ids.news_body.text = self.news[self.curr_news][3]
-        # admin_data_global.image_url += "update_news_"
-        # print("**************", admin_data_global.image_url)
 
     def prev(self):
         self.curr_news = len(self.news) - \

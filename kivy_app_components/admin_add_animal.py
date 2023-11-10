@@ -16,7 +16,7 @@ from kivymd.uix.button import MDFlatButton
 
 from textwrap import dedent
 
-from plyer import filechooser
+# from plyer import filechooser
 
 from kivy.app import App
 from kivy.lang import Builder
