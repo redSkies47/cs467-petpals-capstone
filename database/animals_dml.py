@@ -91,6 +91,41 @@ def get_all_dogs(db):
         selectAllDogs_result = db.query(selectAllDogs_cmd, selectAllDogs_params)
         return selectAllDogs_result
 
+def get_dogs(breed, dispositions, recency, db):
+        """
+        Returns a list containing the dogs that match the search filter options. Returns an empty list if no such dogs exist.
+
+        :param string breed: specified breed, empty string if no preference
+        :param list dispositions: specified dispositions, empty list if no preference
+        :param boolean recency: True if sorted by most recent, False if sorted by least recent, None if no preference
+        :param Database db: database to be queried
+        :return: [(id_animal, name, date_created)]
+        """
+        # filter by breed
+        if breed == "":
+            breed_clause = ""
+        else:
+            breed_clause = f"AND Breeds.description = '{breed}'"
+        # filter by disposition
+        if dispositions == []:
+            disposition_clause = ""
+        else:
+            disposition_clause = f"AND Dispositions.description IN ({str(dispositions)[1:-1]}) GROUP BY Animals.id_animal HAVING COUNT(DISTINCT Dispositions.id_disposition) = {len(dispositions)}"
+        # sort by date
+        if recency is None:
+            recency_clause = ""
+        elif recency:
+            recency_clause = "ORDER BY date_created DESC"
+        else:
+            recency_clause = "ORDER BY date_created ASC"
+        # format and execute query
+        selectDogscmd = f"SELECT DISTINCT Animals.id_animal, Animals.name, Animals.date_created FROM Animals JOIN Breeds ON Breeds.id_breed = Animals.id_breed JOIN Animal_Dispositions ON Animal_Dispositions.id_animal = Animals.id_animal JOIN Dispositions ON Dispositions.id_disposition = Animal_Dispositions.id_disposition WHERE Animals.id_species = 2 {breed_clause} {disposition_clause} {recency_clause}"
+        selectDogsparams = tuple()
+        selectDogsresult = db.query(selectDogscmd, selectDogsparams)
+        return selectDogsresult
+
+
+
 def get_animal_disposition_by_id(id_animal, db):
         """
         Returns a list containing Animal Dispositions matching the id_animal. Returns an empty list if none exist.
@@ -136,7 +171,7 @@ def get_cat_breeds(db):
         :param Database db: database to be queried
         :return: [(id_breed, description)]
         """
-        selectCatBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 3"
+        selectCatBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 3 ORDER BY description"
         selectCatBreed_params = ()
         selectCatBreed_result = db.query(selectCatBreed_cmd, selectCatBreed_params)
         return selectCatBreed_result
@@ -148,7 +183,7 @@ def get_dog_breeds(db):
         :param Database db: database to be queried
         :return: [(id_breed, description)]
         """
-        selectDogBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 2"
+        selectDogBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 2 ORDER BY description"
         selectDogBreed_params = ()
         selectDogBreed_result = db.query(selectDogBreed_cmd, selectDogBreed_params)
         return selectDogBreed_result
@@ -160,7 +195,7 @@ def get_other_breeds(db):
         :param Database db: database to be queried
         :return: [(id_breed, description)]
         """
-        selectOtherBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 1"
+        selectOtherBreed_cmd = "SELECT id_breed, description FROM Breeds WHERE id_species = 1 ORDER BY description"
         selectOtherBreed_params = ()
         selectOtherBreed_result = db.query(selectOtherBreed_cmd, selectOtherBreed_params)
         return selectOtherBreed_result

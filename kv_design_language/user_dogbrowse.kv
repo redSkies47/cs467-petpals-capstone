@@ -7,15 +7,6 @@
 
 
 <DogProfile>
-    # id_dog: 0
-    # availability: ''
-    # name: ''
-    # birthdate: ''
-    # gender: ''
-    # breed: ''
-    # size_in_lbs: ''
-    # date_created: ''
-    # summary: ''
 
     name: "dogprofile"
     Screen:
@@ -442,7 +433,7 @@
             Spinner:
                 id: spinner_id
                 text:"Click Here For Breeds"
-                values: root.breed_list
+                values: root.breeds
                 color: (1, 1, 1, 1)
                 background_normal: ''
                 background_color: (0, 187/255, 224/255, 1)
@@ -455,7 +446,7 @@
                         pos: self.pos
 
             Label:
-                text: "Select Dispositions:"
+                text: "Select Disposition(s):"
                 font_size: self.width * 0.065
                 size_hint_x: .9
                 size_hint_y: 0.7
@@ -469,7 +460,7 @@
                         pos: self.pos
             Dispositions:
                 id: Dispositions
-                values: root.disposition_list
+                values: root.dispositions
             Label:
                 text: "List by most recent"
                 font_size: self.width * 0.065
@@ -485,7 +476,7 @@
                         pos: self.pos
             CheckBox:
                 group: "recency"
-                on_active: root.checkbox_recency(self, self.active, "most recent")
+                on_active: root.checkbox_most_recent(self, self.active)
                 color: (1, 1, 1, 2)
                 background_color: (255/255, 233/255, 234/255, 1)
                 canvas.before:
@@ -509,7 +500,7 @@
                         pos: self.pos
             CheckBox:
                 group: "recency"
-                on_active: root.checkbox_recency(self, self.active, "least recent")
+                on_active: root.checkbox_least_recent(self, self.active)
                 color: (1, 1, 1, 2)
                 background_normal: ''
                 background_color: (255/255, 233/255, 234/255, 1)

@@ -334,12 +334,16 @@ class DogBrowseWindow(Screen):
         self.manager.transition.direction = "left"
 
     def add_dog(self):
-        # Retrieve all dogs
-        dog_list = get_all_dogs(MainApp.db)
+        # Retrieve matching dogs
+        dog_search_info = self.parent.ids['dog_search']
+        dog_list = get_dogs(dog_search_info.get_breed(), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
+        # PLACEHOLDER: no matching dogs message
+        if not dog_list:
+            print('No matching dogs were found!')
         # Add each dog card
         for dog in dog_list:
-            dog_name = dog[4]
             dog_id = dog[0]
+            dog_name = dog[1]
             dog_card = Button(text=dog_name)
             dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
             self.ids.grid.add_widget(dog_card)
@@ -375,30 +379,44 @@ class DogProfile(Screen):
 
 
 class DogSearch(Screen):
-    breed_list = ["Poodle", "Golden Retreiver", "German Shepard"]
-    disposition_list = ["Poodle", "Golden Retreiver", "German Shepard","Poodle", "Golden Retreiver", "German Shepard","Poodle", "Golden Retreiver", "German Shepard"]
-    recency_list = []
-    def checkbox_disposition(self, instance, value, disposition):
+    # Store selected breed, disposition(s), and recency
+    selected_breed = ''             # breed name
+    selected_dispositions = []      # disposition descriptions
+    selected_recency = None         # True if most recent, False if least recent
+    # Retrieve breeds and dispositions to display
+    breeds = [breed[1] for breed in get_dog_breeds(MainApp.db)]
+    dispositions = [disposition[1] for disposition in get_dispositions(MainApp.db)]
+
+    def get_breed(self):
+        return self.selected_breed
+
+    def get_dispositions(self):
+        return self.selected_dispositions
+
+    def get_recency(self):
+        return self.selected_recency
+
+    def checkbox_most_recent(self, instance, value):
+        """Sets selected_recency to True, indicating the list of displayed dogs is listed in order of most recent"""
         if value == True:
-            DogSearch.disposition_list.append(disposition)
-        else:
-            DogSearch.disposition_list.remove(disposition)
-    def checkbox_recency(self, instance, value, recency):
+            self.selected_recency = True
+
+    def checkbox_least_recent(self, instance, value):
+        """Sets selected_recency to False, indicating the list of displayed dogs is listed in order of most recent"""
         if value == True:
-            DogSearch.disposition_list.append(recency)
-        else:
-            DogSearch.disposition_list.remove(recency)
+            self.selected_recency = False
+
     def breed_dropdown(self, value):
+        """Sets selected_breed and displays it as the dropdown label's text"""
         self.ids.click_label = value
+        self.selected_breed = value
 
 
 class Dispositions(Button):
 
     dropdown = ObjectProperty(None)
-    values = ListProperty([])
-    """Values to choose from."""
-    chosen_dispositions = ListProperty([])
-    """List of values selected by the user."""
+    values = ListProperty([])               # list of dispositions
+    chosen_dispositions = ListProperty([])  # selected dispositions
 
     def __init__(self, **kwargs):
         self.text="Click here for dispositions"
@@ -428,14 +446,18 @@ class Dispositions(Button):
                 self.dropdown.add_widget(b)
 
     def choose_disposition(self, instance, value):
+        """Sets the selected dispositions in this class (for display as dropdown label's text) and in DogSearch class (for use in search results)."""
         if value == 'down':
-            if instance.text not in self.chosen_dispositions:
+            if instance.text not in DogSearch.selected_dispositions:
                 self.chosen_dispositions.append(instance.text)
+                DogSearch.selected_dispositions.append(instance.text)
         else:
-            if instance.text in self.chosen_dispositions:
+            if instance.text in DogSearch.selected_dispositions:
                 self.chosen_dispositions.remove(instance.text)
+                DogSearch.selected_dispositions.remove(instance.text)
 
     def on_chosen_dispositions(self, instance, value):
+        """Formats drop label's text."""
         if value:
             self.text = ', '.join(value)
         else:
