@@ -11,12 +11,16 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 from kivy.properties import NumericProperty
 from kivy.properties import StringProperty
+from kivy.uix.togglebutton import ToggleButton
 import kivymd
 from kivymd.app import MDApp
 from kivy.core.window import Window
+from kivy.uix.dropdown import DropDown
 from kivy.uix.carousel import Carousel
 from kivy.uix.image import AsyncImage
+from kivy.factory import Factory
 from kivy.uix.button import Button
+from kivy.properties import ListProperty, ObjectProperty
 
 import database
 from database.db_interface import Database
@@ -40,6 +44,7 @@ class MainApp(MDApp):
     db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
     id_account = None
     def build(self):
+        Window.size = (720, 1280)
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
         return Builder.load_file('../kv_design_language/user_front.kv')
@@ -246,7 +251,7 @@ class DogBrowseWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
-        self.delete_label = Label(text="Account Deleted.",
+        self.delete_label = Label(text="Account Deleted. Please Log Out.",
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
@@ -370,14 +375,9 @@ class DogProfile(Screen):
 
 
 class DogSearch(Screen):
-    breed_list = []
-    disposition_list = []
+    breed_list = ["Poodle", "Golden Retreiver", "German Shepard"]
+    disposition_list = ["Poodle", "Golden Retreiver", "German Shepard","Poodle", "Golden Retreiver", "German Shepard","Poodle", "Golden Retreiver", "German Shepard"]
     recency_list = []
-    def checkbox_breed(self, instance, value, breed):
-        if value == True:
-            DogSearch.breed_list.append(breed)
-        else:
-            DogSearch.breed_list.remove(breed)
     def checkbox_disposition(self, instance, value, disposition):
         if value == True:
             DogSearch.disposition_list.append(disposition)
@@ -388,6 +388,58 @@ class DogSearch(Screen):
             DogSearch.disposition_list.append(recency)
         else:
             DogSearch.disposition_list.remove(recency)
+    def breed_dropdown(self, value):
+        self.ids.click_label = value
+
+
+class Dispositions(Button):
+
+    dropdown = ObjectProperty(None)
+    values = ListProperty([])
+    """Values to choose from."""
+    chosen_dispositions = ListProperty([])
+    """List of values selected by the user."""
+
+    def __init__(self, **kwargs):
+        self.text="Click here for dispositions"
+        self.background_normal= ''
+        self.background_color=(0, 187/255, 224/255, 1)
+        self.bind(dropdown=self.update_dropdown)
+        self.bind(values=self.update_dropdown)
+        super(Dispositions, self).__init__(**kwargs)
+        self.bind(on_release=self.click_dropdown)
+
+    def click_dropdown(self, *args):
+        if self.dropdown.parent:
+            self.dropdown.dismiss()
+        else:
+            self.dropdown.open(self)
+
+    def update_dropdown(self, *args):
+        if not self.dropdown:
+            self.dropdown = DropDown()
+        values = self.values
+        if values:
+            if self.dropdown.children:
+                self.dropdown.clear_widgets()
+            for value in values:
+                b = Factory.MultiSelectOption(text=value)
+                b.bind(state=self.choose_disposition)
+                self.dropdown.add_widget(b)
+
+    def choose_disposition(self, instance, value):
+        if value == 'down':
+            if instance.text not in self.chosen_dispositions:
+                self.chosen_dispositions.append(instance.text)
+        else:
+            if instance.text in self.chosen_dispositions:
+                self.chosen_dispositions.remove(instance.text)
+
+    def on_chosen_dispositions(self, instance, value):
+        if value:
+            self.text = ', '.join(value)
+        else:
+            self.text = ''
 
 class WindowManager(ScreenManager):
     pass

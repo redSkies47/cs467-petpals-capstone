@@ -1,6 +1,11 @@
 #:kivy 2.2.1
 #:import Factory kivy.factory.Factory
 
+<MultiSelectOption@ToggleButton>:
+    size_hint: 1, None
+    height: '48dp'
+
+
 <DogProfile>
     # id_dog: 0
     # availability: ''
@@ -25,7 +30,7 @@
                 cols:1
                 size: root.width, root.height
 
-                padding: 150
+                padding: 50
                 spacing: 50
 
                 # Dog Information
@@ -66,31 +71,49 @@
                         color: (56/255, 45/255, 94/255, 1)
                     # Summary
                     Label:
+                        padding: 10
                         text: "Summary:\n" + root.summary
+                        text_size: self.size
                         color: (56/255, 45/255, 94/255, 1)
                     # Date Created
                     Label:
                         text: "At the shelter since: " + root.date_created
                         color: (56/255, 45/255, 94/255, 1)
 
-                Button:
-                    text: "Add to Liked List"
-                    size_hint: .3, .3
-                    font_size: 50
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                    background_normal: ''
-                    background_color: (0, 187/255, 224/255, 1)
-                Button:
-                    text: "Back To Browse"
-                    size_hint: .3, .3
-                    font_size: 50
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                    background_normal: ''
-                    background_color: (222/255, 23/255, 63/255, 1)
-                    on_release:
-                        app.root.current = "dogbrowse"
-                        root.manager.transition.direction = "right"
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
+                    pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
+                    MDFillRoundFlatButton:
+                        text: "Add to Liked List"
+                        text_color: (1,1,1,1)
+                        font_style: "Button"
+                        font_size: self.width * 0.035
+                        size_hint_x: .6
+                        size_hint_y: 0.65
+                        md_bg_color: (222/255, 23/255, 63/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.7}
+
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
+                    pos_hint: {"center_x": 0.5, "center_y": 0.2}
+
+                    MDFillRoundFlatButton:
+                        text: "Back To Browse"
+                        text_color: (1,1,1,1)
+                        font_style: "Button"
+                        font_size: self.width * 0.035
+                        size_hint_x: .6
+                        size_hint_y: 0.65
+                        md_bg_color: (0, 187/255, 224/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                        on_release:
+                            app.root.current = "dogbrowse"
+                            root.manager.transition.direction = "right"
 			Image:
 				source: '../images/petpals_logo.png'
 			Image:
@@ -124,8 +147,9 @@
 
                     padding: 150
                     spacing: 50
-                    Button:
+                    ToggleButton:
                         text:"Show Results"
+                        group: "results"
                         size_hint_y: None
                         height:80
                         font_size: 30
@@ -167,52 +191,69 @@
                         padding: 20
                         FitImage:
                             source: '../images/petpals_logo.png'
-                            size_hint: None, None
-                            size: 250, 250
+                            size_hint: .3, .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
 
-                MDRectangleFlatButton:
+                MDLabel:
                     text: root.news_title + '\n' + root.news_body
-                    font_size: 20
+                    text_size: self.size
                     text_color: (56/255, 45/255, 94/255, 1)
                     size_hint: None, None
                     width: root.width*0.5
                     height: root.height*0.25
                     md_bg_color: (255/255, 233/255, 234/255, 1)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                    pos_hint: {"center_x": 0.5, "center_y": 0.55}
 
-                MDFillRoundFlatButton:
-                    text: "Dogs"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.35}
-                    on_release:
-                        app.root.current = "dogbrowse"
-                        root.manager.transition.direction = "left"
 
-                MDFillRoundFlatButton:
-                    text: "Cats"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    MDFillRoundFlatButton:
+                        text: "Dogs"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                        on_release:
+                            app.root.current = "dogsearch"
+                            root.manager.transition.direction = "left"
+
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.25}
 
-                MDFillRoundFlatButton:
-                    text: "Other"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    MDFillRoundFlatButton:
+                        text: "Cats"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+                    MDFillRoundFlatButton:
+                        text: "Other"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
 
             MDBottomNavigationItem:
@@ -262,7 +303,7 @@
                             id: email_input
                             multiline:False
                         Label:
-                            text: "Change password? \nPlease enter your current password:"
+                            text: "Change password? \nPlease enter your new password:"
                             color: (56/255, 45/255, 94/255, 1)
                             background_color: (255/255, 233/255, 234/255, 1)
                             canvas.before:
@@ -275,57 +316,79 @@
                             id: password_input
                             multiline:False
 
-                    Button:
-                        text: "Submit Changes"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (0, 187/255, 224/255, 1)
-                        on_press: root.update_account()
-                        on_release:
-                            root.cleardelete()
-                            root.clearchange()
-                            root.press_change()
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
-                    Button:
-                        text: "Log Out"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (0, 187/255, 224/255, 1)
-                        on_press: root.logout()
-                        on_release:
-                            root.clearchange()
-                            root.cleardelete()
-                            app.root.current = "login"
-                            root.manager.transition.direction = "right"
+                        Button:
+                            text: "Submit Changes"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (0, 187/255, 224/255, 1)
+                            on_press: root.update_account()
+                            on_release:
+                                root.cleardelete()
+                                root.clearchange()
+                                root.press_change()
 
-                    Button:
-                        text: "Delete Account"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (222/255, 23/255, 63/255, 1)
-                        on_press: root.delete_account()
-                        on_release:
-                            root.clearchange()
-                            root.cleardelete()
-                            root.press_delete()
-                            # PLACEHOLDER: should also go back to login screen?
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+                        Button:
+                            text: "Log Out"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (0, 187/255, 224/255, 1)
+                            on_press: root.logout()
+                            on_release:
+                                root.clearchange()
+                                root.cleardelete()
+                                app.root.current = "login"
+                                root.manager.transition.direction = "right"
+
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+                        Button:
+                            text: "Delete Account"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (222/255, 23/255, 63/255, 1)
+                            on_press: root.delete_account()
+                            on_release:
+                                root.clearchange()
+                                root.cleardelete()
+                                root.press_delete()
+                                # PLACEHOLDER: should also go back to login screen?
 
             MDBottomNavigationItem:
                 name: 'screen 3'
-                text: 'Liked List'
-                icon: 'paw'
+                text: 'Liked Animals'
+                icon: 'heart'
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
 
                 Label:
                     text: "will fill later"
+
 
 
         Widget:
@@ -340,60 +403,34 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    BoxLayout:
+    MDBoxLayout:
         orientation: "vertical"
-        size: root.width, root.height
-        padding: 150
-        spacing: 50
-        Label:
-            text: "Search For Dogs by Breed, Disposition, and Recency"
-            color: (56/255, 45/255, 94/255, 1)
-            background_color: (255/255, 233/255, 234/255, 1)
-            canvas.before:
-                Color:
-                    rgba: self.background_color
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
+        MDBoxLayout:
+            radius: [0,0,0,0]
+            size_hint_x: 0.5
+            size_hint_y: 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+            MDLabel:
+                text: "Search For Dogs by Breed, Disposition, and Recency"
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+                text_color: (56/255, 45/255, 94/255, 1)
+                size_hint:.5,.5
+                md_bg_color: (255/255, 233/255, 234/255, 1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
 
         GridLayout:
-            cols: 2
+            padding:50
+            cols:2
 
             Label:
-                text: "Golden Retriever"
+                id: click_label
+                text: "Select a Breed:"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.7
                 color: (56/255, 45/255, 94/255, 1)
-                background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            CheckBox:
-                on_active: root.checkbox_breed(self, self.active, "Golden Retriever")
-                color: (1, 1, 1, 2)
-                background_color: (255/255, 233/255, 234/255, 1)
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            Label:
-                text: "Poodle"
-                color: (56/255, 45/255, 94/255, 1)
-                background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            CheckBox:
-                on_active: root.checkbox_breed(self, self.active, "Poodle")
-                color: (1, 1, 1, 2)
                 background_color: (255/255, 233/255, 234/255, 1)
                 canvas.before:
                     Color:
@@ -402,63 +439,14 @@
                         size: self.size
                         pos: self.pos
 
-            Label:
-                text: "Good with other animals"
-                color: (56/255, 45/255, 94/255, 1)
-                background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            CheckBox:
-                on_active: root.checkbox_disposition(self, self.active, "Good with other animals")
-                color: (1, 1, 1, 2)
-                background_color: (255/255, 233/255, 234/255, 1)
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            Label:
-                text: "Good with children"
-                color: (56/255, 45/255, 94/255, 1)
-                background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            CheckBox:
-                on_active: root.checkbox_disposition(self, self.active, "Good with children")
-                color: (1, 1, 1, 2)
-                background_color: (255/255, 233/255, 234/255, 1)
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            Label:
-                text: "Animal must be leashed at all times"
-                color: (56/255, 45/255, 94/255, 1)
-                background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
-                canvas.before:
-                    Color:
-                        rgba: self.background_color
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            CheckBox:
-                on_active: root.checkbox_disposition(self, self.active, "Animal must be leashed at all times")
-                color: (1, 1, 1, 2)
-                background_color: (255/255, 233/255, 234/255, 1)
+            Spinner:
+                id: spinner_id
+                text:"Click Here For Breeds"
+                values: root.breed_list
+                color: (1,1,1,1)
+                background_normal: ''
+                background_color: (0, 187/255, 224/255, 1)
+                on_text: root.breed_dropdown(spinner_id.text)
                 canvas.before:
                     Color:
                         rgba: self.background_color
@@ -466,11 +454,29 @@
                         size: self.size
                         pos: self.pos
 
+            Label:
+                text: "Select Dispositions:"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.7
+                color: (56/255, 45/255, 94/255, 1)
+                background_color: (255/255, 233/255, 234/255, 1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            Dispositions:
+                id: Dispositions
+                values: root.disposition_list
             Label:
                 text: "List by most recent"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.7
                 color: (56/255, 45/255, 94/255, 1)
                 background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
                 canvas.before:
                     Color:
                         rgba: self.background_color
@@ -490,9 +496,11 @@
                         pos: self.pos
             Label:
                 text: "List by least recent"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.7
                 color: (56/255, 45/255, 94/255, 1)
                 background_color: (255/255, 233/255, 234/255, 1)
-                font_size: 30
                 canvas.before:
                     Color:
                         rgba: self.background_color
@@ -512,24 +520,40 @@
                         size: self.size
                         pos: self.pos
 
-        Button:
-            id: 'add dog'
-            text: "Search Now"
-            size_hint_y: None
-            height:70
-            font_size: 30
-            background_normal: ''
-            background_color: (0, 187/255, 224/255, 1)
-            on_release:
-                app.root.current = "dogbrowse"
-                root.manager.transition.direction = "left"
-        Button:
-            text: "Back To Home"
-            size_hint_y: None
-            height:70
-            font_size: 30
-            background_normal: ''
-            background_color: (222/255, 23/255, 63/255, 1)
-            on_release:
-                app.root.current = "landing"
-                root.manager.transition.direction = "right"
+        MDBoxLayout:
+            radius: [0,0,0,0]
+            size_hint_x: 0.5
+            size_hint_y: 0.130
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+            MDFillRoundFlatButton:
+                text: "Search Now"
+                text_color: (1,1,1,1)
+                font_style: "Button"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.65
+                md_bg_color: (222/255, 23/255, 63/255, 1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release:
+                    app.root.current = "dogbrowse"
+                    root.manager.transition.direction = "left"
+
+        MDBoxLayout:
+            radius: [0,0,0,0]
+            size_hint_x: 0.5
+            size_hint_y: 0.130
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+
+            MDFillRoundFlatButton:
+                text: "Back To Home"
+                text_color: (1,1,1,1)
+                font_style: "Button"
+                font_size: self.width * 0.065
+                size_hint_x: .9
+                size_hint_y: 0.65
+                md_bg_color: (0, 187/255, 224/255, 1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release:
+                    app.root.current = "landing"
+                    root.manager.transition.direction = "right"

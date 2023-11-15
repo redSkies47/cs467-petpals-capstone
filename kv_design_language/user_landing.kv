@@ -31,8 +31,7 @@
                         padding: 20
                         FitImage:
                             source: '../images/petpals_logo.png'
-                            size_hint: None, None
-                            size: 250, 250
+                            size_hint: .3, .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
 
                 MDLabel:
@@ -43,40 +42,58 @@
                     width: root.width*0.5
                     height: root.height*0.25
                     md_bg_color: (255/255, 233/255, 234/255, 1)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                    pos_hint: {"center_x": 0.5, "center_y": 0.55}
 
-                MDFillRoundFlatButton:
-                    text: "Dogs"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.35}
-                    on_release:
-                        app.root.current = "dogsearch"
-                        root.manager.transition.direction = "left"
 
-                MDFillRoundFlatButton:
-                    text: "Cats"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    MDFillRoundFlatButton:
+                        text: "Dogs"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                        on_release:
+                            app.root.current = "dogsearch"
+                            root.manager.transition.direction = "left"
+
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.25}
 
-                MDFillRoundFlatButton:
-                    text: "Other"
-                    font_size: 12
-                    text_color: (56/255, 45/255, 94/255, 1)
-                    size_hint: None, None
-                    width: root.width*0.2
-                    height: root.height*0.05
-                    md_bg_color: (255/255, 233/255, 234/255, 1)
+                    MDFillRoundFlatButton:
+                        text: "Cats"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+
+                MDBoxLayout:
+                    radius: [0,0,0,0]
+                    size_hint_x: 0.5
+                    size_hint_y: 0.130
                     pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+                    MDFillRoundFlatButton:
+                        text: "Other"
+                        text_color: (56/255, 45/255, 94/255, 1)
+                        font_style: "Button"
+                        font_size: self.width * 0.065
+                        size_hint_x: .9
+                        size_hint_y: 0.65
+                        md_bg_color: (255/255, 233/255, 234/255, 1)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
 
             MDBottomNavigationItem:
@@ -126,7 +143,7 @@
                             id: email_input
                             multiline:False
                         Label:
-                            text: "Change password? \nPlease enter your current password:"
+                            text: "Change password? \nPlease enter your new password:"
                             color: (56/255, 45/255, 94/255, 1)
                             background_color: (255/255, 233/255, 234/255, 1)
                             canvas.before:
@@ -139,46 +156,67 @@
                             id: password_input
                             multiline:False
 
-                    Button:
-                        text: "Submit Changes"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (0, 187/255, 224/255, 1)
-                        on_press: root.update_account()
-                        on_release:
-                            root.cleardelete()
-                            root.clearchange()
-                            root.press_change()
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.35}
 
-                    Button:
-                        text: "Log Out"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (0, 187/255, 224/255, 1)
-                        on_press: root.logout()
-                        on_release:
-                            root.clearchange()
-                            root.cleardelete()
-                            app.root.current = "login"
-                            root.manager.transition.direction = "right"
+                        Button:
+                            text: "Submit Changes"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (0, 187/255, 224/255, 1)
+                            on_press: root.update_account()
+                            on_release:
+                                root.cleardelete()
+                                root.clearchange()
+                                root.press_change()
 
-                    Button:
-                        text: "Delete Account"
-                        size_hint_y: None
-                        height:45
-                        font_size: 20
-                        background_normal: ''
-                        background_color: (222/255, 23/255, 63/255, 1)
-                        on_press: root.delete_account()
-                        on_release:
-                            root.clearchange()
-                            root.cleardelete()
-                            root.press_delete()
-                            # PLACEHOLDER: should also go back to login screen?
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+                        Button:
+                            text: "Log Out"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (0, 187/255, 224/255, 1)
+                            on_press: root.logout()
+                            on_release:
+                                root.clearchange()
+                                root.cleardelete()
+                                app.root.current = "login"
+                                root.manager.transition.direction = "right"
+
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.5
+                        size_hint_y: 0.170
+                        pos_hint: {"center_x": 0.5, "center_y": 0.15}
+
+                        Button:
+                            text: "Delete Account"
+                            font_style: "Button"
+                            font_size: self.width * 0.065
+                            size_hint_x: .9
+                            size_hint_y: 0.7
+                            background_normal: ''
+                            background_color: (222/255, 23/255, 63/255, 1)
+                            on_press: root.delete_account()
+                            on_release:
+                                root.clearchange()
+                                root.cleardelete()
+                                root.press_delete()
+                                # PLACEHOLDER: should also go back to login screen?
 
             MDBottomNavigationItem:
                 name: 'screen 3'
@@ -187,9 +225,35 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    md_bg_color: (171/255, 196/255, 212/255, 1)
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'top'
+                        padding: 20
+                        FitImage:
+                            source: '../images/petpals_logo.png'
+                            size_hint: .3, .3
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                    MDBoxLayout:
+                        radius: [0,0,0,0]
+                        size_hint_x: 0.95
+                        size_hint_y: 0.3
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        MDList:
+                            TwoLineAvatarIconListItem:
+                                bg_color:(255/255, 233/255, 234/255, 1)
+                                text: "Doug"
+                                text_color: (56/255, 45/255, 94/255, 1)
+                                secondary_text: "Dog"
 
-                Label:
-                    text: "will fill later"
+                                IconLeftWidget:
+                                    icon: "information-outline"
+
+                                IconRightWidget:
+                                    icon: "minus"
+
 
 
         Widget:
