@@ -35,8 +35,8 @@ class admin_landing(MDApp):
 
     def build(self):
         # for temporary rendering, expect screen to adapt to device res
-        # Window.size = (295, 620)
-        Window.size = (720, 1280)
+        Window.size = (295, 620)
+        # Window.size = (720, 1280)
         return Builder.load_file('../kv_design_language/admin_landing.kv')
 
     def toEditDeleteAnimal(self):
