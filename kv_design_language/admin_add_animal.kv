@@ -1,10 +1,20 @@
-#:import FileChoose kivy_app_components.admin_add_animal.FileChoose
+#:import MDFlatButton kivymd.uix.button.MDFlatButton
+#:import MDRectangleFlatIconButton kivymd.uix.button.MDRectangleFlatIconButton
+#:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDFillRoundFlatButton kivymd.uix.button.MDFillRoundFlatButton
+#:import MDRectangleFlatButton kivymd.uix.button.MDRectangleFlatButton
+#:import MDRaisedButton kivymd.uix.button.MDRaisedButton
+
 
 <admin_add_animal@Screen>:
  
     name: "admin_add_animal"
     on_pre_enter:
-
+        root.load_species_breeds()
+        root.load_gender()
+        root.load_availability()
+        root.load_dispositions()
    
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -73,7 +83,7 @@
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_press: 
                         app.root.current = "admin_add_animal_url_popup"
-                        root.load_image1()
+                        root.getImageURL()
             
             MDFloatLayout:
                 size_hint: (0.4625, 0.225)
@@ -83,123 +93,249 @@
                 pos_hint: {"center_x": 0.74375, "center_y": 0.875}
 
                 MDFloatLayout:
-                    size_hint: (0.4625, 0.225)
                     radius: [50,50,50,50]
                     size_hint_x: 0.95
                     size_hint_y: 0.9/3
                     pos_hint: {"center_x": 0.5, "center_y": 0.95 - 0.8/6 }
 
-                    MDTextField: # name
-                        id: name
+                    MDRoundFlatButton:
+                        id: species
                         mode: "round"
                         md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Name"
+                        text: "Species"
+                        font_style: "Button"
+                        text_color: 0/255,0/255,0/255,0.5
                         size_hint_x: 1
                         size_hint_y: 1
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
                         halign: 'center'
                         valign: 'center'
+                        text_color: 0/255,0/255,0/255,0.5
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        on_release:
+                            app.root.current = "admin_add_animal_species_popup"
                 
                 
                 MDFloatLayout:
-                    size_hint: (0.4625, 0.225)
-                    radius: [50,50,50,50]
-                    hint_text: "Species"
-                    size_hint_x: 0.95
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.94
                     size_hint_y: 0.9/3
                     pos_hint: {"center_x": 0.5, "center_y": 0.95 - 0.8/6 - 0.8/3 - 0.05 }
 
-                    MDTextField: # species
-                        id: name
+                    MDTextField:
+                        id: size
                         mode: "round"
-                        hint_text: "Species"
+                        hint_text: "Size"
+                        font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Species"
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
                         size_hint_x: 1
                         size_hint_y: 1
                         halign: 'center'
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        # on_release:
+                        #     app.root.current = "admin_add_animal_species_popup"
 
-                MDFloatLayout: # breed
+                MDFloatLayout:
                     size_hint: (0.4625, 0.225)
-                    radius: [50,50,50,50]
-                    size_hint_x: 0.95
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.94
                     size_hint_y: 0.9/3
-                    pos_hint: {"center_x": 0.5, "center_y": 0.95 - 0.8/6 - 0.8 * 2/3 - 0.05*2 }
+                    pos_hint: {"center_x": 0.5, "center_y": 0.95 - 0.8/6 - 0.8 * 2/3 - 0.05 * 2 }
+                    
+                    MDTextField:
+                        id: birth_date
+                        mode: "round"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        hint_text: "BIRTH DATE"
+                        font_style: "Button"
+                        # hint_text_size: self.height * 0.01
+                        # font_size: self.parent.width * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            # 0.7625 ---
+
+                    # 0.08125 gaps
+                    # 0.225 box
+
+
+            MDFloatLayout:
+                size_hint: (0.95, 0.421875)
+                radius: [10,10,10,10]
+                md_bg_color: (0/255,0/255,0/255,0.1)
+
+                pos_hint: {"center_x": 0.5, "center_y": 0.5390625}
+
+# .0675 button
+# 0.050625 gap 
+
+
+                MDFloatLayout:
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.95
+                    size_hint_y: 0.18
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 - 0.18/2 }
+
+                    MDRoundFlatButton:
+                        id: breed
+                        mode: "round"
+                        text: "Breed"
+                        font_style: "Button"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        on_release:
+                            app.root.current = "admin_add_animal_breed_popup"
+            
+                MDFloatLayout:
+                    # size_hint: (0.4625, 0.198774081)
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.95
+                    size_hint_y: 0.18
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 2 - 0.18/2 - 0.18 }
+
+                    MDRoundFlatButton:
+                        id: gender
+                        mode: "round"
+                        text: "Gender"
+                        font_style: "Button"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5 }
+                        on_release:
+                            app.root.current = "admin_add_animal_gender_popup"
+                        
+                MDFloatLayout:
+                    # size_hint: (0.4625, 0.198774081)
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.95
+                    size_hint_y: 0.18
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 3 - 0.18/2 - 0.18 * 2 }
+
+                
+                    MDRoundFlatButton:
+                        id: availability
+                        mode: "round"
+                        text: "Availability"
+                        font_style: "Button"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5 }
+                        on_release:
+                            app.root.current = "admin_add_animal_availability_popup"
+                     
+                MDFloatLayout
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.95
+                    size_hint_y: 0.18
+                    pos_hint: {"center_x": 0.5, "center_y": 
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 4 - 0.18/2 - 0.18 * 3 }
+
+                    MDRoundFlatButton:
+                        id: dispositions
+                        mode: "round"
+                        text: "Dispositions"
+                        font_style: "Button"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5 }
+                        on_release:
+                            app.root.current = "admin_add_animal_dispositions_popup"
+                     
+
+                MDFloatLayout
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.94
+                    size_hint_y: 0.18
+                    pos_hint: {"center_x": 0.5, "center_y": 
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 5 - 0.18/2 - 0.18 * 4 }
 
                     MDTextField:
                         id: name
                         mode: "round"
                         md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Breed"
+                        #hint_text: "Breed"
+                        hint_text: "NAME"
+                        font_style: "Button"
+                        text_color: 0/255,0/255,0/255,0.5
                         size_hint_x: 1
                         size_hint_y: 1
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
                         halign: 'center'
                         valign: 'center'
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            
+                        text_color: 0/255,0/255,0/255,0.5
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5} 
+
+# 0.328125
 
 
-            # 0.7625 ---
-
+            # 0.5375
 
             MDFloatLayout:
-                size_hint: (.95, 0.675)
+                size_hint: (.95, 0.240625)
                 radius: [10,10,10,10]
                 md_bg_color: (0/255,0/255,0/255,0.1)
-                pos_hint: {"center_x": 0.5, "center_y": 0.4125}
+                pos_hint: {"center_x": 0.5, "center_y": 0.1953125}
 
                 MDFloatLayout:
-                    size_hint: (.95, 0.25)
+                    size_hint: (0.95, 0.95)
                     radius: [10,10,10,10]
                     md_bg_color: (255/255,233/255,234/255,1)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.8625}
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-
-                    # 0.7375
-                    MDTextField: # disposition
-                        id: disposition
+                    MDTextField: # 
+                        id: summary
                         md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Disposition:"
+                        hint_text: "Summary:"
+                        text: ''
                         size_hint_x: 1
                         size_hint_y: 1
                         multiline: True
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 
-                MDFloatLayout:
-                    size_hint: (.95, 0.35)
-                    radius: [10,10,10,10]
-                    md_bg_color: (255/255,233/255,234/255,1)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.55}
-
-
-                    MDTextField: # summary
-                        id: disposition
-                        md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Summary:"
-                        size_hint_x: 1
-                        size_hint_y: 1
-                        multiline: True
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-
-                MDFloatLayout:
-                    size_hint: (.95, 0.35)
-                    radius: [10,10,10,10]
-                    md_bg_color: (255/255,233/255,234/255,1)
-                    pos_hint: {"center_x": 0.5, "center_y": 0.55 - 0.35 -0.0125}
-
-
-                    MDTextField: # notes
-                        id: disposition
-                        md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "Notes:"
-                        size_hint_x: 1
-                        size_hint_y: 1
-                        multiline: True
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
+     
             # 0.0625 ---
 
             MDFloatLayout:
@@ -213,8 +349,11 @@
                     size_hint_x: 1
                     size_hint_y : 1
                     md_bg_color: 222/255,23/255,63/255,1
-                    radius: [15,0,0,15]
+                    # radius: [15,0,0,15]
+                    text_color: 0,0,0,1
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release:
+                        root.cancel()
 
             MDFloatLayout:
                 size_hint: (0.95/9, 0.05)
@@ -227,7 +366,8 @@
                     size_hint_x: 1
                     size_hint_y : 1
                     md_bg_color: (255/255,233/255,234/255,1)
-                    radius: [0,0,0,0]
+                    # radius: [0,0,0,0]
+                    text_color: 0,0,0,1
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_release: app.root.current = "admin_landing"
 
@@ -235,16 +375,20 @@
                 # size_hint: (.95, 0.05)
                 size_hint: (0.95 * 5/6 * 1/2, 0.05)
                 radius: [0,15,15,0]
-                md_bg_color: 56/255,45/255,94/255,1
+                md_bg_color: 0/255,187/255,224/255,1
                 pos_hint: {"center_x": 1 - (0.95 * 5/6 * 1/4 + 0.025), "center_y": 0.0375}
 
                 MDIconButton:
                     icon: "bookmark"
                     size_hint_x: 1
                     size_hint_y : 1
-                    md_bg_color: 56/255,45/255,94/255,1
-                    radius: [0,15,15,0]
+                    md_bg_color: 0/255,187/255,224/255,0.75
+                    text_color: 0,0,0,1
+                    # radius: [0,15,15,0]
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release:
+                        root.save()
+                    
 
             # padding = 0.0125
 
@@ -295,3 +439,330 @@
                 on_press: 
                     root.load_image()
                     app.root.current = "admin_add_animal"
+
+
+<admin_add_animal_breed_popup@Screen>:
+    
+    name: "admin_add_animal_breed_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            # md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_breed()
+
+            MDFlatButton:
+                id: selection_breed
+                line: 0
+                text: "Breed"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_add_animal"
+
+            MDIconButton:
+                icon: "arrow-left"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_breed()
+
+
+<admin_add_animal_species_popup@Screen>:
+    
+    name: "admin_add_animal_species_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            # md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_species()
+
+            MDFlatButton:
+                line: 0
+                id: selection_species
+                text: "Species"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_add_animal"
+
+            MDIconButton:
+                icon: "arrow-left"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_species()
+
+
+<admin_add_animal_gender_popup@Screen>:
+    
+    name: "admin_add_animal_gender_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            # md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_gender()
+
+            MDFlatButton:
+                line: 0
+                id: selection_gender
+                text: "Gender"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_add_animal"
+
+            MDIconButton:
+                icon: "arrow-left"
+                # md_bg_color: (255/255,233/255,234/255,1)
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_gender()
+
+
+<admin_add_animal_availability_popup@Screen>:
+    
+    name: "admin_add_animal_availability_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            # md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release: 
+                    root.next_availability()
+
+            MDFlatButton:
+                line: 0
+                id: selection_availability
+                text: "Availability"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_add_animal"
+
+            MDIconButton:
+                icon: "arrow-left"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_release: 
+                    root.previous_availability()
+
+
+<admin_add_animal_dispositions_popup@Screen>:
+    
+    name: "admin_add_animal_dispositions_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            # md_bg_color: (255/255,233/255,234/255,1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDFlatButton:
+                size_hint_x: 1
+                size_hint_y: 0.2
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.9}
+                on_release: 
+                    app.root.current = 'admin_add_animal'
+
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release: 
+                    root.next_disposition()
+
+            MDFlatButton:
+                line: 0
+                id: selection_dispositions
+                # md_bg_color: (0/255, 187/255, 224/255, 1)
+                text: "Disposition"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    # app.root.current = "admin_add_animal"
+                    root.toggle_select()
+
+            MDIconButton:
+                icon: "arrow-left"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_release: 
+                    root.previous_disposition()
+
+
+            MDFlatButton:
+                size_hint_x: 1
+                size_hint_y: 0.2
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.1}
+                on_release: 
+                    app.root.current = 'admin_add_animal'
