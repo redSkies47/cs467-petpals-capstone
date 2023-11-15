@@ -93,7 +93,7 @@
                         font_size: self.width * 0.035
                         size_hint_x: .6
                         size_hint_y: 0.65
-                        md_bg_color: (222/255, 23/255, 63/255, 1)
+                        md_bg_color: (0, 187/255, 224/255, 1)
                         pos_hint: {"center_x": 0.5, "center_y": 0.7}
 
                 MDBoxLayout:
@@ -109,7 +109,7 @@
                         font_size: self.width * 0.035
                         size_hint_x: .6
                         size_hint_y: 0.65
-                        md_bg_color: (0, 187/255, 224/255, 1)
+                        md_bg_color: (222/255, 23/255, 63/255, 1)
                         pos_hint: {"center_x": 0.5, "center_y": 0.7}
                         on_release:
                             app.root.current = "dogbrowse"
@@ -154,7 +154,7 @@
                         height:80
                         font_size: 30
                         background_normal: ''
-                        background_color: (222/255, 23/255, 63/255, 1)
+                        background_color: (0, 187/255, 224/255, 1)
                         on_release:
                             root.add_dog()
                     GridLayout:
@@ -443,7 +443,7 @@
                 id: spinner_id
                 text:"Click Here For Breeds"
                 values: root.breed_list
-                color: (1,1,1,1)
+                color: (1, 1, 1, 1)
                 background_normal: ''
                 background_color: (0, 187/255, 224/255, 1)
                 on_text: root.breed_dropdown(spinner_id.text)
@@ -533,7 +533,7 @@
                 font_size: self.width * 0.065
                 size_hint_x: .9
                 size_hint_y: 0.65
-                md_bg_color: (222/255, 23/255, 63/255, 1)
+                md_bg_color: (0, 187/255, 224/255, 1)
                 pos_hint: {"center_x": 0.5, "center_y": 0.7}
                 on_release:
                     app.root.current = "dogbrowse"
@@ -552,7 +552,7 @@
                 font_size: self.width * 0.065
                 size_hint_x: .9
                 size_hint_y: 0.65
-                md_bg_color: (0, 187/255, 224/255, 1)
+                md_bg_color: (222/255, 23/255, 63/255, 1)
                 pos_hint: {"center_x": 0.5, "center_y": 0.7}
                 on_release:
                     app.root.current = "landing"
