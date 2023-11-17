@@ -24,6 +24,7 @@
 
         MDFloatLayout:
             md_bg_color: (255/255,233/255,234/255,1)
+            line_color: (255/255,233/255,234/255,1)
             size_hint_x: 0.965
             size_hint_y: 0.965
             radius: [10,10,10,10]
@@ -102,6 +103,7 @@
                         id: species
                         mode: "round"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text: "Species"
                         font_style: "Button"
                         text_color: 0/255,0/255,0/255,0.5
@@ -127,9 +129,10 @@
                     MDTextField:
                         id: size
                         mode: "round"
-                        hint_text: "Size"
+                        text: "SIZE"
                         font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text_color: 0/255,0/255,0/255,0.5
                         # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
@@ -153,7 +156,8 @@
                         id: birth_date
                         mode: "round"
                         md_bg_color: (255/255,233/255,234/255,1)
-                        hint_text: "BIRTH DATE"
+                        line_color: (255/255,233/255,234/255,1)
+                        text: "BIRTH DATE"
                         font_style: "Button"
                         # hint_text_size: self.height * 0.01
                         # font_size: self.parent.width * 0.1
@@ -195,6 +199,7 @@
                         text: "Breed"
                         font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text_color: 0/255,0/255,0/255,0.5
                         # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
@@ -220,6 +225,7 @@
                         text: "Gender"
                         font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text_color: 0/255,0/255,0/255,0.5
                         # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
@@ -246,6 +252,7 @@
                         text: "Availability"
                         font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text_color: 0/255,0/255,0/255,0.5
                         # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
@@ -271,6 +278,7 @@
                         text: "Dispositions"
                         font_style: "Button"
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         text_color: 0/255,0/255,0/255,0.5
                         # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
@@ -295,13 +303,13 @@
                         id: name
                         mode: "round"
                         md_bg_color: (255/255,233/255,234/255,1)
-                        #hint_text: "Breed"
-                        hint_text: "NAME"
+                        line_color: (255/255,233/255,234/255,1)
+                        line: 1
+                        text: "NAME"
                         font_style: "Button"
                         text_color: 0/255,0/255,0/255,0.5
                         size_hint_x: 1
                         size_hint_y: 1
-                        # font_size_x: self.parent.width * 0.02
                         font_size_y: self.height * 0.1
                         halign: 'center'
                         valign: 'center'
@@ -323,11 +331,13 @@
                     size_hint: (0.95, 0.95)
                     radius: [10,10,10,10]
                     md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                     MDTextField: # 
                         id: summary
                         md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
                         hint_text: "Summary:"
                         text: ''
                         size_hint_x: 1
@@ -359,6 +369,7 @@
                 size_hint: (0.95/9, 0.05)
                 radius: [0,0,0,0]
                 md_bg_color: (255/255,233/255,234/255,1)
+                line_color: (255/255,233/255,234/255,1)
                 pos_hint: {"center_x": 0.5, "center_y": 0.0375}
 
                 MDIconButton:
@@ -366,6 +377,7 @@
                     size_hint_x: 1
                     size_hint_y : 1
                     md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
                     # radius: [0,0,0,0]
                     text_color: 0,0,0,1
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
@@ -407,7 +419,6 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
@@ -416,8 +427,6 @@
 
             MDTextField:
                 id: image_url
-                # md_bg_color: (0/255,0/255,0/255,1)
-                # md_bg_color: (255/255,233/255,234/255,1)
                 hint_text: "URL:"
                 text_color: 0/255,0/255,0/255,1
                 size_hint_x: 0.8
@@ -428,7 +437,6 @@
 
             MDIconButton:
                 icon: "arrow-right"
-                # md_bg_color: (255/255,233/255,234/255,1)
                 size_hint_x: 0.9
                 size_hint_y: 0.1
                 radius: [45,45,45,45]
@@ -456,7 +464,6 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
@@ -465,7 +472,6 @@
 
             MDIconButton:
                 icon: "arrow-right"
-                # md_bg_color: (255/255,233/255,234/255,1)
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -492,7 +498,7 @@
 
             MDIconButton:
                 icon: "arrow-left"
-                # md_bg_color: (255/255,233/255,234/255,1)
+    
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -519,7 +525,7 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
+
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
@@ -528,7 +534,7 @@
 
             MDIconButton:
                 icon: "arrow-right"
-                # md_bg_color: (255/255,233/255,234/255,1)
+    
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -555,7 +561,7 @@
 
             MDIconButton:
                 icon: "arrow-left"
-                # md_bg_color: (255/255,233/255,234/255,1)
+    
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -582,7 +588,7 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
+
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
@@ -591,7 +597,7 @@
 
             MDIconButton:
                 icon: "arrow-right"
-                # md_bg_color: (255/255,233/255,234/255,1)
+    
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -618,7 +624,7 @@
 
             MDIconButton:
                 icon: "arrow-left"
-                # md_bg_color: (255/255,233/255,234/255,1)
+    
                 size_hint_x: 1
                 size_hint_y: 0.2
                 radius: [45,45,45,45]
@@ -645,7 +651,7 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
+
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
@@ -703,7 +709,7 @@
 
         MDFloatLayout:
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            # md_bg_color: (255/255,233/255,234/255,1)
+
             radius: [10, 10, 10, 10]
             size_hint_x: 0.9
             size_hint_y: 0.9
