@@ -1,5 +1,6 @@
 from kivy_app_components.admin_update_news import admin_update_news
 from kivy_app_components.admin_add_animal import admin_add_animal
+from kivy_app_components.admin_edit_delete_animal import admin_edit_delete_animal
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import os

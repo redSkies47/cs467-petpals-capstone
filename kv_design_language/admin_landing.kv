@@ -1,5 +1,6 @@
-#:include kv_design_language/admin_add_animal.kv
 #:include kv_design_language/admin_update_news.kv
+#:include kv_design_language/admin_add_animal.kv
+#:include kv_design_language/admin_edit_delete_animal.kv
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
@@ -234,7 +235,7 @@ ScreenManager:
                 size_hint_x: 1
                 size_hint_y: 0.95
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                on_release: app.toEditDeleteAnimal()
+                on_release: app.root.current = "admin_edit_delete_animal"
 
     admin_update_news:
 
@@ -251,3 +252,5 @@ ScreenManager:
     admin_add_animal_availability_popup:
 
     admin_add_animal_dispositions_popup:
+
+    admin_edit_delete_animal:
