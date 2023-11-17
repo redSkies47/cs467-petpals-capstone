@@ -31,6 +31,13 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'password'
+DB_NAME = 'capstone'
+
+
 class admin_browse_animals(Screen):
 
     def __init__(self, **kwargs):
