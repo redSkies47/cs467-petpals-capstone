@@ -1,0 +1,386 @@
+#:import MDFlatButton kivymd.uix.button.MDFlatButton
+#:import MDRectangleFlatIconButton kivymd.uix.button.MDRectangleFlatIconButton
+#:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDFillRoundFlatButton kivymd.uix.button.MDFillRoundFlatButton
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+
+<admin_browse_animals@Screen>:
+ 
+    name: "admin_browse_animals"
+    on_pre_enter:
+        # root.load_species_breeds()
+        # root.load_gender()
+        # root.load_availability()
+        # root.load_dispositions()
+   
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        MDFloatLayout:
+            md_bg_color: (255/255,233/255,234/255,1)
+            size_hint_x: 0.965
+            size_hint_y: 0.965
+            radius: [10,10,10,10]
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                md_bg_color: 0/255,187/255,224/255,1
+                size_hint_x: 0.95
+                size_hint_y: 0.05
+                icon: "magnify"
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.9625}
+                on_press: 
+
+# 0.9375
+
+            MDScrollView:
+                md_bg_color: 0/255,0/255,0/255,0.1
+                size_hint_x: 0.95
+                size_hint_y: 0.85
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                do_scroll_x: False
+
+                MDFloatLayout:
+                    adaptive_height: True
+                    size_hint_x: 1
+                    size_hint_y: 5/4
+                    orientation: 'vertical'
+                    radius: [10,10,10,10]
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+        MDFloatLayout:
+            md_bg_color: (255/255,233/255,234/255,1)
+            size_hint_x: 0.965
+            size_hint_y: 0.965
+            radius: [10,10,10,10]
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                md_bg_color: 0/255,187/255,224/255,1
+                size_hint_x: 0.95
+                size_hint_y: 0.05
+                icon: "magnify"
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.9625}
+                on_press: 
+
+# 0.9375
+
+            MDScrollView:
+                md_bg_color: 0/255,0/255,0/255,0.1
+                size_hint_x: 0.95
+                size_hint_y: 0.85
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                do_scroll_x: False
+
+                MDFloatLayout:
+                    adaptive_height: True
+                    size_hint_x: 1
+                    size_hint_y: (10 + 2) /2  * 1/4
+                    orientation: 'vertical'
+                    radius: [10,10,10,10]
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+# raw width 1/2 * 0.9 = 0.45 of MDScrollView (static)
+# pos_X_left = 0.25 + 1/12 of MDScrollView (static)
+# pos_X_right = 0.25 - 1/12 of MDScrollView (static)
+
+
+# raw height 1/12 * 0.9 * MDFloatLayout.size_hint_y = 0.225 * MDScrollView.size_hint_y = 0.225 / MDFloatLayout.size_hint_y
+# 1 - 1/24 - 1/12 * 0
+# pos_y = 1 - self.size_hint_y * 11/18 - self.size_hint_y * 10/9 * animal_num // 2
+#       = 1 - self.size_hint_y * (11/18 + 10/9 * animal_num // 2)
+
+# MDFloatLayout.size_hint_y = self.parent.size_hint_y = math.ceil((num_animals + 2) / 2) * 1/4  # extra row for space buffer
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 0// 2)}
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1   
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            # radius: [10,10,10,10]
+                            source: 'https://c8.alamy.com/comp/2BWX3PT/image-of-a-cute-stray-puppies-pictured-in-a-garbage-dump-2BWX3PT.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":  1 - self.size_hint_y * (11/18 + 10/9 * 0 // 2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://images.tribuneindia.com/cms/gall_content/2019/7/2019_7$largeimg15_Monday_2019_185050690.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 2// 2)}
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            radius: [10,10,10,10]
+                            source: 'https://www.naiaonline.org/uploads/FeaturedArticleImages/strayDogWithPups.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":1 - self.size_hint_y * (11/18 + 10/9 * 2 // 2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://i.cdn.turner.com/cnn/2011/LIVING/07/22/help.strays.mnn/t1larg.stray.puppy.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 4// 2)}
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1   
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            # radius: [10,10,10,10]
+                            source: 'https://assets3.thrillist.com/v1/image/2924618/792x447/scale;webp=auto;jpeg_quality=60.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":  1 - self.size_hint_y * (11/18 + 10/9 * 4// 2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1UGW-HLY_AkHky4rEIRqyoNUXGwsGbAIsfg&usqp=CAU'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 6// 2)}
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            radius: [10,10,10,10]
+                            source: 'https://lp-cms-production.imgix.net/image_browser/Dingo%202.jpg?auto=format&q=75'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":1 - self.size_hint_y * (11/18 + 10/9 * 6// 2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKgTeQ81bW2hXBF7-iz7UAsK8BwceISdqHAw&usqp=CAU'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+                        pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 8// 2)}
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            radius: [10,10,10,10]
+                            source: 'https://www.shutterstock.com/image-photo/lonely-cute-brown-puppy-sitting-600nw-2239428987.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":1 - self.size_hint_y * (11/18 + 10/9 * 8//2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTynHQ2WmWHxM9rhvh1hNL3vjF8CZ8rQQjm6A&usqp=CAU'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+
+                        pos_hint: {"center_x": 0.25 +1/12 * 0.1 , "center_y":1 - self.size_hint_y * (11/18 + 10/9 * 10//2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://t4.ftcdn.net/jpg/00/02/64/41/360_F_2644105_nSd01CU9oT801BqVIbO3is2hr01gL9.jpg'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+                    MDRectangleFlatButton:
+                        md_bg_color: 0/255,0/255,0/255,0.1
+                        line_color: self.md_bg_color
+                        size_hint_x: 1/2 * 0.9
+                        size_hint_y: 0.225 / self.parent.size_hint_y
+                        radius: [10,10,10,10]
+
+                        pos_hint: {"center_x": 0.75 -1/12 * 0.1 , "center_y":1 - self.size_hint_y * (11/18 + 10/9 * 10//2)}
+
+
+                        AsyncImage:
+                            id: image_widget
+                            size_hint_x: 1
+                            size_hint_y: 1
+                            keep_ratio: True
+                            allow_stretch: True
+                            source: 'https://img.freepik.com/free-photo/many-cute-rescue-dogs-shelter-waiting-be-adopted_23-2148682949.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1699056000&semt=ais'
+                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+
+            # 0.0625 ---
+
+            MDFloatLayout:
+                size_hint: (0.95 * 5/6 * 1/2, 0.05)
+                radius: [15,0,0,15]
+                md_bg_color: 222/255,23/255,63/255,1
+                pos_hint: {"center_x": 0.95 * 5/6 * 1/4 + 0.025, "center_y": 0.0375}
+
+                MDIconButton:
+                    icon: "delete"
+                    size_hint_x: 1
+                    size_hint_y : 1
+                    md_bg_color: 222/255,23/255,63/255,1
+                    # radius: [15,0,0,15]
+                    text_color: 0,0,0,1
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release:
+                        root.cancel()
+
+            MDFloatLayout:
+                size_hint: (0.95/9, 0.05)
+                radius: [0,0,0,0]
+                md_bg_color: (255/255,233/255,234/255,1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.0375}
+
+                MDIconButton:
+                    icon: "home"
+                    size_hint_x: 1
+                    size_hint_y : 1
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    # radius: [0,0,0,0]
+                    text_color: 0,0,0,1
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release: app.root.current = "admin_landing"
+
+            MDFloatLayout:
+                # size_hint: (.95, 0.05)
+                size_hint: (0.95 * 5/6 * 1/2, 0.05)
+                radius: [0,15,15,0]
+                md_bg_color: 0/255,187/255,224/255,1
+                pos_hint: {"center_x": 1 - (0.95 * 5/6 * 1/4 + 0.025), "center_y": 0.0375}
+
+                MDIconButton:
+                    icon: "bookmark"
+                    size_hint_x: 1
+                    size_hint_y : 1
+                    md_bg_color: 0/255,187/255,224/255,0.75
+                    text_color: 0,0,0,1
+                    # radius: [0,15,15,0]
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release:
+                        root.save()
+                    
+
+            # padding = 0.0125
+
