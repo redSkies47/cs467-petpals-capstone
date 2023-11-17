@@ -161,6 +161,7 @@
                         background_normal: ''
                         background_color: (222/255, 23/255, 63/255, 1)
                         on_release:
+                            root.remove_dog()
                             app.root.current = "dogsearch"
                             root.manager.transition.direction = "right"
 

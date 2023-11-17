@@ -255,6 +255,11 @@ class DogBrowseWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
+        self.no_results_label = Label(text="No matches were found!",
+                              color = (255/255, 0/255, 0/255, 1),
+                              size_hint = (.2,.2),
+                              font_size = self.width/2, 
+                              pos_hint = {"center_x": 0.5, "center_y": .5})
         super(DogBrowseWindow, self).__init__(**kwargs)
 
     def get_news(self):
@@ -333,20 +338,29 @@ class DogBrowseWindow(Screen):
         self.manager.current = "dogprofile"
         self.manager.transition.direction = "left"
 
+    dog_card = ObjectProperty(None)
+    dog_card_list = []
+
     def add_dog(self):
         # Retrieve matching dogs
         dog_search_info = self.parent.ids['dog_search']
         dog_list = get_dogs(dog_search_info.get_breed(), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
         # PLACEHOLDER: no matching dogs message
         if not dog_list:
-            print('No matching dogs were found!')
+            self.add_widget(self.no_results_label)
         # Add each dog card
         for dog in dog_list:
             dog_id = dog[0]
             dog_name = dog[1]
-            dog_card = Button(text=dog_name)
-            dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
-            self.ids.grid.add_widget(dog_card)
+            self.dog_card = Button(text=dog_name)
+            self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+            self.dog_card_list.append(self.dog_card)
+            self.ids.grid.add_widget(self.dog_card)
+
+    def remove_dog(self):
+        self.remove_widget(self.no_results_label)
+        for cards in self.dog_card_list:
+            self.ids.grid.remove_widget(cards)
 
 class DogProfile(Screen):
     id_dog = NumericProperty(None)
