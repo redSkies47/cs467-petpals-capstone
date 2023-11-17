@@ -39,6 +39,31 @@ def add_animal_disposition(id_animal, id_disposition, db):
     db.query(addAnimalDispositions_cmd, addAnimalDispositions_params)
 
 
+def add_image(github_path, db):
+    """
+    Adds an Image to the database with the given values for its attributes.
+
+    :param str github_path: The relative path (within the repo) for the image
+    :param Database db: database to be queried
+    :return: None
+    """
+    addImage_cmd = "INSERT INTO Images (github_path) VALUES (%s)"
+    addImage_params = (github_path,)
+    db.query(addImage_cmd, addImage_params)
+
+def add_animal_image(id_animal, id_image, db):
+    """
+    Adds an Animal Image relationship to the database with the given values for its attributes.
+
+    :param int id_animal: ID of the target Animal
+    :param int id_image: ID of the target Image
+    :param Database db: database to be queried
+    :return: None
+    """
+    addAnimalImages_cmd = "INSERT INTO Animal_Images (id_animal, id_image) VALUES (%s, %s)"
+    addAnimalImages_params = (id_animal, id_image)
+    db.query(addAnimalImages_cmd, addAnimalImages_params)
+
 def delete_animal(id_animal, db):
     """
     Removes an Animal matching the id_animal from the Animals.
@@ -51,6 +76,29 @@ def delete_animal(id_animal, db):
     deleteAnimal_params = (id_animal,)
     db.query(deleteAnimal_cmd, deleteAnimal_params)
 
+def delete_animal_image(id_animal_image, db):
+    """
+    Removes an Animal Image relationship matching the id_animal_image from the Animal Images.
+
+    :param int id_animal_image: ID of the target Animal Image relationship
+    :param Database db: database to be queried
+    :return: None
+    """
+    deleteAnimalImage_cmd = "DELETE FROM Animal_images WHERE id_animal_image = %s"
+    deleteAnimalImage_params = (id_animal_image,)
+    db.query(deleteAnimalImage_cmd, deleteAnimalImage_params)
+
+def delete_image(id_image, db):
+    """
+    Removes an Image reference matching the id_image from the Images.
+
+    :param int id_image: ID of the target Image reference
+    :param Database db: database to be queried
+    :return: None
+    """
+    deleteImage_cmd = "DELETE FROM Images WHERE id_image = %s"
+    deleteImage_params = (id_image,)
+    db.query(deleteImage_cmd, deleteImage_params)
 
 def find_animal_by_id(id_animal, db):
     """
@@ -72,6 +120,45 @@ def find_animal_by_id(id_animal, db):
     selectIDAnimal_result = db.query(selectIDAnimal_cmd, selectIDAnimal_params)
     return selectIDAnimal_result
 
+def find_animal_id_by_name(name, db):
+    """
+    Returns an animal id matching the name from the Animals. Returns an empty list if no entries exist.
+
+    :param str name: name of the target Animal
+    :param Database db: database to be queried
+    :return: [(id_animal)]
+    """
+    selectIDAnimalName_cmd = 'SELECT id_animal FROM Animals WHERE Name = %s'; 
+    selectIDAnimalName_params = (name,)
+    selectIDAnimalName_result = db.query(selectIDAnimalName_cmd, selectIDAnimalName_params)
+    return selectIDAnimalName_result
+
+def find_latest_animal_image_id(id_animal, id_image, db):
+    """
+    Returns the animal image relationship id of the latest added entry from Animal Images.
+    Returns an empty list if no entries exist.
+
+    :param int id_animal: ID of the target Animal
+    :param int id_image: ID of the target Image
+    :param Database db: database to be queried
+    :return: [(id_animal_image)]
+    """
+    selectIDAnimalImageLatest_cmd = 'SELECT id_animal_image FROM Animal_Images WHERE id_animal = %s AND id_image = %s ORDER BY id_animal_image DESC'; 
+    selectIDAnimalImageLatest_params = (id_animal, id_image)
+    selectIDAnimalImageLatest_result = db.query(selectIDAnimalImageLatest_cmd, selectIDAnimalImageLatest_params)
+    return selectIDAnimalImageLatest_result[0] if selectIDAnimalImageLatest_result else selectIDAnimalImageLatest_result
+
+def find_latest_image_id(db):
+    """
+    Returns an image id of the latest added entry from Images. Returns an empty list if no entries exist.
+
+    :param Database db: database to be queried
+    :return: [(id_image)]
+    """
+    selectIDAnimalLatest_cmd = 'SELECT id_image FROM Images ORDER BY id_image DESC'; 
+    selectIDAnimalLatest_params = ()
+    selectIDAnimalLatest_result = db.query(selectIDAnimalLatest_cmd, selectIDAnimalLatest_params)
+    return selectIDAnimalLatest_result[0] if selectIDAnimalLatest_result else selectIDAnimalLatest_result
 
 def get_all_animals(db):
     """
@@ -280,3 +367,32 @@ def update_animal(id_animal, id_availability, id_species, id_breed, name, birth_
                              birth_date, id_gender, size, summary, date_created, id_animal)
     updateIDAnimal_result = db.query(updateIDAnimal_cmd, updateIDAnimal_params)
     return updateIDAnimal_result
+
+def update_animal_image(id_animal_image, id_animal, id_image, db):
+    """
+    Updates an Animal Image relationship in the database with the given values for its attributes.
+
+    :param int id_animal_image: ID of the target Animal Image reference
+    :param int id_animal: ID of the target Animal
+    :param int id_image: ID of the target Image reference
+    :param Database db: database to be queried
+    :return: None
+    """
+    updateAnimalImage_cmd = "UPDATE Animal_Images SET id_animal = %s, id_image = %s WHERE id_animal_image = %s"
+    UpdateAnimalImage_params = (id_animal, id_image, id_animal_image)
+    updateAnimalImage_result = db.query(updateAnimalImage_cmd, UpdateAnimalImage_params)
+    return updateAnimalImage_result
+
+def update_image(id_image, github_path, db):
+    """
+    Updates an Image reference in the database with the given values for its attributes.
+
+    :param int id_image: ID of the target Image reference
+    :param str github_path: The relative path (within the repo) for the image
+    :param Database db: database to be queried
+    :return: None
+    """
+    updateImage_cmd = "UPDATE Images SET github_path = %s WHERE id_image = %s"
+    UpdateImage_params = (github_path, id_image)
+    updateImage_result = db.query(updateImage_cmd, UpdateImage_params)
+    return updateImage_result
