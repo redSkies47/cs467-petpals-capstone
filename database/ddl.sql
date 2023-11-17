@@ -77,6 +77,24 @@ CREATE TABLE `Animal_Dispositions` (
     FOREIGN KEY (`id_disposition`) REFERENCES `Dispositions` (`id_disposition`)
 );
 
+-- Create Images table
+CREATE TABLE `Images` (
+    `id_image` int AUTO_INCREMENT UNIQUE NOT NULL,
+    `github_path` varchar(255),
+    PRIMARY KEY (`id_image`)
+);
+
+-- Create Animal_Images table
+CREATE TABLE `Animal_Images` (
+    `id_animal_image` int AUTO_INCREMENT UNIQUE NOT NULL,
+    `id_animal` int NOT NULL,
+    `id_image` int NOT NULL,
+    PRIMARY KEY (`id_animal_image`),
+    FOREIGN KEY (`id_animal`) REFERENCES `Animals` (`id_animal`)
+        ON DELETE CASCADE,
+    FOREIGN KEY (`id_image`) REFERENCES `Images` (`id_image`)
+);
+
 -- Create Credentials table
 CREATE TABLE `Credentials` (
     `id_credential` int AUTO_INCREMENT UNIQUE NOT NULL,
