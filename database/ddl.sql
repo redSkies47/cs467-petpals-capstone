@@ -59,11 +59,13 @@ CREATE TABLE `Animals` (
     `summary` text(500),
     `date_created` date NOT NULL,
         /* DEFAULT GETDATE() not working, handle on client-side */
+    `id_shelter` int NOT NULL,
     PRIMARY KEY (`id_animal`),
     FOREIGN KEY (`id_availability`) REFERENCES `Availabilities` (`id_availability`),
     FOREIGN KEY (`id_species`) REFERENCES `Species` (`id_species`),
     FOREIGN KEY (`id_breed`) REFERENCES `Breeds` (`id_breed`),
-    FOREIGN KEY (`id_gender`) REFERENCES `Genders` (`id_gender`)
+    FOREIGN KEY (`id_gender`) REFERENCES `Genders` (`id_gender`),
+    FOREIGN KEY (`id_shelter`) REFERENCES `Shelters` (`id_shelter`)
 );
 
 -- Create Animal_Dispositions table
@@ -231,39 +233,36 @@ VALUES
 -- -----------------------------------------------------------------------------
 
 -- Insert new Animals
-INSERT INTO `Animals` (`id_availability`, `id_species`, `id_breed`, `name`,
-`birth_date`, `id_gender`, `size`,
-`summary`,
-`date_created`)
+INSERT INTO `Animals` (`id_availability`, `id_species`, `id_breed`, `name`, `birth_date`, `id_gender`, `size`, `summary`, `date_created`, `id_shelter`)
 VALUES
 (1, 3, 36, 'Cleocatra',
 '2019-04-20', 2, 12,
 'Cleocatra is a sweet independent persian cat. She keeps herself very busy but is very sweet and open to some pampering!',
-'2023-10-26'),
+'2023-09-04', 1),
 (1, 3, 35, 'Safari',
 '2021-04-02', 4, 8,
 'Looking for a social cat? Look no further than the social Safari! She gets along well with children and other pets.',
-'2023-10-26'),
+'2022-10-10', 2),
 (2, 3, 46, 'Tango',
 '2023-01-04', 3, 6,
 'Anywhere is a stage for the singing Tango who is otherwise silently sleeping. Seeks out people but doesn''t quite get along with other animals.',
-'2023-10-26'),
+'2023-10-26', 2),
 (1, 2, 18, 'Curls',
 '2018-12-03', 2, 33,
 'Curls came from another home that could no longer care for her. She gets along well with kids and is looking for a great carer who can groom her well.',
-'2023-10-26'),
+'2023-10-26', 3),
 (3, 2, 7, 'Luna',
 '2023-06-29', 1, 21,
 'Puppy Luna has been getting lots of training. He is very playful with kids and other animals.',
-'2023-10-26'),
+'2023-04-05', 1),
 (4, 2, 15, 'Snowy',
 '2023-02-10', 3, 32,
 'Snowy had to part ways from his liter recently. Expect lots of sassy vocals from him! Can be a bit too excited on walks.',
-'2023-10-26'),
+'2023-03-27', 3),
 (1, 1, 1, 'Coco',
 '2021-06-20', 2, 5,
 'Persevering Coco went through a house fire where her caretakers had to let her go. She is very social and can speak several phrases.',
-'2023-10-26');
+'2023-10-26', 3);
 
 -- Insert new Animal_Dispositions
 INSERT INTO `Animal_Dispositions` (`id_animal`, `id_disposition`)
@@ -296,7 +295,9 @@ INSERT INTO `Shelters` (`name`, `address`, `phone_number`,
 `opening_hour`, `closing_hour`)
 VALUES
 ('Pet Refuge', '2273 Bel Meadow Drive, Bellevue Oregon',
-'909-410-5017', 9, 17);
+'909-410-5017', 9, 17),
+('Jefferson County Animal Shelter', '153 Lakefront Drive, Avondale Washington', '782-889-0021', 9, 17),
+('Happy Pet Rescue', '621 Hazel Street, Bisbee California', '145-617-0830', 10, 16);
 
 -- Insert new News
 INSERT INTO `News` (`date`, `title`, `body`)
