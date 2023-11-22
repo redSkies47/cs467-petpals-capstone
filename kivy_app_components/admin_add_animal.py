@@ -30,12 +30,6 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-# local
-DB_HOST = 'localhost'
-DB_USER = 'shukie'
-DB_PASSWORD = 'password'
-DB_NAME = 'capstone'
-
 
 class admin_add_animal_breed_popup(Screen):
 
@@ -272,6 +266,9 @@ class admin_add_animal(Screen):
             if len(self.breeds) <= row[0]:
                 self.breeds.append([])
             self.breeds[row[0]] = breeds_table
+
+        print(self.species)
+        print(self.breeds)
 
     def load_gender(self):
 

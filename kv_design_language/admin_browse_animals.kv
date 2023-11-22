@@ -10,10 +10,10 @@
  
     name: "admin_browse_animals"
     on_pre_enter:
-        # root.load_species_breeds()
-        # root.load_gender()
-        # root.load_availability()
-        # root.load_dispositions()
+        root.load_species_breeds()
+        root.load_gender()
+        root.load_availability()
+        root.load_dispositions()
    
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -36,41 +36,7 @@
                 radius: [10,10,10,10]
                 pos_hint: {"center_x": 0.5, "center_y": 0.9625}
                 on_press: 
-
-# 0.9375
-
-            MDScrollView:
-                md_bg_color: 0/255,0/255,0/255,0.1
-                size_hint_x: 0.95
-                size_hint_y: 0.85
-                radius: [10,10,10,10]
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                do_scroll_x: False
-
-                MDFloatLayout:
-                    adaptive_height: True
-                    size_hint_x: 1
-                    size_hint_y: 5/4
-                    orientation: 'vertical'
-                    radius: [10,10,10,10]
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-
-        MDFloatLayout:
-            md_bg_color: (255/255,233/255,234/255,1)
-            size_hint_x: 0.965
-            size_hint_y: 0.965
-            radius: [10,10,10,10]
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-            MDIconButton:
-                md_bg_color: 0/255,187/255,224/255,1
-                size_hint_x: 0.95
-                size_hint_y: 0.05
-                icon: "magnify"
-                radius: [10,10,10,10]
-                pos_hint: {"center_x": 0.5, "center_y": 0.9625}
-                on_press: 
+                    app.root.current = "admin_browse_animals_search_popup"
 
 # 0.9375
 
@@ -382,5 +348,461 @@
                         root.save()
                     
 
+##
+
+<admin_browse_animals_search_popup@Screen>:
+
+    name: "admin_browse_animals_search_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        MDFloatLayout:
+            md_bg_color: (255/255,233/255,234/255,1)
+            size_hint_x: 0.965
+            size_hint_y: 0.965
+            radius: [10,10,10,10]
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                md_bg_color: 0/255,187/255,224/255,1
+                size_hint_x: 0.95
+                size_hint_y: 0.05
+                icon: "arrow-right"
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.9625}
+                on_press: 
+                    root.search_popup()
+                    app.root.current = 'admin_browse_animals'
+
+# 0.9375
+
+
+            MDFloatLayout:
+                md_bg_color: 0/255,0/255,0/255,0.1
+                size_hint_x: 0.95
+                size_hint_y: 0.85
+                radius: [10,10,10,10]
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                MDRectangleFlatButton:
+                    id: species
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
+                    size_hint_x: 0.95
+                    size_hint_y: 0.185
+                    radius: [10,10,10,10]
+                    text: "Species"
+                    font_style: "Button"
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - .0925 - .0125}
+                    on_release:
+                        app.root.current = "admin_browse_animals_species_popup"
+
+
+                MDRectangleFlatButton:
+                    id: breed
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
+                    size_hint_x: 0.95
+                    size_hint_y: 0.185
+                    radius: [10,10,10,10]
+                    text: "Breed"
+                    font_style: "Button"
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - .0925 - 2* .0125 - .185}
+                    on_release:
+                        app.root.current = "admin_browse_animals_breed_popup"
+
+
+                MDRectangleFlatButton:
+                    id: gender
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
+                    size_hint_x: 0.95
+                    size_hint_y: 0.185
+                    radius: [10,10,10,10]
+                    text: "Gender"
+                    font_style: "Button"
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - .0925 - 3* .0125 - 2* .185}
+                    on_release:
+                        app.root.current = "admin_browse_animals_gender_popup"
+
+                MDRectangleFlatButton:
+                    id: availability
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
+                    size_hint_x: 0.95
+                    size_hint_y: 0.185
+                    radius: [10,10,10,10]
+                    text: "Availability"
+                    font_style: "Button"
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - .0925 - 4* .0125 - 3* .185}
+                    on_release:
+                        app.root.current = "admin_browse_animals_availability_popup"
+
+                MDRectangleFlatButton:
+                    id: dispositions
+                    md_bg_color: (255/255,233/255,234/255,1)
+                    line_color: (255/255,233/255,234/255,1)
+                    size_hint_x: 0.95
+                    size_hint_y: 0.185
+                    radius: [10,10,10,10]
+                    text: "Dispositions"
+                    font_style: "Button"
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - .0925 - 5* .0125 - 4*.185}
+                    on_release:
+                        app.root.current = "admin_browse_animals_dispositions_popup"
+
+# species, breed, gender, availability, dispositions
+
+            # 0.0625 ---
+
+            MDFloatLayout:
+                size_hint: (0.95, 0.05)
+                radius: [15,15,15,15]
+                md_bg_color: 222/255,23/255,63/255,1
+                pos_hint: {"center_x": 0.5, "center_y": 0.0375}
+
+                MDIconButton:
+                    icon: "arrow-left"
+                    size_hint_x: 1
+                    size_hint_y : 1
+                    md_bg_color: 222/255,23/255,63/255,1
+                    # radius: [15,0,0,15]
+                    text_color: 0,0,0,1
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    on_release:
+                        app.root.current = "admin_browse_animals"
+
+        
+
+
+
             # padding = 0.0125
 
+
+<admin_browse_animals_breed_popup@Screen>:
+    
+    name: "admin_browse_animals_breed_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_breed()
+
+            MDFlatButton:
+                id: selection_breed
+                line: 0
+                text: "Breed"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_browse_animals_search_popup"
+
+            MDIconButton:
+                icon: "arrow-left"
+    
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_breed()
+
+
+<admin_browse_animals_species_popup@Screen>:
+    
+    name: "admin_browse_animals_species_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+    
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_species()
+
+            MDFlatButton:
+                line: 0
+                id: selection_species
+                text: "Species"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_browse_animals_search_popup"
+
+            MDIconButton:
+                icon: "arrow-left"
+    
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_species()
+
+
+<admin_browse_animals_gender_popup@Screen>:
+    
+    name: "admin_browse_animals_gender_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            # orientation: 'vertical'
+
+            MDIconButton:
+                icon: "arrow-right"
+    
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                # on_press: root.load_image()
+                on_release: 
+                    root.next_gender()
+
+            MDFlatButton:
+                line: 0
+                id: selection_gender
+                text: "Gender"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_browse_animals_search_popup"
+
+            MDIconButton:
+                icon: "arrow-left"
+    
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                # on_press: root.load_image()
+                on_release: 
+                    root.previous_gender()
+
+
+<admin_browse_animals_availability_popup@Screen>:
+    
+    name: "admin_browse_animals_availability_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release: 
+                    root.next_availability()
+
+            MDFlatButton:
+                line: 0
+                id: selection_availability
+                text: "Availability"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_browse_animals_search_popup"
+
+            MDIconButton:
+                icon: "arrow-left"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_release: 
+                    root.previous_availability()
+
+
+<admin_browse_animals_dispositions_popup@Screen>:
+    
+    name: "admin_browse_animals_dispositions_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDFlatButton:
+                size_hint_x: 1
+                size_hint_y: 0.2
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.9}
+                on_release: 
+                    app.root.current = 'admin_browse_animals_search_popup'
+
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release: 
+                    root.next_disposition()
+
+            MDFlatButton:
+                line: 0
+                id: selection_dispositions
+                # md_bg_color: (0/255, 187/255, 224/255, 1)
+                text: "Disposition"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    # app.root.current = "admin_browse_animals_search_popup"
+                    root.toggle_select()
+
+            MDIconButton:
+                icon: "arrow-left"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_release: 
+                    root.previous_disposition()
+
+
+            MDFlatButton:
+                size_hint_x: 1
+                size_hint_y: 0.2
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.1}
+                on_release: 
+                    app.root.current = 'admin_browse_animals_search_popup'
