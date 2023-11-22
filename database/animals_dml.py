@@ -38,6 +38,7 @@ def add_animal_disposition(id_animal, id_disposition, db):
     addAnimalDispositions_params = (id_animal, id_disposition)
     db.query(addAnimalDispositions_cmd, addAnimalDispositions_params)
 
+
 def add_image(id_animal, db):
     """
     Adds an Image to the database with the given values for its attributes.
@@ -62,6 +63,7 @@ def delete_animal(id_animal, db):
     deleteAnimal_cmd = "DELETE FROM News WHERE id_news = %s"
     deleteAnimal_params = (id_animal,)
     db.query(deleteAnimal_cmd, deleteAnimal_params)
+
 
 def delete_image(id_image, db):
     """
@@ -96,6 +98,7 @@ def find_animal_by_id(id_animal, db):
     selectIDAnimal_result = db.query(selectIDAnimal_cmd, selectIDAnimal_params)
     return selectIDAnimal_result
 
+
 def find_animal_id_by_name(name, db):
     """
     Returns an animal id matching the name from the Animals. Returns an empty list if no entries exist.
@@ -104,10 +107,12 @@ def find_animal_id_by_name(name, db):
     :param Database db: database to be queried
     :return: [(id_animal)]
     """
-    selectIDAnimalName_cmd = 'SELECT id_animal FROM Animals WHERE Name = %s'; 
+    selectIDAnimalName_cmd = 'SELECT id_animal FROM Animals WHERE Name = %s'
     selectIDAnimalName_params = (name,)
-    selectIDAnimalName_result = db.query(selectIDAnimalName_cmd, selectIDAnimalName_params)
+    selectIDAnimalName_result = db.query(
+        selectIDAnimalName_cmd, selectIDAnimalName_params)
     return selectIDAnimalName_result
+
 
 def find_latest_image_id_by_animal(id_animal, db):
     """
@@ -117,10 +122,12 @@ def find_latest_image_id_by_animal(id_animal, db):
     :param Database db: database to be queried
     :return: [(id_image)]
     """
-    selectIDAnimalLatest_cmd = 'SELECT id_image FROM Images WHERE id_animal = %s ORDER BY id_image DESC'; 
+    selectIDAnimalLatest_cmd = 'SELECT id_image FROM Images WHERE id_animal = %s ORDER BY id_image DESC'
     selectIDAnimalLatest_params = (id_animal,)
-    selectIDAnimalLatest_result = db.query(selectIDAnimalLatest_cmd, selectIDAnimalLatest_params)
+    selectIDAnimalLatest_result = db.query(
+        selectIDAnimalLatest_cmd, selectIDAnimalLatest_params)
     return selectIDAnimalLatest_result[0] if selectIDAnimalLatest_result else selectIDAnimalLatest_result
+
 
 def get_all_animals(db):
     """
@@ -136,6 +143,68 @@ def get_all_animals(db):
     return selectAllAnimals_result
 
 
+def get_animals_by_species_breed_gender_availability_dispositions(id_species, id_breed, id_gender, id_availability, list_id_dispositions, db):
+    """
+    Returns a list containing the all the Animal entries satisfying the given parameters. Returns an empty list if no entries exist.
+
+    :param int id_species: ID of the target Animal(s)
+    :param int id_breed: breed of the target Animal(s)
+    :param int id_gender: gender of the target Animal(s)
+    :param int id_availability: availability of the target Animal(s)
+    :param List[int] list_id_dispositions: list of dispositions of the target Animal(s)
+    :param Database db: database to be queried
+    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, list(id_dispositions))]
+    """
+
+    selectAnimals_cmd = "select id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, summary, date_created, group_concat(c.id_disposition) as dispositions from \
+                            (select a.*, b.id_disposition from Animals a left join Animal_Dispositions b on a.id_animal = b.id_animal) c "
+    first_clause = 1
+    selectAnimals_params = []
+
+    if id_species:
+        selectAnimals_cmd += ' where c.id_species = %s '
+        selectAnimals_params.append(id_species)
+        first_clause = 0
+    if id_breed:
+        if not first_clause:
+            selectAnimals_cmd += ' and '
+        else:
+            selectAnimals_cmd += ' where '
+        selectAnimals_cmd += ' c.id_breed = %s '
+        selectAnimals_params.append(id_breed)
+        first_clause = 0
+    if id_gender:
+        if not first_clause:
+            selectAnimals_cmd += ' and '
+        else:
+            selectAnimals_cmd += ' where '
+        selectAnimals_cmd += ' c.id_gender = %s '
+        selectAnimals_params.append(id_gender)
+        first_clause = 0
+    if id_availability:
+        if not first_clause:
+            selectAnimals_cmd += ' and '
+        else:
+            selectAnimals_cmd += ' where '
+        selectAnimals_cmd += ' c.id_availability = %s '
+        selectAnimals_params.append(id_availability)
+        first_clause = 0
+
+    for i in range(len(list_id_dispositions)):
+        if list_id_dispositions[i] != 0:
+            if not first_clause:
+                selectAnimals_cmd += ' and '
+            else:
+                selectAnimals_cmd += ' where '
+            selectAnimals_cmd += ' (select count(*) from Animal_Dispositions where id_disposition = %s and id_animal = c.id_animal > 0) '
+            selectAnimals_params.append(i)
+            first_clause = 0
+    selectAnimals_cmd += "group by c.id_animal"
+    print(selectAnimals_cmd, selectAnimals_params)
+    selectAnimals_result = db.query(selectAnimals_cmd, selectAnimals_params)
+    return selectAnimals_result
+
+
 def get_all_dogs(db):
     """
     Returns a list containing all the dogs. Returns an empty list if no dogs exist.
@@ -148,6 +217,7 @@ def get_all_dogs(db):
     selectAllDogs_result = db.query(selectAllDogs_cmd, selectAllDogs_params)
     return selectAllDogs_result
 
+
 def get_all_images_by_id_animal(id_animal, db):
     """
     Returns a list containing all the Images belong to the target ID Animal. Returns an empty list if no Images exist.
@@ -158,8 +228,10 @@ def get_all_images_by_id_animal(id_animal, db):
     """
     selectAllImagesByAnimal_cmd = "SELECT id_image FROM Animals WHERE id_animal = %s ORDER BY id_image ASC"
     selectAllImagesByAnimal_params = (id_animal,)
-    selectAllImagesByAnimal_result = db.query(selectAllImagesByAnimal_cmd, selectAllImagesByAnimal_params)
+    selectAllImagesByAnimal_result = db.query(
+        selectAllImagesByAnimal_cmd, selectAllImagesByAnimal_params)
     return selectAllImagesByAnimal_result
+
 
 def get_dogs(breed, dispositions, recency, db):
     """
@@ -341,6 +413,7 @@ def update_animal(id_animal, id_availability, id_species, id_breed, name, birth_
                              birth_date, id_gender, size, summary, date_created, id_animal)
     updateIDAnimal_result = db.query(updateIDAnimal_cmd, updateIDAnimal_params)
     return updateIDAnimal_result
+
 
 def update_image(id_image, id_animal, db):
     """
