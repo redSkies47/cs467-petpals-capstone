@@ -15,6 +15,7 @@
         root.load_gender()
         root.load_availability()
         root.load_dispositions()
+        root.load_shelter()
    
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -176,22 +177,25 @@
 
 
             MDFloatLayout:
-                size_hint: (0.95, 0.421875)
+                # size_hint: (0.95, 0.421875)
+                size_hint: (0.95, 0.50484375)
                 radius: [10,10,10,10]
                 md_bg_color: (0/255,0/255,0/255,0.1)
 
-                pos_hint: {"center_x": 0.5, "center_y": 0.5390625}
+                pos_hint: {"center_x": 0.5, "center_y": 0.497578125}
 
-# .0675 button
-# 0.050625 gap 
 
+
+# 0.0759375
+
+# 0.00703125
 
                 MDFloatLayout:
                     md_bg_color: (0/255,0/255,0/255,1)
                     radius: [45,45,45,45]
                     size_hint_x: 0.95
-                    size_hint_y: 0.18
-                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 - 0.18/2 }
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 - 0.9125/6/2 }
 
                     MDRoundFlatButton:
                         id: breed
@@ -216,8 +220,8 @@
                     md_bg_color: (0/255,0/255,0/255,1)
                     radius: [45,45,45,45]
                     size_hint_x: 0.95
-                    size_hint_y: 0.18
-                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 2 - 0.18/2 - 0.18 }
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 * 2 - 0.9125/6/2 - 0.9125/6 }
 
                     MDRoundFlatButton:
                         id: gender
@@ -242,8 +246,8 @@
                     md_bg_color: (0/255,0/255,0/255,1)
                     radius: [45,45,45,45]
                     size_hint_x: 0.95
-                    size_hint_y: 0.18
-                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 3 - 0.18/2 - 0.18 * 2 }
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 * 3 - 0.9125/6/2 - 0.9125/6 * 2 }
 
                 
                     MDRoundFlatButton:
@@ -264,13 +268,12 @@
                         on_release:
                             app.root.current = "admin_add_animal_availability_popup"
                      
-                MDFloatLayout
+                MDFloatLayout:
                     md_bg_color: (0/255,0/255,0/255,1)
                     radius: [45,45,45,45]
                     size_hint_x: 0.95
-                    size_hint_y: 0.18
-                    pos_hint: {"center_x": 0.5, "center_y": 
-                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 4 - 0.18/2 - 0.18 * 3 }
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 * 4 - 0.9125/6/2 - 0.9125/6 * 3 }
 
                     MDRoundFlatButton:
                         id: dispositions
@@ -289,15 +292,39 @@
                         pos_hint: {"center_x": 0.5, "center_y": 0.5 }
                         on_release:
                             app.root.current = "admin_add_animal_dispositions_popup"
+
+                MDFloatLayout:
+                    md_bg_color: (0/255,0/255,0/255,1)
+                    radius: [45,45,45,45]
+                    size_hint_x: 0.95
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 * 5 - 0.9125/6/2 - 0.9125/6 * 4 }
+
+                    MDRoundFlatButton:
+                        id: shelter
+                        mode: "round"
+                        text: "Shelter"
+                        font_style: "Button"
+                        md_bg_color: (255/255,233/255,234/255,1)
+                        line_color: (255/255,233/255,234/255,1)
+                        text_color: 0/255,0/255,0/255,0.5
+                        # font_size_x: self.parent.width * 0.02
+                        font_size_y: self.height * 0.1
+                        size_hint_x: 1
+                        size_hint_y: 1
+                        halign: 'center'
+                        valign: 'center'
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5 }
+                        on_release:
+                            app.root.current = "admin_add_animal_shelter_popup"
                      
 
-                MDFloatLayout
+                MDFloatLayout:
                     md_bg_color: (0/255,0/255,0/255,1)
                     radius: [45,45,45,45]
                     size_hint_x: 0.94
-                    size_hint_y: 0.18
-                    pos_hint: {"center_x": 0.5, "center_y": 
-                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.1/6 * 5 - 0.18/2 - 0.18 * 4 }
+                    size_hint_y: 0.9125/6
+                    pos_hint: {"center_x": 0.5, "center_y": 1 - 0.0875/7 * 6 - 0.9125/6/2 - 0.9125/6 * 5 }
 
                     MDTextField:
                         id: name
@@ -316,16 +343,14 @@
                         text_color: 0/255,0/255,0/255,0.5
                         pos_hint: {"center_x": 0.5, "center_y": 0.5} 
 
-# 0.328125
+# 0.23265625
 
-
-            # 0.5375
 
             MDFloatLayout:
-                size_hint: (.95, 0.240625)
+                size_hint: (.95, 0.15765625)
                 radius: [10,10,10,10]
                 md_bg_color: (0/255,0/255,0/255,0.1)
-                pos_hint: {"center_x": 0.5, "center_y": 0.1953125}
+                pos_hint: {"center_x": 0.5, "center_y": 0.153828125}
 
                 MDFloatLayout:
                     size_hint: (0.95, 0.95)
@@ -772,3 +797,61 @@
                 pos_hint: {"center_x": 0.5, "center_y": 0.1}
                 on_release: 
                     app.root.current = 'admin_add_animal'
+
+
+<admin_add_animal_shelter_popup@Screen>:
+    
+    name: "admin_add_animal_shelter_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                on_release: 
+                    root.next_shelter()
+
+            MDFlatButton:
+                line: 0
+                id: selection_shelter
+                text: "Shelter"
+                font_style: "Button"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 1
+                size_hint_y: 0.2
+                multiline: True
+                readonly: False
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release:
+                    app.root.current = "admin_add_animal"
+
+            MDIconButton:
+                icon: "arrow-left"
+                size_hint_x: 1
+                size_hint_y: 0.2
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_release: 
+                    root.previous_shelter()
