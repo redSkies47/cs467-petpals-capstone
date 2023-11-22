@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from database.db_interface import Database
 from database.accounts_dml import *
 from database import animals_dml
+from database import images
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from datetime import date
@@ -170,6 +171,41 @@ class admin_add_animal_availability_popup(Screen):
         # screen_main.ids.breed.text = breeds_list[curr_species][0][1]
 
 
+class admin_add_animal_shelter_popup(Screen):
+
+    def __init__(self, **kwargs):
+        super(admin_add_animal_shelter_popup, self).__init__(**kwargs)
+        self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+
+    def next_shelter(self):
+        screen_main = self.manager.get_screen(
+            'admin_add_animal')
+        shelter_list = screen_main.shelter
+        curr_shelter = screen_main.curr_shelter
+        curr_shelter += 1
+        if curr_shelter >= len(shelter_list):
+            curr_shelter = 1
+        self.set(screen_main, shelter_list, curr_shelter)
+
+    def previous_shelter(self):
+        screen_main = self.manager.get_screen(
+            'admin_add_animal')
+        shelter_list = screen_main.shelter
+        curr_shelter = screen_main.curr_shelter
+        curr_shelter -= 1
+        if curr_shelter < 1:
+            curr_shelter = len(shelter_list) - 1
+        self.set(screen_main, shelter_list, curr_shelter)
+
+    def set(self, screen_main, shelter_list, curr_shelter):
+        # breeds_list = screen_main.breeds
+        screen_main.curr_shelter = curr_shelter
+        # screen_main.curr_breed = 0
+        self.ids.selection_shelter.text = shelter_list[curr_shelter]
+        screen_main.ids.shelter.text = shelter_list[curr_shelter]
+        # screen_main.ids.breed.text = breeds_list[curr_species][0][1]
+
+
 class admin_add_animal_dispositions_popup(Screen):
 
     def __init__(self, **kwargs):
@@ -240,16 +276,19 @@ class admin_add_animal(Screen):
         self.breeds = []
         self.gender = []
         self.availability = []
+        self.shelter = []
         self.dispositions = []
         self.curr_breed = 0
         self.curr_species = 1
         self.curr_gender = 1
         self.curr_availability = 1
+        self.curr_shelter = 1
         self.curr_disposition = 1
         self.dispositions_selection = []
         self.loaded_species_breeds = 0
         self.loaded_gender = 0
         self.loaded_availability = 0
+        self.loaded_shelter = 0
         self.loaded_dispositions = 0
 
     def load_species_breeds(self):
@@ -301,6 +340,15 @@ class admin_add_animal(Screen):
             self.dispositions.append(row[1])
             self.dispositions_selection.append(0)
 
+    def load_shelter(self):
+        if self.loaded_shelter != 0:
+            return
+        self.loaded_shelter = 1
+        self.shelter.append([])
+        shelter_table = animals_dml.get_shelters(self.db)
+        for row in shelter_table:
+            self.shelter.append(row[1])
+
     def getImageURL(self):
         image_widget = self.ids.image_widget
         if not self.image_link:
@@ -319,23 +367,32 @@ class admin_add_animal(Screen):
         gender = int(self.curr_gender)
         summary = str(self.ids.summary.text)
         date_created = str(date.today())
+        shelter = self.curr_shelter
         size = self.ids.size.text
 
-        animals_dml.add_animal(availability,
-                               species,
-                               breed,
-                               name,
-                               birth_date,
-                               gender,
-                               size,
-                               summary,
-                               date_created,
-                               self.db)
+        print("*** shelter: ", shelter)
+        add_res = animals_dml.add_animal(availability,
+                                         species,
+                                         breed,
+                                         name,
+                                         birth_date,
+                                         gender,
+                                         size,
+                                         summary,
+                                         date_created,
+                                         shelter,
+                                         self.db)
 
+        print("*** add res: ", add_res)
         animal_id = animals_dml.get_all_animals(self.db)[-1][0]
         for i in range(1, len(self.dispositions_selection)):
             if self.dispositions_selection[i] == 1:
                 animals_dml.add_animal_disposition(animal_id, i, self.db)
+
+        id_animal = animals_dml.get_all_animals(self.db)[0][0]
+        print("***** id_animal: ", id_animal)
+
+        images.upload_and_save_image(id_animal, self.image_link, self.db)
 
         print("save")
 

@@ -275,34 +275,12 @@ class admin_browse_animals(Screen):
         availability = self.curr_availability
         dispositions = self.dispositions_selection
 
-        # name = str(self.ids.name.text)  # *
-        # birth_date = str(self.ids.birth_date.text)
-        # summary = str(self.ids.summary.text)
-        # date_created = str(date.today())
-        # size = self.ids.size.text
-
         results = animals_dml.get_animals_by_species_breed_gender_availability_dispositions(species,
                                                                                             breed,
                                                                                             gender,
                                                                                             availability,
                                                                                             dispositions,
                                                                                             self.db)
-        # results[6] = results[6].split(',')
-        # print(results)
-    # selectAnimals_params = [id_species, id_breed, id_gender, id_availability]
-    # for i in range(len(list_id_dispositions)):
-    #     selectAnimals_cmd += "%s"
-    #     if i != len(list_id_dispositions) - 1:
-    #         selectAnimals_cmd += ", "
-    #     else:
-    #         selectAnimals_cmd += ") group by c.id_animal"
-
-    # species = 2
-    # breed = 3
-    # gender = 2
-    # avail = 1
-    # dispos = 1,7
-
         print(results)
 
     def load_results(self, search_results):
