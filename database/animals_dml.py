@@ -3,7 +3,7 @@ Contains all functions that perform CRUD operations on the Animals entity group.
 """
 
 
-def add_animal(id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, db):
+def add_animal(id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, db):
     """
     Adds a Animal entry to the database with the given values for its attributes.
 
@@ -16,12 +16,13 @@ def add_animal(id_availability, id_species, id_breed, name, birth_date, id_gende
     :param int size: size of the new Animal
     :param str summary: summary of the new Animal
     :param str date_created: formatted as YYYY-MM-DD
+    :param int id_shelter: shelter of the new Animal
     :param Database db: database to be queried
     :return: None
     """
-    addAnimal_cmd = "INSERT INTO Animals (id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    addAnimal_cmd = "INSERT INTO Animals (id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     addAnimal_params = (id_availability, id_species, id_breed,
-                        name, birth_date, id_gender, size, summary, date_created)
+                        name, birth_date, id_gender, size, summary, date_created, id_shelter)
     db.query(addAnimal_cmd, addAnimal_params)
 
 
@@ -49,6 +50,7 @@ def add_image(id_animal, db):
     """
     addImage_cmd = "INSERT INTO Images (id_animal) VALUES (%s)"
     addImage_params = (id_animal,)
+    print("***** addImage_params: ", addImage_params)
     db.query(addImage_cmd, addImage_params)
 
 
@@ -153,10 +155,10 @@ def get_animals_by_species_breed_gender_availability_dispositions(id_species, id
     :param int id_availability: availability of the target Animal(s)
     :param List[int] list_id_dispositions: list of dispositions of the target Animal(s)
     :param Database db: database to be queried
-    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, list(id_dispositions))]
+    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
     """
 
-    selectAnimals_cmd = "select id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, summary, date_created, group_concat(c.id_disposition) as dispositions from \
+    selectAnimals_cmd = "select id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, summary, date_created, id_shelter, group_concat(c.id_disposition) as dispositions from \
                             (select a.*, b.id_disposition from Animals a left join Animal_Dispositions b on a.id_animal = b.id_animal) c "
     first_clause = 1
     selectAnimals_params = []
@@ -203,6 +205,19 @@ def get_animals_by_species_breed_gender_availability_dispositions(id_species, id
     print(selectAnimals_cmd, selectAnimals_params)
     selectAnimals_result = db.query(selectAnimals_cmd, selectAnimals_params)
     return selectAnimals_result
+
+
+def get_latest_animal(db):
+    """
+    Returns the most recently added animal. Returns an empty list if no entry exists.
+    :param Database db: database to be queried
+    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
+    """
+    selectLatestAnimal_cmd = "select * from Animals order by id_animal desc limit 1;"
+    selectLatestAnimal_params = ()
+    selectLatestAnimal_result = db.query(
+        selectLatestAnimal_cmd, selectLatestAnimal_params)
+    return selectLatestAnimal_result
 
 
 def get_all_dogs(db):
@@ -294,6 +309,20 @@ def get_availability(db):
     selectAvailability_result = db.query(
         selectAvailability_cmd, selectAvailability_params)
     return selectAvailability_result
+
+
+def get_shelters(db):
+    """
+    Returns a list containing all shelters. Returns an empty list if none exist.
+
+    :param Database db: database to be queried
+    :return: [(id_shelter, name, address, phone_number, opening_hour, closing_hour)]
+    """
+    selectShelter_cmd = "SELECT * FROM Shelters"
+    selectShelter_params = ()
+    selectShelter_result = db.query(
+        selectShelter_cmd, selectShelter_params)
+    return selectShelter_result
 
 
 def get_breed_by_species(id_species, db):
