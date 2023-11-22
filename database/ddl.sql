@@ -9,6 +9,19 @@ SET AUTOCOMMIT = 0;
 -- Create tables
 -- -----------------------------------------------------------------------------
 
+-- Create Shelters table
+CREATE TABLE `Shelters` (
+    `id_shelter` int AUTO_INCREMENT UNIQUE NOT NULL,
+    `name` varchar(100) NOT NULL,
+    `address` varchar(255) NOT NULL,
+    `phone_number` varchar(12) NOT NULL, /* ###-###-#### */
+    `opening_hour` int NOT NULL
+        CHECK (`opening_hour` >= 0 AND `opening_hour` < 25),
+    `closing_hour` int NOT NULL
+        CHECK (`closing_hour` >= 0 AND `closing_hour` < 25),
+    PRIMARY KEY (`id_shelter`)
+);
+
 -- Create Availabilities table
 CREATE TABLE `Availabilities` (
     `id_availability` int AUTO_INCREMENT UNIQUE NOT NULL,
@@ -106,6 +119,16 @@ CREATE TABLE `Accounts` (
     FOREIGN KEY (`id_credential`) REFERENCES `Credentials` (`id_credential`)
 );
 
+-- Create Liked Animals table
+CREATE TABLE `Liked_Animals` (
+    `id_liked_animal` int AUTO_INCREMENT UNIQUE NOT NULL,
+    `id_account` int NOT NULL,
+    `id_animal` int NOT NULL,
+    PRIMARY KEY (`id_liked_animal`),
+    FOREIGN KEY (`id_account`) REFERENCES `Accounts` (`id_account`),
+    FOREIGN KEY (`id_animal`) REFERENCES `Animals` (`id_animal`)
+);
+
 -- Create News table
 CREATE TABLE `News` (
     `id_news` int AUTO_INCREMENT UNIQUE NOT NULL,
@@ -114,19 +137,6 @@ CREATE TABLE `News` (
     `title` varchar(255) NOT NULL,
     `body` text(500) NOT NULL,
     PRIMARY KEY (`id_news`)
-);
-
--- Create Shelters table
-CREATE TABLE `Shelters` (
-    `id_shelter` int AUTO_INCREMENT UNIQUE NOT NULL,
-    `name` varchar(100) NOT NULL,
-    `address` varchar(255) NOT NULL,
-    `phone_number` varchar(12) NOT NULL, /* ###-###-#### */
-    `opening_hour` int NOT NULL
-        CHECK (`opening_hour` >= 0 AND `opening_hour` < 25),
-    `closing_hour` int NOT NULL
-        CHECK (`closing_hour` >= 0 AND `closing_hour` < 25),
-    PRIMARY KEY (`id_shelter`)
 );
 
 
@@ -231,6 +241,14 @@ VALUES
 -- -----------------------------------------------------------------------------
 -- Insert sample data into tables
 -- -----------------------------------------------------------------------------
+-- Insert new Shelters
+INSERT INTO `Shelters` (`name`, `address`, `phone_number`,
+`opening_hour`, `closing_hour`)
+VALUES
+('Pet Refuge', '2273 Bel Meadow Drive, Bellevue Oregon',
+'909-410-5017', 9, 17),
+('Jefferson County Animal Shelter', '153 Lakefront Drive, Avondale Washington', '782-889-0021', 9, 17),
+('Happy Pet Rescue', '621 Hazel Street, Bisbee California', '145-617-0830', 10, 16);
 
 -- Insert new Animals
 INSERT INTO `Animals` (`id_availability`, `id_species`, `id_breed`, `name`, `birth_date`, `id_gender`, `size`, `summary`, `date_created`, `id_shelter`)
@@ -289,15 +307,6 @@ VALUES
 (2, 'director@petrefuge.org', 'L4ve@nimal$', 'Pet Refuge'),
 (1, 'eSharp@gmail.com', 'dogSearch4', 'Enrique Sharp'),
 (1, 'tashHop@icloud.com', 'sw33Tc@ts', 'Tasha Hopkins');
-
--- Insert new Shelters
-INSERT INTO `Shelters` (`name`, `address`, `phone_number`,
-`opening_hour`, `closing_hour`)
-VALUES
-('Pet Refuge', '2273 Bel Meadow Drive, Bellevue Oregon',
-'909-410-5017', 9, 17),
-('Jefferson County Animal Shelter', '153 Lakefront Drive, Avondale Washington', '782-889-0021', 9, 17),
-('Happy Pet Rescue', '621 Hazel Street, Bisbee California', '145-617-0830', 10, 16);
 
 -- Insert new News
 INSERT INTO `News` (`date`, `title`, `body`)

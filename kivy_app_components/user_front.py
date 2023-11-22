@@ -40,8 +40,6 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
 
-liked_animal_list = []
-
 # --- App Components ---#
 class MainApp(MDApp):
     db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
@@ -261,7 +259,7 @@ class DogBrowseWindow(Screen):
         self.no_results_label = Label(text="No matches were found!",
                               color = (255/255, 0/255, 0/255, 1),
                               size_hint = (.2,.2),
-                              font_size = self.width/2, 
+                              font_size = self.width/2,
                               pos_hint = {"center_x": 0.5, "center_y": .5})
         self.dog_card_present = 0
         super(DogBrowseWindow, self).__init__(**kwargs)
@@ -365,7 +363,7 @@ class DogBrowseWindow(Screen):
                 self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
-        
+
 
     def remove_dog(self):
         self.dog_card_present = 0
@@ -377,30 +375,32 @@ class DogBrowseWindow(Screen):
         self.manager.current = "dogprofile"
 
     def show_liked_animals(self):
-        if liked_animal_list:
-            for animal in liked_animal_list:
-                dog_name = animal
-                self.liked_animal_item = TwoLineAvatarIconListItem(
-                        IconLeftWidget(
-                            icon="information-outline",
-                            on_release = lambda x: self.liked_dog_profile()
-                        ),
-                        IconRightWidget(
-                            icon="minus",
-                            on_release=lambda x: self.remove_liked_animal()
-                        ),
-                        secondary_text="Shelter",
-                        bg_color=(255/255, 233/255, 234/255, 1),
-                        text_color= (56/255, 45/255, 94/255, 1),
-                        text=f"[size=54]{dog_name}[/size]"
-                )
-                self.liked_animal_card_list.append(self.liked_animal_item)
-                self.ids.liked_list.add_widget(self.liked_animal_item)
-        else:
-            pass
-    
+        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        for id_animal in liked_animal_list:
+            animal = find_animal_by_id(id_animal[0], MainApp.db)[0]
+            animal_name = animal[4]
+            shelter_name = animal[10]
+            self.liked_animal_item = TwoLineAvatarIconListItem(
+                IconLeftWidget(
+                    icon="information-outline",
+                    on_release = lambda x: self.liked_dog_profile()
+                ),
+                IconRightWidget(
+                    icon="minus",
+                    on_release=lambda x: self.remove_liked_animal()
+                ),
+                secondary_text=shelter_name,
+                bg_color=(255/255, 233/255, 234/255, 1),
+                text_color= (56/255, 45/255, 94/255, 1),
+                text=f"[size=54]{animal_name}[/size]"
+            )
+            self.liked_animal_card_list.append(self.liked_animal_item)
+            self.ids.liked_list.add_widget(self.liked_animal_item)
+
     def remove_liked_animal(self):
-        print(liked_animal_list)
+        # REMOVED GLOBAL VARIABLE so this will not work anymore
+        # print(liked_animal_list)
+        print('temporary placeholder')
         # liked_animal_list.remove(self.dog_name)
         # self.ids.liked_list.remove_widget(self.liked_animal_item)
 
@@ -441,10 +441,10 @@ class DogProfile(Screen):
         self.date_created = str(dog_info[9])
 
     def add_liked_animal(self):
-        if self.dog_name not in liked_animal_list:
-            liked_animal_list.append(self.dog_name)
-        
-        
+        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        liked_animal_list = [liked_animal[0] for liked_animal in liked_animal_list]
+        if self.id_dog not in liked_animal_list:
+            add_liked_animal(MainApp.id_account, self.id_dog, MainApp.db)
 
 
 class DogSearch(Screen):

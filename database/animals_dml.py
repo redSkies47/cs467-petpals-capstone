@@ -84,16 +84,16 @@ def find_animal_by_id(id_animal, db):
 
     :param int id_animal: ID of the target Animal
     :param Database db: database to be queried
-    :return: [(id_animal, availability, species, breed, name, birth_date, gender, size, summary, date_created)]
+    :return: [(id_animal, availability, species, breed, name, birth_date, gender, size, summary, date_created, shelter)]
     """
-    selectIDAnimal_cmd = "SELECT Animals.id_animal, Availabilities.description AS availability, Species.description AS species, Breeds.description AS breed, Animals.name, Animals.birth_date, Genders.description AS gender, Animals.size, Animals.summary, Animals.date_created \
+    selectIDAnimal_cmd = "SELECT Animals.id_animal, Availabilities.description AS availability, Species.description AS species, Breeds.description AS breed, Animals.name, Animals.birth_date, Genders.description AS gender, Animals.size, Animals.summary, Animals.date_created, Shelters.name AS shelter \
         FROM Animals \
             INNER JOIN Availabilities ON Availabilities.id_availability = Animals.id_availability \
             INNER JOIN Species ON Species.id_species = Animals.id_species \
             INNER JOIN Breeds ON Breeds.id_breed = Animals.id_breed \
             INNER JOIN Genders ON Genders.id_gender = Animals.id_gender \
+            INNER JOIN Shelters ON Shelters.id_shelter = Animals.id_shelter \
         WHERE id_animal = %s"
-    # selectIDAnimal_cmd = "SELECT * FROM Animals WHERE id_animal = %s"
     selectIDAnimal_params = (id_animal,)
     selectIDAnimal_result = db.query(selectIDAnimal_cmd, selectIDAnimal_params)
     return selectIDAnimal_result

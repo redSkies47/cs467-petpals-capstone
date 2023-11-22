@@ -109,3 +109,29 @@ def is_admin(id_account, db):
         selectCredentials_result = db.query(selectCredentials_cmd, selectCredentials_params)
         credentials = selectCredentials_result[0][0]
         return credentials == 2
+
+def add_liked_animal(id_account, id_animal, db):
+        """
+        Adds a Liked_Animal entry to the database with the given attribute values.
+
+        :param int id_account: ID of the specified Account
+        :param int id_animal: ID of the specified Animal
+        :param Database db: database to be queried
+        :return: None
+        """
+        addLikedAnimal_cmd = "INSERT INTO Liked_Animals (id_account, id_animal) VALUES (%s, %s)"
+        addLikedAnimal_params = (id_account, id_animal)
+        db.query(addLikedAnimal_cmd, addLikedAnimal_params)
+
+def get_liked_animals(id_account, db):
+        """
+        Returns the list of Liked Animals for the Account with the specified ID.
+
+        :param int id_account: ID of the target Account
+        :param Database db: database to be queried
+        :return: [(id_animal)]
+        """
+        getLikedAnimals_cmd = "SELECT id_animal FROM Liked_Animals WHERE id_account = %s"
+        getLikedAnimals_params = (id_account,)
+        getLikedAnimals_result = db.query(getLikedAnimals_cmd, getLikedAnimals_params)
+        return getLikedAnimals_result
