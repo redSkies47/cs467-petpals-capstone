@@ -219,7 +219,7 @@
                                 # PLACEHOLDER: should also go back to login screen?
 
             MDBottomNavigationItem:
-                name: 'screen 3'
+                name: 'liked_animals'
                 text: 'Liked Animals'
                 icon: 'heart'
                 on_tab_press:
@@ -242,17 +242,7 @@
                         size_hint_y: 0.3
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                         MDList:
-                            TwoLineAvatarIconListItem:
-                                bg_color:(255/255, 233/255, 234/255, 1)
-                                text: "Doug"
-                                text_color: (56/255, 45/255, 94/255, 1)
-                                secondary_text: "Dog"
-
-                                IconLeftWidget:
-                                    icon: "information-outline"
-
-                                IconRightWidget:
-                                    icon: "minus"
+                            id: liked_list
 
 
 

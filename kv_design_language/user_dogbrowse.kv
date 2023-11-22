@@ -86,6 +86,8 @@
                         size_hint_y: 0.65
                         md_bg_color: (0, 187/255, 224/255, 1)
                         pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                        on_release:
+                            root.add_liked_animal()
 
                 MDBoxLayout:
                     radius: [0,0,0,0]
@@ -107,8 +109,8 @@
                             root.manager.transition.direction = "right"
 			Image:
 				source: '../images/petpals_logo.png'
-			Image:
-				source: '../images/petpals_logo.png'
+			AsyncImage:
+				source: 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/1.jpg'
 
 
 
@@ -132,13 +134,14 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
+                    root.reset_liked_list()
                 GridLayout:
                     cols:1
                     size: root.width, root.height
 
                     padding: 150
                     spacing: 50
-                    ToggleButton:
+                    Button:
                         text:"Show Results"
                         group: "results"
                         size_hint_y: None
@@ -149,7 +152,7 @@
                         on_release:
                             root.add_dog()
                     GridLayout:
-                        id: grid
+                        id: dog_grid
                         cols:2
                         padding: 150
                         spacing: 30
@@ -160,6 +163,7 @@
                         font_size: 30
                         background_normal: ''
                         background_color: (222/255, 23/255, 63/255, 1)
+                        text_autoupdate: True
                         on_release:
                             root.remove_dog()
                             app.root.current = "dogsearch"
@@ -173,6 +177,7 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
+                    root.reset_liked_list()
 
                 MDBoxLayout:
                     orientation: 'vertical'
@@ -252,6 +257,8 @@
                 name: 'account'
                 text: 'Account'
                 icon: 'account'
+                on_tab_press:
+                    root.reset_liked_list()
 
                 GridLayout:
                     cols:1
@@ -371,16 +378,31 @@
                                 # PLACEHOLDER: should also go back to login screen?
 
             MDBottomNavigationItem:
-                name: 'screen 3'
+                name: 'liked_animals'
                 text: 'Liked Animals'
                 icon: 'heart'
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
-
-                Label:
-                    text: "will fill later"
-
+                    root.show_liked_animals()
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    md_bg_color: (171/255, 196/255, 212/255, 1)
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'top'
+                        padding: 20
+                        FitImage:
+                            source: '../images/petpals_logo.png'
+                            size_hint: .3, .3
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'top'
+                    padding: (20,410)
+                    MDList:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                        id: liked_list
 
 
         Widget:

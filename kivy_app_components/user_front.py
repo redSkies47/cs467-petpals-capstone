@@ -18,6 +18,7 @@ from kivy.core.window import Window
 from kivy.uix.dropdown import DropDown
 from kivy.uix.carousel import Carousel
 from kivy.uix.image import AsyncImage
+from kivymd.uix.list import TwoLineAvatarIconListItem, IconLeftWidget, IconRightWidget
 from kivy.factory import Factory
 from kivy.uix.button import Button
 from kivy.properties import ListProperty, ObjectProperty
@@ -38,6 +39,8 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
+
+liked_animal_list = []
 
 # --- App Components ---#
 class MainApp(MDApp):
@@ -260,6 +263,7 @@ class DogBrowseWindow(Screen):
                               size_hint = (.2,.2),
                               font_size = self.width/2, 
                               pos_hint = {"center_x": 0.5, "center_y": .5})
+        self.dog_card_present = 0
         super(DogBrowseWindow, self).__init__(**kwargs)
 
     def get_news(self):
@@ -340,6 +344,8 @@ class DogBrowseWindow(Screen):
 
     dog_card = ObjectProperty(None)
     dog_card_list = []
+    liked_animal_card = ObjectProperty(None)
+    liked_animal_card_list = []
 
     def add_dog(self):
         # Retrieve matching dogs
@@ -348,19 +354,62 @@ class DogBrowseWindow(Screen):
         # PLACEHOLDER: no matching dogs message
         if not dog_list:
             self.add_widget(self.no_results_label)
+            self.dog_card_present = 1
         # Add each dog card
-        for dog in dog_list:
-            dog_id = dog[0]
-            dog_name = dog[1]
-            self.dog_card = Button(text=dog_name)
-            self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
-            self.dog_card_list.append(self.dog_card)
-            self.ids.grid.add_widget(self.dog_card)
+        if self.dog_card_present == 0:
+            self.dog_card_present = 1
+            for dog in dog_list:
+                dog_id = dog[0]
+                dog_name = dog[1]
+                self.dog_card = Button(text=dog_name)
+                self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+                self.dog_card_list.append(self.dog_card)
+                self.ids.dog_grid.add_widget(self.dog_card)
+        
 
     def remove_dog(self):
+        self.dog_card_present = 0
         self.remove_widget(self.no_results_label)
         for cards in self.dog_card_list:
-            self.ids.grid.remove_widget(cards)
+            self.ids.dog_grid.remove_widget(cards)
+
+    def liked_dog_profile(self):
+        self.manager.current = "dogprofile"
+
+    def show_liked_animals(self):
+        if liked_animal_list:
+            for animal in liked_animal_list:
+                dog_name = animal
+                self.liked_animal_item = TwoLineAvatarIconListItem(
+                        IconLeftWidget(
+                            icon="information-outline",
+                            on_release = lambda x: self.liked_dog_profile()
+                        ),
+                        IconRightWidget(
+                            icon="minus",
+                            on_release=lambda x: self.remove_liked_animal()
+                        ),
+                        secondary_text="Shelter",
+                        bg_color=(255/255, 233/255, 234/255, 1),
+                        text_color= (56/255, 45/255, 94/255, 1),
+                        text=f"[size=54]{dog_name}[/size]"
+                )
+                self.liked_animal_card_list.append(self.liked_animal_item)
+                self.ids.liked_list.add_widget(self.liked_animal_item)
+        else:
+            pass
+    
+    def remove_liked_animal(self):
+        print(liked_animal_list)
+        # liked_animal_list.remove(self.dog_name)
+        # self.ids.liked_list.remove_widget(self.liked_animal_item)
+
+    def reset_liked_list(self):
+        if self.liked_animal_card_list:
+            for liked_cards in self.liked_animal_card_list:
+                self.ids.liked_list.remove_widget(liked_cards)
+
+
 
 class DogProfile(Screen):
     id_dog = NumericProperty(None)
@@ -390,6 +439,12 @@ class DogProfile(Screen):
         self.size_in_lbs = str(dog_info[7])
         self.summary = dog_info[8]
         self.date_created = str(dog_info[9])
+
+    def add_liked_animal(self):
+        if self.dog_name not in liked_animal_list:
+            liked_animal_list.append(self.dog_name)
+        
+        
 
 
 class DogSearch(Screen):
