@@ -318,6 +318,17 @@ VALUES
 ('2023-10-28', 'Winter 5k Run Fundraiser',
 'This December 10 at Bellevue Community Center, there is a local 5k Winter Run. Join Pet Refuge in the 5k Winter Run as a volunteer or donor. Volunteers can join the 5k Run as representative runners. Another opportunity is to be present in the tent providing information and other goodies to the community about Pet Refuge. Or support our fundraising efforts by donating on behalf of our runners! To learn more visit our 5k Winter Run''s event page.');
 
+-- Insert new Images
+INSERT INTO `Images` (`id_animal`)
+VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7);
+
 -- -----------------------------------------------------------------------------
 -- Re-enable commits and foreign key checks
 -- -----------------------------------------------------------------------------
