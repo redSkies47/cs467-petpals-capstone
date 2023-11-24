@@ -16,6 +16,8 @@ BRANCH = "main"
 """
 Contains functions to save and retrieve images from github
 """
+
+
 def upload_and_save_image(id_animal, filename, db):
     """
     Uploads and saves the image located at the provided filename for the target animal matchin the id_animal.
@@ -30,8 +32,8 @@ def upload_and_save_image(id_animal, filename, db):
     id_image = animals_dml.find_latest_image_id_by_animal(id_animal, db)
 
     # Connect to github api
-    g=Github(TOKEN)
-    repo=g.get_repo(REPO)
+    g = Github(TOKEN)
+    repo = g.get_repo(REPO)
 
     with open(filename, 'rb') as file:
         bytes = file.read()
@@ -42,8 +44,9 @@ def upload_and_save_image(id_animal, filename, db):
 
     # Use github api to store image in repo
     repo.create_file(github_path, MESSAGE, bytes, BRANCH)
-    
+
     return github_path
+
 
 def place_sample_images():
     """
@@ -58,7 +61,7 @@ def place_sample_images():
     DB_NAME = os.getenv('DB_NAME')
 
     DB = db_interface.Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-    
+
     # Set image relative paths
     paths = [".\images\\01.jpg",
              ".\images\\02.jpg",
@@ -67,15 +70,15 @@ def place_sample_images():
              ".\images\\05.jpg",
              ".\images\\06.jpg",
              ".\images\\07.jpg"]
-    
+
     pet_id = {
-           paths[0]: 1,
-           paths[1]: 2,
-           paths[2]: 3,
-           paths[3]: 4,
-           paths[4]: 5,
-           paths[5]: 6,
-           paths[6]: 7
+        paths[0]: 1,
+        paths[1]: 2,
+        paths[2]: 3,
+        paths[3]: 4,
+        paths[4]: 5,
+        paths[5]: 6,
+        paths[6]: 7
     }
 
     # Place sample image into github and update database
@@ -83,6 +86,7 @@ def place_sample_images():
         relative_path = upload_and_save_image(pet_id[path], path, DB)
         print(relative_path)
 
+
 if __name__ == "__main__":
-    
+
     place_sample_images()

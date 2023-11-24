@@ -21,6 +21,7 @@ from kivy.properties import ListProperty
 from kivy.uix.button import Button
 import time
 import random
+import subprocess
 
 # --- Set Up ---#
 
@@ -30,6 +31,21 @@ DB_HOST = os.getenv('DB_HOST')
 DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
+
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+
+
+# Assign Github variables
+TOKEN = os.getenv('TOKEN')
+DOMAIN = "https://github.com/"
+REPO = "redSkies47/cs467-petpals-capstone"
+REPO_PATH = "images/"
+MESSAGE = "upload image"
+BRANCH = "main"
 
 
 class admin_add_animal_breed_popup(Screen):
@@ -389,38 +405,58 @@ class admin_add_animal(Screen):
             if self.dispositions_selection[i] == 1:
                 animals_dml.add_animal_disposition(animal_id, i, self.db)
 
-        id_animal = animals_dml.get_all_animals(self.db)[0][0]
+        added_animal = animals_dml.get_all_animals(self.db)[-1]
+        print("**** all animals: ", added_animal)
+
+        # test
+        id_animal = int(added_animal[0])
+
+        # id_animal = animals_dml.get_all_animals(self.db)[-1][0]
         print("***** id_animal: ", id_animal)
 
         images.upload_and_save_image(id_animal, self.image_link, self.db)
+        self.git_pull()
 
         print("save")
 
+    def git_pull(repository_path):
+        try:
+            repo = DOMAIN + REPO
+            branch = BRANCH
+            main_dir = '/home/shukie/Documents/CS467/cs467-petpals-capstone'
+            subprocess.run(['cd', main_dir], shell=True)
+            command = f'git pull {repo} {branch}'
+            result = subprocess.run(
+                command, shell=True, capture_output=True, text=True)
+            print("Git pull successful. ", result)
+        except subprocess.CalledProcessError as e:
+            print(f"Error during git pull: {e}")
 
-class FileChoose(Button):
-    '''
-    Button that triggers 'filechooser.open_file()' and processes
-    the data response from filechooser Activity.
-    '''
 
-    selection = ListProperty([])
+# class FileChoose(Button):
+#     '''
+#     Button that triggers 'filechooser.open_file()' and processes
+#     the data response from filechooser Activity.
+#     '''
 
-    def choose(self):
-        '''
-        Call plyer filechooser API to run a filechooser Activity.
-        '''
-        filechooser.open_file(on_selection=self.handle_selection)
+#     selection = ListProperty([])
 
-    def handle_selection(self, selection):
-        '''
-        Callback function for handling the selection response from Activity.
-        '''
-        self.selection = selection
+#     def choose(self):
+#         '''
+#         Call plyer filechooser API to run a filechooser Activity.
+#         '''
+#         filechooser.open_file(on_selection=self.handle_selection)
 
-    def on_selection(self, *a, **k):
-        '''
-        Update TextInput.text after FileChoose.selection is changed
-        via FileChoose.handle_selection.
-        '''
-        # App.get_running_app().root.ids.result.text = str(self.selection)
-        pass
+#     def handle_selection(self, selection):
+#         '''
+#         Callback function for handling the selection response from Activity.
+#         '''
+#         self.selection = selection
+
+#     def on_selection(self, *a, **k):
+#         '''
+#         Update TextInput.text after FileChoose.selection is changed
+#         via FileChoose.handle_selection.
+#         '''
+#         # App.get_running_app().root.ids.result.text = str(self.selection)
+#         pass
