@@ -241,7 +241,7 @@ def get_all_images_by_id_animal(id_animal, db):
     :param Database db: database to be queried
     :return:
     """
-    selectAllImagesByAnimal_cmd = "SELECT id_image FROM Animals WHERE id_animal = %s ORDER BY id_image ASC"
+    selectAllImagesByAnimal_cmd = "SELECT id_image FROM Images WHERE id_animal = %s ORDER BY id_image ASC"
     selectAllImagesByAnimal_params = (id_animal,)
     selectAllImagesByAnimal_result = db.query(
         selectAllImagesByAnimal_cmd, selectAllImagesByAnimal_params)
