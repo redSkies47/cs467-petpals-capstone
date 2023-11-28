@@ -39,6 +39,7 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
+dog_dictionary = {}
 
 # --- App Components ---#
 class MainApp(MDApp):
@@ -168,6 +169,7 @@ class LandingWindow(Screen):
                               color = (255/255, 0/255, 0/255, 1),
                               font_size = 25,
                               pos_hint = {"center_x": 0.5, "center_y": .95})
+        self.liked_card_present = 0
         super(LandingWindow, self).__init__(**kwargs)
 
     def get_news(self):
@@ -241,6 +243,53 @@ class LandingWindow(Screen):
         if self.delete_label:
             self.remove_widget(self.delete_label)
 
+    liked_animal_card = ObjectProperty(None)
+    liked_animal_card_list = []
+
+    def liked_dog_profile(self):
+        self.manager.current = "dogprofile"
+
+    def show_liked_animals(self):
+        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        if not liked_animal_list:
+            self.liked_card_present = 1
+        if self.liked_card_present == 0:
+            self.liked_card_present = 1
+            for id_animal in liked_animal_list:
+                animal = find_animal_by_id(id_animal[0], MainApp.db)[0]
+                animal_name = animal[4]
+                shelter_name = animal[10]
+                self.liked_animal_item = TwoLineAvatarIconListItem(
+                    IconLeftWidget(
+                        icon="information-outline",
+                        on_release = lambda x: self.liked_dog_profile()
+                    ),
+                    IconRightWidget(
+                        icon="minus",
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                    ),
+                    secondary_text=shelter_name,
+                    bg_color=(255/255, 233/255, 234/255, 1),
+                    text_color= (56/255, 45/255, 94/255, 1),
+                    text=f"[size=54]{animal_name}[/size]"
+                )
+                dog_dictionary[id_animal] = self.liked_animal_item
+                self.liked_animal_card_list.append(self.liked_animal_item)
+                self.ids.liked_list.add_widget(self.liked_animal_item)
+
+    def remove_liked_animal(self, id):
+        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        self.ids.liked_list.remove_widget(dog_dictionary[id])
+        # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
+        print(liked_animal_list) # tester
+
+    def reset_liked_list(self):
+        self.liked_card_present = 0
+        if self.liked_animal_card_list:
+            for liked_cards in self.liked_animal_card_list:
+                self.ids.liked_list.remove_widget(liked_cards)
+
+
 class DogBrowseWindow(Screen):
     name_input = ObjectProperty(None)       # update account form - name
     email_input = ObjectProperty(None)      # update account form - email
@@ -262,6 +311,7 @@ class DogBrowseWindow(Screen):
                               font_size = self.width/2,
                               pos_hint = {"center_x": 0.5, "center_y": .5})
         self.dog_card_present = 0
+        self.liked_card_present = 0
         super(DogBrowseWindow, self).__init__(**kwargs)
 
     def get_news(self):
@@ -359,7 +409,9 @@ class DogBrowseWindow(Screen):
             for dog in dog_list:
                 dog_id = dog[0]
                 dog_name = dog[1]
-                self.dog_card = Button(text=dog_name)
+                self.dog_card = Button(text=dog_name,
+                                       color = (1,1,1,1),
+                                        background_normal = '../images/5.jpg')
                 self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
@@ -376,35 +428,40 @@ class DogBrowseWindow(Screen):
 
     def show_liked_animals(self):
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
-        for id_animal in liked_animal_list:
-            animal = find_animal_by_id(id_animal[0], MainApp.db)[0]
-            animal_name = animal[4]
-            shelter_name = animal[10]
-            self.liked_animal_item = TwoLineAvatarIconListItem(
-                IconLeftWidget(
-                    icon="information-outline",
-                    on_release = lambda x: self.liked_dog_profile()
-                ),
-                IconRightWidget(
-                    icon="minus",
-                    on_release=lambda x: self.remove_liked_animal()
-                ),
-                secondary_text=shelter_name,
-                bg_color=(255/255, 233/255, 234/255, 1),
-                text_color= (56/255, 45/255, 94/255, 1),
-                text=f"[size=54]{animal_name}[/size]"
-            )
-            self.liked_animal_card_list.append(self.liked_animal_item)
-            self.ids.liked_list.add_widget(self.liked_animal_item)
+        if not liked_animal_list:
+            self.liked_card_present = 1
+        if self.liked_card_present == 0:
+            self.liked_card_present = 1
+            for id_animal in liked_animal_list:
+                animal = find_animal_by_id(id_animal[0], MainApp.db)[0]
+                animal_name = animal[4]
+                shelter_name = animal[10]
+                self.liked_animal_item = TwoLineAvatarIconListItem(
+                    IconLeftWidget(
+                        icon="information-outline",
+                        on_release = lambda x: self.liked_dog_profile()
+                    ),
+                    IconRightWidget(
+                        icon="minus",
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                    ),
+                    secondary_text=shelter_name,
+                    bg_color=(255/255, 233/255, 234/255, 1),
+                    text_color= (56/255, 45/255, 94/255, 1),
+                    text=f"[size=54]{animal_name}[/size]"
+                )
+                dog_dictionary[id_animal] = self.liked_animal_item
+                self.liked_animal_card_list.append(self.liked_animal_item)
+                self.ids.liked_list.add_widget(self.liked_animal_item)
 
-    def remove_liked_animal(self):
-        # REMOVED GLOBAL VARIABLE so this will not work anymore
-        # print(liked_animal_list)
-        print('temporary placeholder')
-        # liked_animal_list.remove(self.dog_name)
-        # self.ids.liked_list.remove_widget(self.liked_animal_item)
+    def remove_liked_animal(self, id):
+        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        self.ids.liked_list.remove_widget(dog_dictionary[id])
+        # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
+        print(liked_animal_list) # tester
 
     def reset_liked_list(self):
+        self.liked_card_present = 0
         if self.liked_animal_card_list:
             for liked_cards in self.liked_animal_card_list:
                 self.ids.liked_list.remove_widget(liked_cards)
@@ -423,6 +480,11 @@ class DogProfile(Screen):
     summary = StringProperty('')
 
     def __init__(self, **kwargs):
+        self.added_to_liked = Label(text="Successfully added to your liked list!",
+                              color = (255/255, 0/255, 0/255, 1),
+                              size_hint = (.2,.2),
+                              font_size = self.width/2.3,
+                              pos_hint = {"center_x": 0.5, "center_y": .16})
         super(DogProfile, self).__init__(**kwargs)
 
     def set_id(self, id):
@@ -441,11 +503,14 @@ class DogProfile(Screen):
         self.date_created = str(dog_info[9])
 
     def add_liked_animal(self):
+        self.add_widget(self.added_to_liked)
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
         liked_animal_list = [liked_animal[0] for liked_animal in liked_animal_list]
         if self.id_dog not in liked_animal_list:
             add_liked_animal(MainApp.id_account, self.id_dog, MainApp.db)
 
+    def remove_added_msg(self):
+        self.remove_widget(self.added_to_liked)
 
 class DogSearch(Screen):
     # Store selected breed, disposition(s), and recency

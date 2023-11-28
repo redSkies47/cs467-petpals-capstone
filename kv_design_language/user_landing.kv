@@ -21,6 +21,7 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
+                    root.reset_liked_list()
 
                 MDBoxLayout:
                     orientation: 'vertical'
@@ -100,6 +101,10 @@
                 name: 'account'
                 text: 'Account'
                 icon: 'account'
+                on_tab_press:
+                    root.clearchange()
+                    root.cleardelete()
+                    root.reset_liked_list()
 
                 GridLayout:
                     cols:1
@@ -225,6 +230,7 @@
                 on_tab_press:
                     root.clearchange()
                     root.cleardelete()
+                    root.show_liked_animals()
                 MDBoxLayout:
                     orientation: 'vertical'
                     md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -236,13 +242,13 @@
                             source: '../images/petpals_logo.png'
                             size_hint: .3, .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-                    MDBoxLayout:
-                        radius: [0,0,0,0]
-                        size_hint_x: 0.95
-                        size_hint_y: 0.3
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                        MDList:
-                            id: liked_list
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'top'
+                    padding: (20,410)
+                    MDList:
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                        id: liked_list
 
 
 
