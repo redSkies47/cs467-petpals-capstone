@@ -24,12 +24,6 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-# local
-DB_HOST = 'localhost'
-DB_USER = 'shukie'
-DB_PASSWORD = 'Gummyw0rm5!Gummy'
-DB_NAME = 'capstone'
-
 
 class admin_landing(MDApp):
 
@@ -46,11 +40,15 @@ class admin_landing(MDApp):
         # Window.size = (720, 1280)
         return Builder.load_file('../kv_design_language/admin_landing.kv')
 
-    def toEditDeleteAnimal(self):
-        print("Edit/Delete Animal")
-        # admin_data_global.image_url += "admin_landing_"
-        # print("*******************", admin_data_global.image_url)
-        # TODO: navigate to admin side - delete animal page
+    # def to_admin_browse_animals(self):
+    #     screen_admin_browse_animals = self.manager.get_screen(
+    #         'admin_browse_animals')
+    #     screen_admin_browse_animals.loaded_default = 0
+    #     self.manager.current = "admin_browse_animals"
+    #     # print("Edit/Delete Animal")
+    #     # admin_data_global.image_url += "admin_landing_"
+    #     # print("*******************", admin_data_global.image_url)
+    #     # TODO: navigate to admin side - delete animal page
 
 
 if __name__ == '__main__':

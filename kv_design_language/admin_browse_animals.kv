@@ -10,11 +10,12 @@
  
     name: "admin_browse_animals"
     on_pre_enter:
-        root.load_species_breeds()
-        root.load_gender()
-        root.load_availability()
-        root.load_dispositions()
-        root.search_main()
+        # root.load_species_breeds()
+        # root.load_gender()
+        # root.load_availability()
+        # root.load_dispositions()
+        # root.search_main()
+        root.load_default()
    
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -307,26 +308,26 @@
 
             # 0.0625 ---
 
-            MDFloatLayout:
-                size_hint: (0.95 * 5/6 * 1/2, 0.05)
-                radius: [15,0,0,15]
-                md_bg_color: 222/255,23/255,63/255,1
-                pos_hint: {"center_x": 0.95 * 5/6 * 1/4 + 0.025, "center_y": 0.0375}
+            # MDFloatLayout:
+            #     size_hint: (0.95 * 5/6 * 1/2, 0.05)
+            #     radius: [15,0,0,15]
+            #     md_bg_color: 222/255,23/255,63/255,1
+            #     pos_hint: {"center_x": 0.95 * 5/6 * 1/4 + 0.025, "center_y": 0.0375}
 
-                MDIconButton:
-                    icon: "delete"
-                    size_hint_x: 1
-                    size_hint_y : 1
-                    md_bg_color: 222/255,23/255,63/255,1
-                    # radius: [15,0,0,15]
-                    text_color: 0,0,0,1
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                    on_release:
-                        root.cancel()
+            #     MDIconButton:
+            #         icon: "delete"
+            #         size_hint_x: 1
+            #         size_hint_y : 1
+            #         md_bg_color: 222/255,23/255,63/255,1
+            #         # radius: [15,0,0,15]
+            #         text_color: 0,0,0,1
+            #         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            #         on_release:
+            #             root.cancel()
 
             MDFloatLayout:
-                size_hint: (0.95/9, 0.05)
-                radius: [0,0,0,0]
+                size_hint: (0.95, 0.05)
+                radius: [15,15,15,15]
                 md_bg_color: (255/255,233/255,234/255,1)
                 pos_hint: {"center_x": 0.5, "center_y": 0.0375}
 
@@ -338,25 +339,26 @@
                     # radius: [0,0,0,0]
                     text_color: 0,0,0,1
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                    on_release: app.root.current = "admin_landing"
-
-            MDFloatLayout:
-                # size_hint: (.95, 0.05)
-                size_hint: (0.95 * 5/6 * 1/2, 0.05)
-                radius: [0,15,15,0]
-                md_bg_color: 0/255,187/255,224/255,1
-                pos_hint: {"center_x": 1 - (0.95 * 5/6 * 1/4 + 0.025), "center_y": 0.0375}
-
-                MDIconButton:
-                    icon: "bookmark"
-                    size_hint_x: 1
-                    size_hint_y : 1
-                    md_bg_color: 0/255,187/255,224/255,0.75
-                    text_color: 0,0,0,1
-                    # radius: [0,15,15,0]
-                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_release:
-                        root.save()
+                        root.to_admin_landing()
+
+            # MDFloatLayout:
+            #     # size_hint: (.95, 0.05)
+            #     size_hint: (0.95 * 5/6 * 1/2, 0.05)
+            #     radius: [0,15,15,0]
+            #     md_bg_color: 0/255,187/255,224/255,1
+            #     pos_hint: {"center_x": 1 - (0.95 * 5/6 * 1/4 + 0.025), "center_y": 0.0375}
+
+            #     MDIconButton:
+            #         icon: "bookmark"
+            #         size_hint_x: 1
+            #         size_hint_y : 1
+            #         md_bg_color: 0/255,187/255,224/255,0.75
+            #         text_color: 0,0,0,1
+            #         # radius: [0,15,15,0]
+            #         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            #         on_release:
+            #             root.save()
                     
 
 ##
@@ -817,3 +819,39 @@
                 pos_hint: {"center_x": 0.5, "center_y": 0.1}
                 on_release: 
                     app.root.current = 'admin_browse_animals_search_popup'
+
+
+<admin_browse_animals_loading_popup@Screen>:
+
+    name: "admin_browse_animals_loading_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDSpinner:
+                # icon: "arrow-right"
+                size_hint_x: 1
+                size_hint_y: 0.4
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDLabel:
+                text: "LOADING ANIMALS..."
+                text_size_y: 0.2
+                halign: 'center'
+                valign: 'center'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    
