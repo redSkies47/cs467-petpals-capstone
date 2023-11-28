@@ -32,11 +32,11 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
-# local
-DB_HOST = 'localhost'
-DB_USER = 'shukie'
-DB_PASSWORD = 'Gummyw0rm5!Gummy'
-DB_NAME = 'capstone'
+# # local
+# DB_HOST = 'localhost'
+# DB_USER = 'shukie'
+# DB_PASSWORD = 'Gummyw0rm5!Gummy'
+# DB_NAME = 'capstone'
 
 
 # Assign Github variables
@@ -275,7 +275,7 @@ class admin_add_animal_dispositions_popup(Screen):
 class admin_add_animal_url_popup(Screen):
 
     def load_image(self):
-        print("popup")
+        # print("popup")
         screen_main = self.manager.get_screen(
             'admin_add_animal')
         screen_main.image_link = self.ids.image_url.text
@@ -322,8 +322,8 @@ class admin_add_animal(Screen):
                 self.breeds.append([])
             self.breeds[row[0]] = breeds_table
 
-        print(self.species)
-        print(self.breeds)
+        # print(self.species)
+        # print(self.breeds)
 
     def load_gender(self):
 
@@ -365,18 +365,45 @@ class admin_add_animal(Screen):
         for row in shelter_table:
             self.shelter.append(row[1])
 
+    def load_default(self):
+        self.load_species_breeds()
+        self.load_gender()
+        self.load_availability()
+        self.load_dispositions()
+        self.load_shelter()
+
     def getImageURL(self):
         image_widget = self.ids.image_widget
         if not self.image_link:
             self.image_link = 'images/petpals_logo.png'
         image_widget.source = self.image_link
 
-    def cancel(self):
-        print("cancel")
+    # def cancel(self):
+    #     self.reset_all()
+    #     print("canceled")
 
     def save(self):
+
+        name = str(self.ids.name.text)
+        birth_date = str(self.ids.birth_date.text)
+        summary = str(self.ids.summary.text)
+        size = str(self.ids.size.text)
+        image = self.image_link
+
+        name_valid = name != "NAME"
+        bith_date_valid = birth_date != "BIRTH DATE"
+        summary_valid = summary != ''
+        size_valid = size != ''
+        image_valid = image != ''
+
+        if not (name_valid and bith_date_valid and summary_valid and size_valid and image_valid):
+            self.manager.current = "admin_add_animal_warning_popup"
+            return
+
+        self.manager.current = "admin_add_animal_loading_popup"
+
         availability = self.curr_availability
-        name = str(self.ids.name.text)  # *
+        name = str(self.ids.name.text)
         birth_date = str(self.ids.birth_date.text)
         species = self.curr_species
         breed = int(self.breeds[self.curr_species][self.curr_breed][0])
@@ -386,7 +413,7 @@ class admin_add_animal(Screen):
         shelter = self.curr_shelter
         size = self.ids.size.text
 
-        print("*** shelter: ", shelter)
+        # print("*** shelter: ", shelter)
         add_res = animals_dml.add_animal(availability,
                                          species,
                                          breed,
@@ -399,25 +426,115 @@ class admin_add_animal(Screen):
                                          shelter,
                                          self.db)
 
-        print("*** add res: ", add_res)
+        # print("*** add res: ", add_res)
         animal_id = animals_dml.get_all_animals(self.db)[-1][0]
         for i in range(1, len(self.dispositions_selection)):
             if self.dispositions_selection[i] == 1:
                 animals_dml.add_animal_disposition(animal_id, i, self.db)
 
         added_animal = animals_dml.get_all_animals(self.db)[-1]
-        print("**** all animals: ", added_animal)
+        # print("**** all animals: ", added_animal)
 
         # test
         id_animal = int(added_animal[0])
 
         # id_animal = animals_dml.get_all_animals(self.db)[-1][0]
-        print("***** id_animal: ", id_animal)
+        # print("***** id_animal: ", id_animal)
 
         images.upload_and_save_image(id_animal, self.image_link, self.db)
         self.git_pull()
 
-        print("save")
+        self.manager.current = "admin_add_animal_saved_popup"
+        self.reset_all()
+        print("saved")
+
+    def reset_all(self):
+
+        self.curr_breed = 0
+        self.curr_species = 1
+        self.curr_gender = 1
+        self.curr_availability = 1
+        self.curr_shelter = 1
+        self.curr_disposition = 1
+        self.dispositions_selection = []
+        self.image_link = 'images/petpals_logo.png'
+
+        screen_search = self.manager.get_screen(
+            'admin_add_animal')
+        # screen_search.ids.breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        # screen_search.ids.species.text = self.species[self.curr_species]
+        # screen_search.ids.gender.text = self.gender[self.curr_gender]
+        # screen_search.ids.availability.text = self.availability[self.curr_availability]
+        # screen_search.ids.dispositions.text = self.dispositions[self.curr_disposition]
+        # screen_search.ids.shelter.text = self.shelter[self.curr_shelter]
+        screen_search.ids.breed.text = 'BREED'
+        screen_search.ids.species.text = 'SPECIES'
+        screen_search.ids.gender.text = 'GENDER'
+        screen_search.ids.availability.text = 'AVAILABILITY'
+        screen_search.ids.dispositions.text = 'DISPOSITIONS'
+        screen_search.ids.shelter.text = 'SHELTER'
+
+        # screen_species = self.manager.get_screen(
+        #     'admin_add_animal_species_popup')
+        # screen_species.ids.selection_species.text = self.species[self.curr_species]
+        # screen_breed = self.manager.get_screen(
+        #     'admin_add_animal_breed_popup')
+        # screen_breed.ids.selection_breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        # screen_gender = self.manager.get_screen(
+        #     'admin_add_animal_gender_popup')
+        # screen_gender.ids.selection_gender.text = self.gender[self.curr_gender]
+        # screen_availability = self.manager.get_screen(
+        #     'admin_add_animal_availability_popup')
+        # screen_availability.ids.selection_availability.text = self.availability[
+        #     self.curr_availability]
+        # screen_dispositions = self.manager.get_screen(
+        #     'admin_add_animal_shelter_popup')
+        # screen_dispositions.ids.selection_shelter.text = self.shelter[
+        #     self.curr_shelter]
+        # screen_url = self.manager.get_screen('admin_add_animal_url_popup')
+        # screen_url.ids.image_url.text = ''
+        screen_species = self.manager.get_screen(
+            'admin_add_animal_species_popup')
+        screen_species.ids.selection_species.text = 'SPECIES'
+        screen_breed = self.manager.get_screen(
+            'admin_add_animal_breed_popup')
+        screen_breed.ids.selection_breed.text = 'BREED'
+        screen_gender = self.manager.get_screen(
+            'admin_add_animal_gender_popup')
+        screen_gender.ids.selection_gender.text = 'GENDER'
+        screen_availability = self.manager.get_screen(
+            'admin_add_animal_availability_popup')
+        screen_availability.ids.selection_availability.text = 'AVAILABILITY'
+        screen_shelter = self.manager.get_screen(
+            'admin_add_animal_shelter_popup')
+        screen_shelter.ids.selection_shelter.text = 'SHELTER'
+        screen_url = self.manager.get_screen('admin_add_animal_url_popup')
+        screen_url.ids.image_url.text = ''
+        screen_dispositions = self.manager.get_screen(
+            'admin_add_animal_dispositions_popup')
+        screen_dispositions.ids.selection_dispositions.text = 'DISPOSITIONS'
+        screen_dispositions.ids.selection_dispositions.md_bg_color = (
+            171/255, 196/255, 212/255, 1)
+
+        self.ids.name.text = 'NAME'
+        self.ids.birth_date.text = 'BIRTH DATE'
+        self.ids.summary.text = ''
+        self.ids.size.text = 'SIZE'
+        self.ids.image_widget.source = self.image_link
+
+        self.species = []
+        self.breeds = []
+        self.gender = []
+        self.availability = []
+        self.dispositions = []
+        self.dispositions_selection = []
+        self.shelter = []
+        self.loaded_species_breeds = 0
+        self.loaded_gender = 0
+        self.loaded_availability = 0
+        self.loaded_dispositions = 0
+        self.loaded_shelter = 0
+        print("reset all")
 
     def git_pull(repository_path):
         try:

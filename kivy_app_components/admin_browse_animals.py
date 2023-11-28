@@ -41,10 +41,6 @@ REPO_PATH = "images/"
 MESSAGE = "upload image"
 BRANCH = "main"
 
-# https://github.com/redSkies47/cs467-petpals-capstone/blob/admin_browse_animals/images/2.jpg
-
-# DOMAIN + REPO + "/blob/" + BRANCH + "/images/" + id_image + ".jpg"
-
 
 class admin_browse_animals_breed_popup(Screen):
 
@@ -80,7 +76,7 @@ class admin_browse_animals_breed_popup(Screen):
         screen_search = self.manager.get_screen(
             'admin_browse_animals_search_popup')
         screen_search.ids.breed.text = breeds_list[curr_species][curr_breed][1]
-        screen_main.configured_breed = 1
+        # screen_main.configured_breed = 1
 
 
 class admin_browse_animals_species_popup(Screen):
@@ -113,13 +109,16 @@ class admin_browse_animals_species_popup(Screen):
         breeds_list = screen_main.breeds
         screen_main.curr_species = curr_species
         screen_main.curr_breed = 0
+        # print(
+        #     "************ species_list[curr_species] ", species_list[curr_species], self.ids.selection_species)
+
         self.ids.selection_species.text = species_list[curr_species]
         screen_search = self.manager.get_screen(
             'admin_browse_animals_search_popup')
         screen_search.ids.species.text = species_list[curr_species]
         screen_search.ids.breed.text = breeds_list[curr_species][0][1]
         # screen_search.ids.breed.text = 'Breed'
-        screen_main.configured_species = 1
+        # screen_main.configured_species = 1
 
 
 class admin_browse_animals_gender_popup(Screen):
@@ -156,7 +155,7 @@ class admin_browse_animals_gender_popup(Screen):
         screen_search = self.manager.get_screen(
             'admin_browse_animals_search_popup')
         screen_search.ids.gender.text = gender_list[curr_gender]
-        screen_main.configured_gender = 1
+        # screen_main.configured_gender = 1
 
 
 class admin_browse_animals_availability_popup(Screen):
@@ -193,7 +192,7 @@ class admin_browse_animals_availability_popup(Screen):
         screen_search = self.manager.get_screen(
             'admin_browse_animals_search_popup')
         screen_search.ids.availability.text = availability_list[curr_availability]
-        screen_main.configured_availability = 1
+        # screen_main.configured_availability = 1
 
 
 class admin_browse_animals_dispositions_popup(Screen):
@@ -252,7 +251,8 @@ class admin_browse_animals_search_popup(Screen):
 
     def search_popup(self):
         screen_main = self.manager.get_screen('admin_browse_animals')
-        screen_main.search_main()
+        screen_main.load_all()
+        # screen_main.search_main()
 
 
 class admin_browse_animals(Screen):
@@ -276,12 +276,76 @@ class admin_browse_animals(Screen):
         self.loaded_gender = 0
         self.loaded_availability = 0
         self.loaded_dispositions = 0
-        self.configured_breed = 0
-        self.configured_species = 0
-        self.configured_gender = 0
-        self.configured_availability = 0
+        # self.configured_breed = 0
+        # self.configured_species = 0
+        # self.configured_gender = 0
+        # self.configured_availability = 0
         self.animals = None
         self.images = []
+        self.loaded_default = 0
+
+    def load_default(self):
+        if self.loaded_default == 1:
+            return
+        self.loaded_default = 1
+        self.load_all()
+
+    def load_all(self):
+        self.manager.current = "admin_browse_animals_loading_popup"
+        self.load_species_breeds()
+        self.load_gender()
+        self.load_availability()
+        self.load_dispositions()
+        self.search_main()
+        self.manager.current = "admin_browse_animals"
+
+    def reset_all(self):
+
+        self.curr_breed = 0
+        self.curr_species = 0
+        self.curr_gender = 0
+        self.curr_availability = 0
+        self.curr_disposition = 0
+
+        screen_search = self.manager.get_screen(
+            'admin_browse_animals_search_popup')
+        screen_search.ids.breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        screen_search.ids.species.text = self.species[self.curr_species]
+        screen_search.ids.gender.text = self.gender[self.curr_gender]
+        screen_search.ids.availability.text = self.availability[self.curr_availability]
+        screen_search.ids.dispositions.text = self.dispositions[self.curr_disposition]
+        screen_species = self.manager.get_screen(
+            'admin_browse_animals_species_popup')
+        screen_species.ids.selection_species.text = self.species[self.curr_species]
+        screen_breed = self.manager.get_screen(
+            'admin_browse_animals_breed_popup')
+        screen_breed.ids.selection_breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        screen_gender = self.manager.get_screen(
+            'admin_browse_animals_gender_popup')
+        screen_gender.ids.selection_gender.text = self.gender[self.curr_gender]
+        screen_availability = self.manager.get_screen(
+            'admin_browse_animals_availability_popup')
+        screen_availability.ids.selection_availability.text = self.availability[
+            self.curr_availability]
+        screen_dispositions = self.manager.get_screen(
+            'admin_browse_animals_dispositions_popup')
+        screen_dispositions.ids.selection_dispositions.text = self.dispositions[
+            self.curr_disposition]
+
+        self.species = []
+        self.breeds = []
+        self.gender = []
+        self.availability = []
+        self.dispositions = []
+        self.dispositions_selection = []
+        self.loaded_species_breeds = 0
+        self.loaded_gender = 0
+        self.loaded_availability = 0
+        self.loaded_dispositions = 0
+        self.animals = None
+        self.images = []
+
+        self.loaded_default = 0
 
     def search_main(self):
 
@@ -365,7 +429,7 @@ class admin_browse_animals(Screen):
             # bytes_io = BytesIO(self.images[num][0])
 
             image_dir = "./images/" + self.images[num][0] + ".jpg"
-            print("********** image_dir: ", image_dir)
+            # print("********** image_dir: ", image_dir)
 
             image = AsyncImage(
                 size_hint_x=4,
@@ -379,32 +443,6 @@ class admin_browse_animals(Screen):
 
             button.add_widget(image)
             results_container.add_widget(button)
-
-        # self.ids.results_container.size_hint_y = MDFloatLayout.size_hint_y = math.ceil((num_animals) / 2) * 1/4  # extra row for space buffer
-# pos_X_left = 0.25 + 1/12 * 0.1
-# pos_x_right = 0.75 - 1/12 * 0.1
-# size_hint_x = 1/2 * 0.9
-# size_hint_y = 0.225 / self.parent.size_hint_y
-#             = 0.225 / self.ids.results_container.size_hint_y
-# pos_y = 1 - self.size_hint_y * (11/18 + 10/9 * animal_num // 2)
-
-            #    MDRectangleFlatButton:
-            #         md_bg_color: 0/255,0/255,0/255,0.1
-            #         line_color: self.md_bg_color
-            #         size_hint_x: 1/2 * 0.9
-            #         size_hint_y: 0.225 / self.parent.size_hint_y
-            #         radius: [10,10,10,10]
-            #         pos_hint: {"center_x": 0.25 + 1/12 * 0.1 , "center_y": 1 - self.size_hint_y * (11/18 + 10/9 * 0// 2)}
-
-            #         AsyncImage:
-            #             id: image_widget
-            #             size_hint_x: 1
-            #             size_hint_y: 1
-            #             keep_ratio: True
-            #             allow_stretch: True
-            #             # radius: [10,10,10,10]
-            #             source: 'https://c8.alamy.com/comp/2BWX3PT/image-of-a-cute-stray-puppies-pictured-in-a-garbage-dump-2BWX3PT.jpg'
-            #             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
     def load_species_breeds(self):
 
@@ -421,9 +459,6 @@ class admin_browse_animals(Screen):
             if len(self.breeds) <= row[0]:
                 self.breeds.append([])
             self.breeds[row[0]] = breeds_table
-
-        # print("species ", self.species)
-        # print("breeds ", self.breeds)
 
     def load_gender(self):
 
@@ -455,6 +490,10 @@ class admin_browse_animals(Screen):
         for row in dispositions_table:
             self.dispositions.append(row[1])
             self.dispositions_selection.append(0)
+
+    def to_admin_landing(self):
+        self.reset_all()
+        self.manager.current = "admin_landing"
 
     def git_pull(repository_path):
         try:
