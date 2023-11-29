@@ -123,6 +123,19 @@ def add_liked_animal(id_account, id_animal, db):
         addLikedAnimal_params = (id_account, id_animal)
         db.query(addLikedAnimal_cmd, addLikedAnimal_params)
 
+def remove_liked_animal(id_account, id_animal, db):
+        """
+        Removes a Liked_Animal entry from the databse with the given attributes values.
+
+        :param int id_account: ID of the specified Account
+        :param int id_animal: ID of the specified Animal
+        :param Database db: database to be queried
+        :return: None
+        """
+        removeLikedAnimal_cmd = "DELETE FROM Liked_Animals WHERE id_account = %s AND id_animal = %s"
+        removeLikedAnimal_params = (id_account, id_animal)
+        db.query(removeLikedAnimal_cmd, removeLikedAnimal_params)
+
 def get_liked_animals(id_account, db):
         """
         Returns the list of Liked Animals for the Account with the specified ID.

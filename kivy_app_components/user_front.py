@@ -278,10 +278,8 @@ class LandingWindow(Screen):
                 self.ids.liked_list.add_widget(self.liked_animal_item)
 
     def remove_liked_animal(self, id):
-        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        remove_liked_animal(MainApp.id_account, id[0], MainApp.db)
         self.ids.liked_list.remove_widget(dog_dictionary[id])
-        # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
@@ -455,10 +453,8 @@ class DogBrowseWindow(Screen):
                 self.ids.liked_list.add_widget(self.liked_animal_item)
 
     def remove_liked_animal(self, id):
-        liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
+        remove_liked_animal(MainApp.id_account, id[0], MainApp.db)
         self.ids.liked_list.remove_widget(dog_dictionary[id])
-        # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
