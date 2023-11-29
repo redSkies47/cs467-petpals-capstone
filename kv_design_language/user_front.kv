@@ -3,6 +3,8 @@
 #:include ../kv_design_language/user_create_account.kv
 #:include ../kv_design_language/user_landing.kv
 #:include ../kv_design_language/user_dogbrowse.kv
+#:include ../kv_design_language/user_catbrowse.kv
+#:include ../kv_design_language/user_otherbrowse.kv
 
 WindowManager:
     LoginWindow:
@@ -13,3 +15,13 @@ WindowManager:
         id: dog_profile
     DogSearch:
         id: dog_search
+    CatBrowseWindow:
+    CatProfile:
+        id: cat_profile
+    CatSearch:
+        id: cat_search
+    OtherBrowseWindow:
+    OtherProfile:
+        id: other_profile
+    OtherSearch:
+        id: other_search

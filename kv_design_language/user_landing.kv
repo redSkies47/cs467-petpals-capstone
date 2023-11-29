@@ -79,6 +79,9 @@
                         size_hint_y: 0.65
                         md_bg_color: (255/255, 233/255, 234/255, 1)
                         pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                        on_release:
+                            app.root.current = "catsearch"
+                            root.manager.transition.direction = "left"
 
                 MDBoxLayout:
                     radius: [0,0,0,0]
@@ -95,6 +98,9 @@
                         size_hint_y: 0.65
                         md_bg_color: (255/255, 233/255, 234/255, 1)
                         pos_hint: {"center_x": 0.5, "center_y": 0.35}
+                        on_release:
+                            app.root.current = "othersearch"
+                            root.manager.transition.direction = "left"
 
 
             MDBottomNavigationItem:
@@ -218,6 +224,8 @@
                             background_color: (222/255, 23/255, 63/255, 1)
                             on_press: root.delete_account()
                             on_release:
+                                app.root.current = "login"
+                                root.manager.transition.direction = "right"
                                 root.clearchange()
                                 root.cleardelete()
                                 root.press_delete()
