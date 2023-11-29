@@ -42,15 +42,15 @@ MESSAGE = "upload image"
 BRANCH = "main"
 
 
-class admin_add_animal_breed_popup(Screen):
+class admin_edit_delete_animal_breed_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_breed_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_breed_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
     def next_breed(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         curr_species = screen_main.curr_species
         breeds_list = screen_main.breeds
         curr_breed = screen_main.curr_breed
@@ -61,7 +61,7 @@ class admin_add_animal_breed_popup(Screen):
 
     def previous_breed(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         curr_species = screen_main.curr_species
         breeds_list = screen_main.breeds
         curr_breed = screen_main.curr_breed
@@ -76,15 +76,15 @@ class admin_add_animal_breed_popup(Screen):
         screen_main.ids.breed.text = breeds_list[curr_species][curr_breed][1]
 
 
-class admin_add_animal_species_popup(Screen):
+class admin_edit_delete_animal_species_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_species_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_species_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
     def next_species(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         species_list = screen_main.species
         curr_species = screen_main.curr_species
         curr_species += 1
@@ -94,7 +94,7 @@ class admin_add_animal_species_popup(Screen):
 
     def previous_species(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         species_list = screen_main.species
         curr_species = screen_main.curr_species
         curr_species -= 1
@@ -111,15 +111,15 @@ class admin_add_animal_species_popup(Screen):
         screen_main.ids.breed.text = breeds_list[curr_species][0][1]
 
 
-class admin_add_animal_gender_popup(Screen):
+class admin_edit_delete_animal_gender_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_gender_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_gender_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
     def next_gender(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         gender_list = screen_main.gender
         curr_gender = screen_main.curr_gender
         curr_gender += 1
@@ -129,7 +129,7 @@ class admin_add_animal_gender_popup(Screen):
 
     def previous_gender(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         gender_list = screen_main.gender
         curr_gender = screen_main.curr_gender
         curr_gender -= 1
@@ -146,15 +146,15 @@ class admin_add_animal_gender_popup(Screen):
         # screen_main.ids.breed.text = breeds_list[curr_species][0][1]
 
 
-class admin_add_animal_availability_popup(Screen):
+class admin_edit_delete_animal_availability_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_availability_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_availability_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
     def next_availability(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         availability_list = screen_main.availability
         curr_availability = screen_main.curr_availability
         curr_availability += 1
@@ -164,7 +164,7 @@ class admin_add_animal_availability_popup(Screen):
 
     def previous_availability(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         availability_list = screen_main.availability
         curr_availability = screen_main.curr_availability
         curr_availability -= 1
@@ -181,15 +181,15 @@ class admin_add_animal_availability_popup(Screen):
         # screen_main.ids.breed.text = breeds_list[curr_species][0][1]
 
 
-class admin_add_animal_shelter_popup(Screen):
+class admin_edit_delete_animal_shelter_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_shelter_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_shelter_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 
     def next_shelter(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         shelter_list = screen_main.shelter
         curr_shelter = screen_main.curr_shelter
         curr_shelter += 1
@@ -199,7 +199,7 @@ class admin_add_animal_shelter_popup(Screen):
 
     def previous_shelter(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         shelter_list = screen_main.shelter
         curr_shelter = screen_main.curr_shelter
         curr_shelter -= 1
@@ -216,10 +216,10 @@ class admin_add_animal_shelter_popup(Screen):
         # screen_main.ids.breed.text = breeds_list[curr_species][0][1]
 
 
-class admin_add_animal_dispositions_popup(Screen):
+class admin_edit_delete_animal_dispositions_popup(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal_dispositions_popup, self).__init__(**kwargs)
+        super(admin_edit_delete_animal_dispositions_popup, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
         self.main_blue = (0/255, 187/255, 224/255, 1)
         light_gray = (171/255, 196/255, 212/255, 1)
@@ -228,7 +228,7 @@ class admin_add_animal_dispositions_popup(Screen):
 
     def next_disposition(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         dispositions_list = screen_main.dispositions
         curr_disposition = screen_main.curr_disposition
         curr_disposition += 1
@@ -238,7 +238,7 @@ class admin_add_animal_dispositions_popup(Screen):
 
     def previous_disposition(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         dispositions_list = screen_main.dispositions
         curr_disposition = screen_main.curr_disposition
         curr_disposition -= 1
@@ -255,7 +255,7 @@ class admin_add_animal_dispositions_popup(Screen):
 
     def toggle_select(self):
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         curr_disposition = screen_main.curr_disposition
         selection = screen_main.dispositions_selection
         if selection[curr_disposition] == 0:
@@ -266,20 +266,20 @@ class admin_add_animal_dispositions_popup(Screen):
             self.ids.selection_dispositions.md_bg_color = self.select[0]
 
 
-class admin_add_animal_url_popup(Screen):
+class admin_edit_delete_animal_url_popup(Screen):
 
     def load_image(self):
         # print("popup")
         screen_main = self.manager.get_screen(
-            'admin_add_animal')
+            'admin_edit_delete_animal')
         screen_main.image_link = self.ids.image_url.text
         screen_main.getImageURL()
 
 
-class admin_add_animal(Screen):
+class admin_edit_delete_animal(Screen):
 
     def __init__(self, **kwargs):
-        super(admin_add_animal, self).__init__(**kwargs)
+        super(admin_edit_delete_animal, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
         self.image_link = ""
         self.species = []
@@ -300,6 +300,21 @@ class admin_add_animal(Screen):
         self.loaded_availability = 0
         self.loaded_shelter = 0
         self.loaded_dispositions = 0
+
+        self.curr_animal_id = None
+        self.curr_name = ""
+        self.curr_bday = None
+        self.curr_size = None
+        self.curr_summary = None
+        self.curr_cday = None
+        self.curr_disposition = None
+
+    def load_default(self):
+        self.load_species_breeds()
+        self.load_gender()
+        self.load_availability()
+        self.load_dispositions()
+        self.load_shelter()
 
     def load_species_breeds(self):
 
@@ -455,12 +470,6 @@ class admin_add_animal(Screen):
 
         screen_search = self.manager.get_screen(
             'admin_add_animal')
-        # screen_search.ids.breed.text = self.breeds[self.curr_species][self.curr_breed][1]
-        # screen_search.ids.species.text = self.species[self.curr_species]
-        # screen_search.ids.gender.text = self.gender[self.curr_gender]
-        # screen_search.ids.availability.text = self.availability[self.curr_availability]
-        # screen_search.ids.dispositions.text = self.dispositions[self.curr_disposition]
-        # screen_search.ids.shelter.text = self.shelter[self.curr_shelter]
         screen_search.ids.breed.text = 'BREED'
         screen_search.ids.species.text = 'SPECIES'
         screen_search.ids.gender.text = 'GENDER'
@@ -468,25 +477,6 @@ class admin_add_animal(Screen):
         screen_search.ids.dispositions.text = 'DISPOSITIONS'
         screen_search.ids.shelter.text = 'SHELTER'
 
-        # screen_species = self.manager.get_screen(
-        #     'admin_add_animal_species_popup')
-        # screen_species.ids.selection_species.text = self.species[self.curr_species]
-        # screen_breed = self.manager.get_screen(
-        #     'admin_add_animal_breed_popup')
-        # screen_breed.ids.selection_breed.text = self.breeds[self.curr_species][self.curr_breed][1]
-        # screen_gender = self.manager.get_screen(
-        #     'admin_add_animal_gender_popup')
-        # screen_gender.ids.selection_gender.text = self.gender[self.curr_gender]
-        # screen_availability = self.manager.get_screen(
-        #     'admin_add_animal_availability_popup')
-        # screen_availability.ids.selection_availability.text = self.availability[
-        #     self.curr_availability]
-        # screen_dispositions = self.manager.get_screen(
-        #     'admin_add_animal_shelter_popup')
-        # screen_dispositions.ids.selection_shelter.text = self.shelter[
-        #     self.curr_shelter]
-        # screen_url = self.manager.get_screen('admin_add_animal_url_popup')
-        # screen_url.ids.image_url.text = ''
         screen_species = self.manager.get_screen(
             'admin_add_animal_species_popup')
         screen_species.ids.selection_species.text = 'SPECIES'

@@ -7,9 +7,9 @@
 #:import MDRaisedButton kivymd.uix.button.MDRaisedButton
 
 
-<admin_add_animal@Screen>:
+<admin_edit_delete_animal@Screen>:
  
-    name: "admin_add_animal"
+    name: "admin_edit_delete_animal"
     on_pre_enter:
         root.load_default()
    
@@ -80,7 +80,7 @@
                     source: ''
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_press: 
-                        app.root.current = "admin_add_animal_url_popup"
+                        app.root.current = "admin_edit_delete_animal_url_popup"
                         root.getImageURL()
             
             MDFloatLayout:
@@ -111,7 +111,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                         on_release:
-                            app.root.current = "admin_add_animal_species_popup"
+                            app.root.current = "admin_edit_delete_animal_species_popup"
                 
                 
                 MDFloatLayout:
@@ -138,7 +138,7 @@
                         valign: 'middle'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                         # on_release:
-                        #     app.root.current = "admin_add_animal_species_popup"
+                        #     app.root.current = "admin_edit_delete_animal_species_popup"
 
                 MDFloatLayout:
                     size_hint: (0.4625, 0.225)
@@ -206,7 +206,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                         on_release:
-                            app.root.current = "admin_add_animal_breed_popup"
+                            app.root.current = "admin_edit_delete_animal_breed_popup"
             
                 MDFloatLayout:
                     # size_hint: (0.4625, 0.198774081)
@@ -232,7 +232,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5 }
                         on_release:
-                            app.root.current = "admin_add_animal_gender_popup"
+                            app.root.current = "admin_edit_delete_animal_gender_popup"
                         
                 MDFloatLayout:
                     # size_hint: (0.4625, 0.198774081)
@@ -259,7 +259,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5 }
                         on_release:
-                            app.root.current = "admin_add_animal_availability_popup"
+                            app.root.current = "admin_edit_delete_animal_availability_popup"
                      
                 MDFloatLayout:
                     md_bg_color: (0/255,0/255,0/255,1)
@@ -284,7 +284,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5 }
                         on_release:
-                            app.root.current = "admin_add_animal_dispositions_popup"
+                            app.root.current = "admin_edit_delete_animal_dispositions_popup"
 
                 MDFloatLayout:
                     md_bg_color: (0/255,0/255,0/255,1)
@@ -309,7 +309,7 @@
                         valign: 'center'
                         pos_hint: {"center_x": 0.5, "center_y": 0.5 }
                         on_release:
-                            app.root.current = "admin_add_animal_shelter_popup"
+                            app.root.current = "admin_edit_delete_animal_shelter_popup"
                      
 
                 MDFloatLayout:
@@ -426,9 +426,9 @@
 
             # padding = 0.0125
 
-<admin_add_animal_url_popup@Screen>:
+<admin_edit_delete_animal_url_popup@Screen>:
     
-    name: "admin_add_animal_url_popup"
+    name: "admin_edit_delete_animal_url_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -468,12 +468,12 @@
                 # on_press: root.load_image()
                 on_press: 
                     root.load_image()
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
 
-<admin_add_animal_breed_popup@Screen>:
+<admin_edit_delete_animal_breed_popup@Screen>:
     
-    name: "admin_add_animal_breed_popup"
+    name: "admin_edit_delete_animal_breed_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -516,7 +516,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
             MDIconButton:
                 icon: "arrow-left"
@@ -532,9 +532,9 @@
                     root.previous_breed()
 
 
-<admin_add_animal_species_popup@Screen>:
+<admin_edit_delete_animal_species_popup@Screen>:
     
-    name: "admin_add_animal_species_popup"
+    name: "admin_edit_delete_animal_species_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -579,7 +579,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
             MDIconButton:
                 icon: "arrow-left"
@@ -594,9 +594,9 @@
                     root.previous_species()
 
 
-<admin_add_animal_gender_popup@Screen>:
+<admin_edit_delete_animal_gender_popup@Screen>:
     
-    name: "admin_add_animal_gender_popup"
+    name: "admin_edit_delete_animal_gender_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -641,7 +641,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
             MDIconButton:
                 icon: "arrow-left"
@@ -657,9 +657,9 @@
                     root.previous_gender()
 
 
-<admin_add_animal_availability_popup@Screen>:
+<admin_edit_delete_animal_availability_popup@Screen>:
     
-    name: "admin_add_animal_availability_popup"
+    name: "admin_edit_delete_animal_availability_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -701,7 +701,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
             MDIconButton:
                 icon: "arrow-left"
@@ -715,9 +715,9 @@
                     root.previous_availability()
 
 
-<admin_add_animal_dispositions_popup@Screen>:
+<admin_edit_delete_animal_dispositions_popup@Screen>:
     
-    name: "admin_add_animal_dispositions_popup"
+    name: "admin_edit_delete_animal_dispositions_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -743,7 +743,7 @@
                 source: ''
                 pos_hint: {"center_x": 0.5, "center_y": 0.9}
                 on_release: 
-                    app.root.current = 'admin_add_animal'
+                    app.root.current = 'admin_edit_delete_animal'
 
 
             MDIconButton:
@@ -770,7 +770,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    # app.root.current = "admin_add_animal"
+                    # app.root.current = "admin_edit_delete_animal"
                     root.toggle_select()
 
             MDIconButton:
@@ -792,12 +792,12 @@
                 source: ''
                 pos_hint: {"center_x": 0.5, "center_y": 0.1}
                 on_release: 
-                    app.root.current = 'admin_add_animal'
+                    app.root.current = 'admin_edit_delete_animal'
 
 
-<admin_add_animal_shelter_popup@Screen>:
+<admin_edit_delete_animal_shelter_popup@Screen>:
     
-    name: "admin_add_animal_shelter_popup"
+    name: "admin_edit_delete_animal_shelter_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -839,7 +839,7 @@
                 readonly: False
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 on_release:
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
             MDIconButton:
                 icon: "arrow-left"
@@ -852,9 +852,9 @@
                 on_release: 
                     root.previous_shelter()
 
-<admin_add_animal_loading_popup@Screen>:
+<admin_edit_delete_animal_loading_popup@Screen>:
 
-    name: "admin_add_animal_loading_popup"
+    name: "admin_edit_delete_animal_loading_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -888,9 +888,9 @@
                     
                 
 
-<admin_add_animal_saved_popup@Screen>:
+<admin_edit_delete_animal_saved_popup@Screen>:
     
-    name: "admin_add_animal_saved_popup"
+    name: "admin_edit_delete_animal_saved_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -928,12 +928,12 @@
                 pos_hint: {"center_x": 0.5, "center_y": 0.45}
                 # on_press: root.load_image()
                 on_press: 
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"
 
 
-<admin_add_animal_warning_popup@Screen>:
+<admin_edit_delete_animal_warning_popup@Screen>:
     
-    name: "admin_add_animal_warning_popup"
+    name: "admin_edit_delete_animal_warning_popup"
 
     MDFloatLayout:
         md_bg_color: (171/255, 196/255, 212/255, 1)
@@ -971,4 +971,4 @@
                 pos_hint: {"center_x": 0.5, "center_y": 0.45}
                 # on_press: root.load_image()
                 on_press: 
-                    app.root.current = "admin_add_animal"
+                    app.root.current = "admin_edit_delete_animal"

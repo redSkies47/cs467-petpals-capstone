@@ -36,8 +36,10 @@ class MainApp(App):
     """
     Represents the main app.
     """
+
     def build(self):
         return MyGridLayout()
+
 
 class MyGridLayout(Widget):
     """
@@ -100,7 +102,8 @@ class MyGridLayout(Widget):
         accounts = find_account(email, self.db)
         if len(accounts) > 0:
             # PLACEHOLDER: error message
-            print('Error: Failed to create account. Email is already registered to an account.')
+            print(
+                'Error: Failed to create account. Email is already registered to an account.')
             return
         # If passwords do not match
         if password1 != password2:
