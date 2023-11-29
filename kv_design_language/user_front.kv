@@ -6,8 +6,40 @@
 #:include ../kv_design_language/user_catbrowse.kv
 #:include ../kv_design_language/user_otherbrowse.kv
 
+#:include kv_design_language/admin_landing.kv
+#:include kv_design_language/admin_update_news.kv
+#:include kv_design_language/admin_add_animal.kv
+#:include kv_design_language/admin_browse_animals.kv
+#:include kv_design_language/admin_edit_delete_animal.kv
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
 WindowManager:
     LoginWindow:
+
+    admin_landing:
+    admin_update_news:
+    admin_add_animal:
+    admin_browse_animals:
+    admin_edit_delete_animal:
+
+    admin_add_animal_species_popup:
+    admin_add_animal_url_popup:
+    admin_add_animal_breed_popup:
+    admin_add_animal_gender_popup:
+    admin_add_animal_availability_popup:
+    admin_add_animal_dispositions_popup:
+    admin_add_animal_shelter_popup:
+    admin_add_animal_loading_popup:
+    admin_add_animal_saved_popup:
+    admin_add_animal_warning_popup:
+
     CreateAccountWindow:
     LandingWindow:
     DogBrowseWindow:

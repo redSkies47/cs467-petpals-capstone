@@ -29,6 +29,11 @@ from database.accounts_dml import *
 from database.news_dml import *
 from database.animals_dml import *
 
+from kivy_app_components.admin_landing import admin_landing
+from kivy_app_components.admin_update_news import admin_update_news
+from kivy_app_components.admin_add_animal import admin_add_animal
+from kivy_app_components.admin_browse_animals import admin_browse_animals
+from kivy_app_components.admin_edit_delete_animal import admin_edit_delete_animal
 
 # --- Set Up ---#
 
@@ -108,6 +113,8 @@ class LoginWindow(Screen):
             # PLACEHOLDER: navigate to Admin Landing page
             print('Successful admin login!')
             clear_labels()
+            self.manager.current = "admin_landing"
+            self.manager.transition.direction = "left"
         # Else (public account)
         else:
             print('Successful user login!')
@@ -117,6 +124,14 @@ class LoginWindow(Screen):
         # Store id_account
         MainApp.id_account = id_account
 
+class admin_landing(Screen):
+
+    def __init__(self, **kwargs):
+        super(admin_landing, self).__init__(**kwargs)
+        self.DB_HOST = DB_HOST
+        self.DB_USER = DB_USER
+        self.DB_PASSWORD = DB_PASSWORD
+        self.DB_NAME = DB_NAME
 
 class CreateAccountWindow(Screen):
     name_input = ObjectProperty(None)       # account form - name
