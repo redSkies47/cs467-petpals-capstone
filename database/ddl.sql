@@ -210,7 +210,8 @@ VALUES
 (3, 'Oriental Shorthair'),
 (3, 'Cornish Rex'),
 (3, 'Selkirk Rex'),
-(3, 'Birman');
+(3, 'Birman'),
+(2, 'Shiba Inu');
 
 -- Insert Genders categories
 INSERT INTO `Genders` (`description`)
@@ -280,7 +281,15 @@ VALUES
 (1, 1, 1, 'Coco',
 '2021-06-20', 2, 5,
 'Persevering Coco went through a house fire where her caretakers had to let her go. She is very social and can speak several phrases.',
-'2023-10-26', 3);
+'2023-10-26', 3),
+(3, 2, 3, 'Fuji',
+'2019-08-13', 1, 70,
+'Fuji is a super dog & people-friendly retriever. And also a food-driven guy. He loves chasing balls and whatever is moving.',
+'2023-11-29', 1),
+(4, 2, 50, 'Sushi',
+'2017-10-29', 2, 20,
+'Sushi is a bit shy with people but definitely friendly to kids. Sushi enjoys playing with all kinds of puzzle toys.',
+'2023-11-29', 2);
 
 -- Insert new Animal_Dispositions
 INSERT INTO `Animal_Dispositions` (`id_animal`, `id_disposition`)
@@ -299,7 +308,9 @@ VALUES
 (6, 3),
 (6, 8),
 (7, 4),
-(7, 8);
+(7, 8),
+(8, 1),
+(9, 2);
 
 -- Insert new Accounts
 INSERT INTO `Accounts` (`id_credential`, `email`, `password`, `name`)
