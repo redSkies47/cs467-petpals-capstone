@@ -382,8 +382,9 @@
                     text_color: 0,0,0,1
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_release:
-                        root.reset_all()
-                        root.load_default()
+                        # root.reset_all()
+                        # root.load_default()
+                        root.delete()
 
             MDFloatLayout:
                 size_hint: (0.95/9, 0.05)
@@ -403,7 +404,7 @@
                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                     on_release: 
                         root.reset_all()
-                        app.root.current = "admin_landing"
+                        app.root.current = "admin_browse_animals"
 
             MDFloatLayout:
                 # size_hint: (.95, 0.05)
@@ -910,7 +911,7 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
             MDLabel:
-                text: "ANIMAL ADDED!"
+                text: "ANIMAL UPDATED!"
                 text_color: 0/255,0/255,0/255,1
                 size_hint_x: 0.8
                 size_hint_y: 0.1
@@ -929,6 +930,49 @@
                 # on_press: root.load_image()
                 on_press: 
                     app.root.current = "admin_edit_delete_animal"
+
+
+<admin_edit_delete_animal_deleted_popup@Screen>:
+    
+    name: "admin_edit_delete_animal_deleted_popup"
+
+    MDFloatLayout:
+        md_bg_color: (171/255, 196/255, 212/255, 1)
+        size_hint_x: 1
+        size_hint_y: 1
+        # radius: [10,10,10,10]
+        # radius: [45,45,45,45]
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        # orientation: 'vertical'
+
+        MDFloatLayout:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+
+            radius: [10, 10, 10, 10]
+            size_hint_x: 0.9
+            size_hint_y: 0.9
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDLabel:
+                text: "ANIMAL DELETED!"
+                text_color: 0/255,0/255,0/255,1
+                size_hint_x: 0.8
+                size_hint_y: 0.1
+                halign: 'center'
+                valign: 'center'
+                pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+            MDIconButton:
+                icon: "arrow-right"
+                size_hint_x: 0.9
+                size_hint_y: 0.1
+                radius: [45,45,45,45]
+                font_size_x: self.width * 1
+                source: ''
+                pos_hint: {"center_x": 0.5, "center_y": 0.45}
+                # on_press: root.load_image()
+                on_press: 
+                    root.to_admin_browse_animals()
 
 
 <admin_edit_delete_animal_warning_popup@Screen>:

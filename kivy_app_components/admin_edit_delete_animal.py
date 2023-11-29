@@ -276,6 +276,19 @@ class admin_edit_delete_animal_url_popup(Screen):
         screen_main.getImageURL()
 
 
+class admin_edit_delete_animal_deleted_popup(Screen):
+
+    def to_admin_browse_animals(self):
+        # print("popup")
+        # screen_main = self.manager.get_screen(
+        #     'admin_edit_delete_animal')
+        # screen_main.image_link = self.ids.image_url.text
+        # screen_main.getImageURL()
+        screen_browse = self.manager.get_screen('admin_browse_animals')
+        screen_browse.reset_all()
+        self.manager.current = "admin_browse_animals"
+
+
 class admin_edit_delete_animal(Screen):
 
     def __init__(self, **kwargs):
@@ -330,9 +343,6 @@ class admin_edit_delete_animal(Screen):
             if len(self.breeds) <= row[0]:
                 self.breeds.append([])
             self.breeds[row[0]] = breeds_table
-
-        # print(self.species)
-        # print(self.breeds)
 
     def load_gender(self):
 
@@ -404,13 +414,14 @@ class admin_edit_delete_animal(Screen):
         summary_valid = summary != ''
         size_valid = size != ''
         image_valid = image != ''
-
+        print("@@@@@@@@@@ valid: ", name, birth_date, summary, size, image)
         if not (name_valid and bith_date_valid and summary_valid and size_valid and image_valid):
-            self.manager.current = "admin_add_animal_warning_popup"
+            self.manager.current = "admin_edit_delete_animal_warning_popup"
             return
 
-        self.manager.current = "admin_add_animal_loading_popup"
+        self.manager.current = "admin_edit_delete_animal_loading_popup"
 
+        id_animal = self.curr_animal_id
         availability = self.curr_availability
         name = str(self.ids.name.text)
         birth_date = str(self.ids.birth_date.text)
@@ -423,39 +434,118 @@ class admin_edit_delete_animal(Screen):
         size = self.ids.size.text
 
         # print("*** shelter: ", shelter)
-        add_res = animals_dml.add_animal(availability,
-                                         species,
-                                         breed,
-                                         name,
-                                         birth_date,
-                                         gender,
-                                         size,
-                                         summary,
-                                         date_created,
-                                         shelter,
-                                         self.db)
+        update_res = animals_dml.update_animal(id_animal,
+                                               availability,
+                                               species,
+                                               breed,
+                                               name,
+                                               birth_date,
+                                               gender,
+                                               size,
+                                               summary,
+                                               date_created,
+                                               shelter,
+                                               self.db)
+
+        # update_res = animals_dml.update_animal()
 
         # print("*** add res: ", add_res)
-        animal_id = animals_dml.get_all_animals(self.db)[-1][0]
+
+        # animal_id = animals_dml.get_all_animals(self.db)[-1][0]
+        animals_dml.delete_dispositions(self.curr_animal_id, self.db)
+
         for i in range(1, len(self.dispositions_selection)):
             if self.dispositions_selection[i] == 1:
-                animals_dml.add_animal_disposition(animal_id, i, self.db)
+                animals_dml.add_animal_disposition(
+                    self.curr_animal_id, i, self.db)
 
-        added_animal = animals_dml.get_all_animals(self.db)[-1]
+        # added_animal = animals_dml.get_all_animals(self.db)[-1]
         # print("**** all animals: ", added_animal)
 
         # test
-        id_animal = int(added_animal[0])
+        # id_animal = int(added_animal[0])
 
         # id_animal = animals_dml.get_all_animals(self.db)[-1][0]
         # print("***** id_animal: ", id_animal)
 
-        images.upload_and_save_image(id_animal, self.image_link, self.db)
+        # images.upload_and_save_image(id_animal, self.image_link, self.db)
         self.git_pull()
 
-        self.manager.current = "admin_add_animal_saved_popup"
-        self.reset_all()
-        print("saved")
+        self.manager.current = "admin_edit_delete_animal_saved_popup"
+        # self.reset_all()
+        print("updated")
+
+    def delete(self):
+        animals_dml.delete_dispositions(self.curr_animal_id, self.db)
+        animals_dml.delete_animal(self.curr_animal_id, self.db)
+
+        latest_image_id = animals_dml.find_latest_image_id_by_animal(
+            self.curr_animal_id, self.db)
+        while (len(latest_image_id)):
+            animals_dml.delete_image(latest_image_id[0], self.db)
+            latest_image_id = animals_dml.find_latest_image_id_by_animal(
+                self.curr_animal_id, self.db)
+
+        self.git_pull()
+        self.manager.current = "admin_edit_delete_animal_deleted_popup"
+
+    def set_animal(self):
+
+        # selected_animal_breed = selected_animal[3]
+        for i, breed in enumerate(self.breeds[self.curr_species]):
+            # print("@@@@@@@@ i, self.curr_breed, breed",
+            #   i, self.curr_breed, breed)
+            if breed[0] == self.curr_breed:
+                self.curr_breed = i
+                break
+
+        # print("@@@@@: self.breeds", self.breeds)
+        # print("@@@@@ self.curr_species, self.curr_breed: ",
+            #   self.curr_species, self.curr_breed)
+        self.ids.breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        self.ids.species.text = self.species[self.curr_species]
+        self.ids.gender.text = self.gender[self.curr_gender]
+        self.ids.availability.text = self.availability[self.curr_availability]
+        self.ids.dispositions.text = "DISPOSITIONS"
+        self.ids.shelter.text = self.shelter[self.curr_shelter]
+
+        screen_species = self.manager.get_screen(
+            'admin_edit_delete_animal_species_popup')
+        screen_species.ids.selection_species.text = self.species[self.curr_species]
+        screen_breed = self.manager.get_screen(
+            'admin_edit_delete_animal_breed_popup')
+        screen_breed.ids.selection_breed.text = self.breeds[self.curr_species][self.curr_breed][1]
+        screen_gender = self.manager.get_screen(
+            'admin_edit_delete_animal_gender_popup')
+        screen_gender.ids.selection_gender.text = self.gender[self.curr_gender]
+        screen_availability = self.manager.get_screen(
+            'admin_edit_delete_animal_availability_popup')
+        screen_availability.ids.selection_availability.text = self.availability[
+            self.curr_availability]
+        screen_shelter = self.manager.get_screen(
+            'admin_edit_delete_animal_shelter_popup')
+        screen_shelter.ids.selection_shelter.text = self.shelter[self.curr_shelter]
+        screen_dispositions = self.manager.get_screen(
+            'admin_edit_delete_animal_dispositions_popup')
+        screen_dispositions.ids.selection_dispositions.text = "DISPOSITIONS"
+        screen_dispositions.ids.selection_dispositions.md_bg_color = (
+            171/255, 196/255, 212/255, 1)
+
+        self.ids.name.text = self.curr_name
+        self.ids.birth_date.text = self.curr_bday
+        self.ids.summary.text = self.curr_summary
+        self.ids.size.text = str(self.curr_size)
+
+        images = animals_dml.get_all_images_by_id_animal(
+            self.curr_animal_id, self.db)
+        first_image_id = images[0][0]
+        image_dir = "./images/" + str(first_image_id) + ".jpg"
+
+        self.image_link = image_dir
+        self.ids.image_widget.source = image_dir
+        screen_url = self.manager.get_screen(
+            'admin_edit_delete_animal_url_popup')
+        screen_url.ids.image_url.text = image_dir
 
     def reset_all(self):
 
