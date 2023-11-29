@@ -20,6 +20,7 @@ from kivy.properties import ListProperty
 from kivy.uix.button import Button
 from kivy.uix.image import AsyncImage
 from io import BytesIO
+from datetime import datetime
 
 import time
 import random
@@ -271,15 +272,12 @@ class admin_browse_animals(Screen):
         self.curr_gender = 0
         self.curr_availability = 0
         self.curr_disposition = 0
+        self.curr_animal = 0
         self.dispositions_selection = []
         self.loaded_species_breeds = 0
         self.loaded_gender = 0
         self.loaded_availability = 0
         self.loaded_dispositions = 0
-        # self.configured_breed = 0
-        # self.configured_species = 0
-        # self.configured_gender = 0
-        # self.configured_availability = 0
         self.animals = None
         self.images = []
         self.loaded_default = 0
@@ -423,7 +421,8 @@ class admin_browse_animals(Screen):
                 #       results_container_size_hiny_y * fixed_y},
                 radius=[10, 10, 10, 10],
                 pos_hint={"center_x": center_x, "center_y": 1 -
-                          size_h_y * (11/18 + 10/9 * pos_y_buff)}
+                          size_h_y * (11/18 + 10/9 * pos_y_buff)},
+                # on_release=self.to_admin_edit_delete_animal(num_id)
             )
 
             # bytes_io = BytesIO(self.images[num][0])
@@ -494,6 +493,48 @@ class admin_browse_animals(Screen):
     def to_admin_landing(self):
         self.reset_all()
         self.manager.current = "admin_landing"
+
+    # def to_admin_edit_delete_animal(self, animal_index):
+    #     print("***** animal_index: ", animal_index)
+    #     self.curr_animal = int(animal_index)
+    #     screen_ed_animal = self.manager.get_screen("admin_edit_delete_animal")
+    #     # print(screen_ed_animal)
+    #     screen_ed_animal.load_default()
+    #     selected_animal = self.animals[self.curr_animal]
+    #     print("********* selected_animal: ", selected_animal)
+
+    #     #         self.curr_breed = 0
+    #     # self.curr_species = 1
+    #     # self.curr_gender = 1
+    #     # self.curr_availability = 1
+    #     # self.curr_shelter = 1
+    #     # self.curr_disposition = 1
+    #     # self.dispositions_selection = []
+    #     #  [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
+    #     screen_ed_animal.curr_animal_id = selected_animal[0]
+    #     screen_ed_animal.curr_availability = selected_animal[1]
+    #     screen_ed_animal.curr_species = selected_animal[2]
+    #     screen_ed_animal.curr_breed = selected_animal[3]
+    #     screen_ed_animal.curr_name = selected_animal[4]
+    #     screen_ed_animal.curr_bday = selected_animal[5].strftime("%Y/%m/%d")
+    #     screen_ed_animal.curr_gender = selected_animal[6]
+    #     screen_ed_animal.curr_size = selected_animal[7]
+    #     screen_ed_animal.curr_summary = selected_animal[8]
+    #     print("***************** selected_animal: ", selected_animal)
+    #     screen_ed_animal.curr_cday = selected_animal[9].strftime("%Y/%m/%d")
+    #     screen_ed_animal.curr_shelter = selected_animal[10]
+
+    #     curr_animal_dispositions = selected_animal[11].split(',')
+
+    #     curr_selections_dispositions = []
+    #     i = 0
+    #     for disposition in curr_animal_dispositions:
+    #         if disposition < i:
+    #             for j in range(disposition-i):
+    #                 curr_animal_dispositions.append(0)
+    #         curr_animal_dispositions.append(1)
+    #     print(curr_selections_dispositions)
+    #     screen_ed_animal.selections_dispositions = curr_selections_dispositions
 
     def git_pull(repository_path):
         try:

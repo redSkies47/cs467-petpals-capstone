@@ -4,29 +4,26 @@ from dotenv import load_dotenv
 from database import db_interface
 from database import animals_dml
 
+
+"""
+Contains functions to save and retrieve images from github
+"""
+
+# --- Set Up ---#
+
 # Assign environment variables
 load_dotenv()
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+
 
 TOKEN = os.getenv('TOKEN')
 REPO = "redSkies47/cs467-petpals-capstone"
 REPO_PATH = "images/"
 MESSAGE = "upload image"
 BRANCH = "main"
-
-# local
-DB_HOST = 'localhost'
-DB_USER = 'shukie'
-DB_PASSWORD = 'Gummyw0rm5!Gummy'
-DB_NAME = 'capstone'
-# local
-
-
-TOKEN = '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'
-BRANCH = "admin_browse_animals"
-
-"""
-Contains functions to save and retrieve images from github
-"""
 
 
 def upload_and_save_image(id_animal, filename, db):

@@ -1,0 +1,139 @@
+#:include kv_design_language/admin_landing.kv
+#:include kv_design_language/admin_update_news.kv
+#:include kv_design_language/admin_add_animal.kv
+#:include kv_design_language/admin_browse_animals.kv
+#:include kv_design_language/admin_edit_delete_animal.kv
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+#:import WipeTransition kivy.uix.screenmanager.WipeTransition
+#:import FallOutTransition kivy.uix.screenmanager.FallOutTransition
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+ScreenManager:
+    transition: FadeTransition()
+
+    Screen:
+        name: "sample_login"
+
+        MDCard:
+            md_bg_color: (171/255, 196/255, 212/255, 1)
+            size_hint: 1, 1
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+  
+
+        MDFloatLayout:
+
+            md_bg_color: (255/255,233/255,234/255,1)
+            radius: [0,0,0,0]
+
+            # size_hint_x: 4/10
+            size_hint_x: 1
+            size_hint_y: 1
+            # pos_hint: {"center_x": 0.3, "center_y": 0.125}
+            # pos_hint: {"center_x": 0.235, "center_y": 0.125}
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            MDFloatLayout:
+
+                md_bg_color: (255/255,233/255,234/255,1)
+                radius: [0,0,0,0]
+
+                # size_hint_x: 4/10
+                size_hint_x: 1
+                size_hint_y: 0.2
+                # pos_hint: {"center_x": 0.3, "center_y": 0.125}
+                # pos_hint: {"center_x": 0.235, "center_y": 0.125}
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+
+
+                MDLabel:
+                    text: "SAMPLE LOGIN PAGE"
+                    h_align: "middle"
+                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+            MDRoundFlatButton:
+                line: 4
+                # line_color: (255/255,233/255,234/255,1)
+                # md_bg_color: (255/255,233/255,234/255,1)
+                md_bg_color: (171/255, 196/255, 212/255, 1)
+                line_color: (171/255, 196/255, 212/255, 1)
+                # text_color: 56/255,45/255,94/255,1
+                text_color: 0/255,0/255,0/255,0.85
+                text: "to admin landing"
+                font_style: "Button"
+                # font_size: self.height * 1.5
+                # font_size: self.width * 0.065
+                size_hint_x: 0.5
+                size_hint_y: 0.2
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                on_press: app.root.current = "admin_landing"
+
+
+
+    admin_landing:
+
+    admin_update_news:
+
+    admin_add_animal:
+
+    admin_add_animal_url_popup:
+
+    admin_add_animal_species_popup:
+
+    admin_add_animal_breed_popup:
+
+    admin_add_animal_gender_popup:
+
+    admin_add_animal_availability_popup:
+
+    admin_add_animal_shelter_popup:
+
+    admin_add_animal_dispositions_popup:
+
+    admin_add_animal_loading_popup:
+
+    admin_add_animal_saved_popup:
+
+    admin_add_animal_warning_popup:
+
+    admin_browse_animals:
+
+    admin_browse_animals_search_popup:
+
+    admin_browse_animals_species_popup:
+
+    admin_browse_animals_breed_popup:
+
+    admin_browse_animals_gender_popup:
+
+    admin_browse_animals_availability_popup:
+
+    admin_browse_animals_dispositions_popup:
+
+    admin_browse_animals_loading_popup:
+
+    admin_edit_delete_animal:
+
+    admin_edit_delete_animal_url_popup:
+
+    admin_edit_delete_animal_species_popup:
+
+    admin_edit_delete_animal_breed_popup:
+
+    admin_edit_delete_animal_gender_popup:
+
+    admin_edit_delete_animal_availability_popup:
+
+    admin_edit_delete_animal_shelter_popup:
+
+    admin_edit_delete_animal_dispositions_popup:
+
+    admin_edit_delete_animal_loading_popup:
+
+    admin_edit_delete_animal_saved_popup:
+
+    admin_edit_delete_animal_warning_popup:
