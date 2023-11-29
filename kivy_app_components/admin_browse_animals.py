@@ -407,6 +407,8 @@ class admin_browse_animals(Screen):
             # fixed_x = int(self.ids.results_container.size_x)
             # fixed_y = int(self.ids.results_container.size_y)
 
+            print("********** num_id: ", num_id)
+
             button = MDRectangleFlatButton(
                 id=num_id,
                 md_bg_color=(0/255, 0/255, 0/255, 0.1),
@@ -422,11 +424,18 @@ class admin_browse_animals(Screen):
                 radius=[10, 10, 10, 10],
                 pos_hint={"center_x": center_x, "center_y": 1 -
                           size_h_y * (11/18 + 10/9 * pos_y_buff)},
-                # on_release=self.to_admin_edit_delete_animal(num_id)
+                on_release=lambda this_button: self.to_admin_edit_delete_animal(
+                    this_button.id),
+                on_load=lambda this_button: button_dimensions(this_button)
             )
+
+            def button_dimensions(button):
+                button.size_hint_x = button.parent.parent.width * 9
+                button.size_hint_y = button.parent.parent.height * 9
 
             # bytes_io = BytesIO(self.images[num][0])
 
+            print("###### self.images:", self.images)
             image_dir = "./images/" + self.images[num][0] + ".jpg"
             # print("********** image_dir: ", image_dir)
 
@@ -494,47 +503,65 @@ class admin_browse_animals(Screen):
         self.reset_all()
         self.manager.current = "admin_landing"
 
-    # def to_admin_edit_delete_animal(self, animal_index):
-    #     print("***** animal_index: ", animal_index)
-    #     self.curr_animal = int(animal_index)
-    #     screen_ed_animal = self.manager.get_screen("admin_edit_delete_animal")
-    #     # print(screen_ed_animal)
-    #     screen_ed_animal.load_default()
-    #     selected_animal = self.animals[self.curr_animal]
-    #     print("********* selected_animal: ", selected_animal)
+    def to_admin_edit_delete_animal(self, animal_index):
 
-    #     #         self.curr_breed = 0
-    #     # self.curr_species = 1
-    #     # self.curr_gender = 1
-    #     # self.curr_availability = 1
-    #     # self.curr_shelter = 1
-    #     # self.curr_disposition = 1
-    #     # self.dispositions_selection = []
-    #     #  [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
-    #     screen_ed_animal.curr_animal_id = selected_animal[0]
-    #     screen_ed_animal.curr_availability = selected_animal[1]
-    #     screen_ed_animal.curr_species = selected_animal[2]
-    #     screen_ed_animal.curr_breed = selected_animal[3]
-    #     screen_ed_animal.curr_name = selected_animal[4]
-    #     screen_ed_animal.curr_bday = selected_animal[5].strftime("%Y/%m/%d")
-    #     screen_ed_animal.curr_gender = selected_animal[6]
-    #     screen_ed_animal.curr_size = selected_animal[7]
-    #     screen_ed_animal.curr_summary = selected_animal[8]
-    #     print("***************** selected_animal: ", selected_animal)
-    #     screen_ed_animal.curr_cday = selected_animal[9].strftime("%Y/%m/%d")
-    #     screen_ed_animal.curr_shelter = selected_animal[10]
+        self.manager.current = "admin_browse_animals_loading_popup"
+        print("***** animal_index: ", animal_index)
+        self.curr_animal = int(animal_index)
+        screen_ed_animal = self.manager.get_screen("admin_edit_delete_animal")
+        # print(screen_ed_animal)
+        screen_ed_animal.load_default()
+        selected_animal = self.animals[self.curr_animal]
+        print("********* selected_animal: ", selected_animal)
 
-    #     curr_animal_dispositions = selected_animal[11].split(',')
+        #         self.curr_breed = 0
+        # self.curr_species = 1
+        # self.curr_gender = 1
+        # self.curr_availability = 1
+        # self.curr_shelter = 1
+        # self.curr_disposition = 1
+        # self.dispositions_selection = []
+        #  [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
+        screen_ed_animal.curr_animal_id = selected_animal[0]
+        screen_ed_animal.curr_availability = selected_animal[1]
+        screen_ed_animal.curr_species = selected_animal[2]
 
-    #     curr_selections_dispositions = []
-    #     i = 0
-    #     for disposition in curr_animal_dispositions:
-    #         if disposition < i:
-    #             for j in range(disposition-i):
-    #                 curr_animal_dispositions.append(0)
-    #         curr_animal_dispositions.append(1)
-    #     print(curr_selections_dispositions)
-    #     screen_ed_animal.selections_dispositions = curr_selections_dispositions
+        screen_ed_animal.curr_breed = selected_animal[3]
+        screen_ed_animal.curr_name = selected_animal[4]
+        screen_ed_animal.curr_bday = selected_animal[5].strftime("%Y/%m/%d")
+        screen_ed_animal.curr_gender = selected_animal[6]
+        screen_ed_animal.curr_size = selected_animal[7]
+        screen_ed_animal.curr_summary = selected_animal[8]
+        screen_ed_animal.curr_cday = selected_animal[9].strftime("%Y/%m/%d")
+        screen_ed_animal.curr_shelter = selected_animal[10]
+
+        curr_animal_dispositions = []
+        if selected_animal[11]:
+            curr_animal_dispositions = sorted([int(i)
+                                               for i in selected_animal[11].split(',')])
+        print(screen_ed_animal.curr_cday)
+        print(screen_ed_animal.curr_bday)
+        print(curr_animal_dispositions)
+
+        curr_dispositions_selection = []
+        i = 0
+        max = len(self.dispositions_selection) - 1
+        for disposition in curr_animal_dispositions:
+            print(disposition)
+            for j in range(disposition-i):
+                curr_dispositions_selection.append(0)
+            curr_dispositions_selection.append(1)
+            i = disposition + 1
+        while i < len(self.dispositions_selection):
+            curr_dispositions_selection.append(0)
+            i += 1
+
+        print(curr_dispositions_selection)
+        screen_ed_animal.dispositions_selection = curr_dispositions_selection
+        screen_ed_animal.curr_disposition = 1
+
+        screen_ed_animal.set_animal()
+        self.manager.current = "admin_edit_delete_animal"
 
     def git_pull(repository_path):
         try:
