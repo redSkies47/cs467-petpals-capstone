@@ -49,28 +49,33 @@ cat_dictionary = {}
 other_dictionary = {}
 
 # --- App Components ---#
+
+
 class MainApp(MDApp):
     db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
     id_account = None
+
     def build(self):
         Window.size = (720, 1280)
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
         return Builder.load_file('../kv_design_language/user_front.kv')
 
+
 class LoginWindow(Screen):
     email_input = ObjectProperty(None)      # login form - email
     password_input = ObjectProperty(None)   # login form - password
+
     def __init__(self, **kwargs):
         super(LoginWindow, self).__init__(**kwargs)
         self.bademail_label = Label(text='Error: Failed to login. Email is not registered to an account.',
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                    color=(255/255, 0/255, 0/255, 1),
+                                    font_size=25,
+                                    pos_hint={"center_x": 0.5, "center_y": .95})
         self.badpass_label = Label(text='Error: Failed to login. Password is incorrect.',
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                   color=(255/255, 0/255, 0/255, 1),
+                                   font_size=25,
+                                   pos_hint={"center_x": 0.5, "center_y": .95})
 
     def clear_labels(self):
         if self.bademail_label:
@@ -84,8 +89,10 @@ class LoginWindow(Screen):
         """
         email = self.email_input.text
         password = self.password_input.text
+
         def bad_email_label():
             self.add_widget(self.bademail_label)
+
         def bad_pass_label():
             self.add_widget(self.badpass_label)
 
@@ -124,6 +131,7 @@ class LoginWindow(Screen):
         # Store id_account
         MainApp.id_account = id_account
 
+
 class admin_landing(Screen):
 
     def __init__(self, **kwargs):
@@ -133,11 +141,13 @@ class admin_landing(Screen):
         self.DB_PASSWORD = DB_PASSWORD
         self.DB_NAME = DB_NAME
 
+
 class CreateAccountWindow(Screen):
     name_input = ObjectProperty(None)       # account form - name
     email_input = ObjectProperty(None)      # account form - email
     password1_input = ObjectProperty(None)  # account form - password
     password2_input = ObjectProperty(None)  # account form - confirm password
+
     def __init__(self, **kwargs):
         super(CreateAccountWindow, self).__init__(**kwargs)
 
@@ -159,7 +169,8 @@ class CreateAccountWindow(Screen):
         accounts = find_account(email, MainApp.db)
         if len(accounts) > 0:
             # PLACEHOLDER: error message
-            print('Error: Failed to create account. Email is already registered to an account.')
+            print(
+                'Error: Failed to create account. Email is already registered to an account.')
             return
         # If passwords do not match
         if password1 != password2:
@@ -172,20 +183,22 @@ class CreateAccountWindow(Screen):
         # PLACEHOLDER: success message
         print('Successful account creation!')
 
+
 class LandingWindow(Screen):
     name_input = ObjectProperty(None)       # update account form - name
     email_input = ObjectProperty(None)      # update account form - email
     password_input = ObjectProperty(None)   # update account form - password
+
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.delete_label = Label(text="Account Deleted.",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.liked_card_present = 0
         super(LandingWindow, self).__init__(**kwargs)
 
@@ -217,7 +230,8 @@ class LandingWindow(Screen):
             accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
-                print('Error: Failed to update account email. Email is already registered to an account.')
+                print(
+                    'Error: Failed to update account email. Email is already registered to an account.')
             else:
                 update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
@@ -256,6 +270,7 @@ class LandingWindow(Screen):
     def clearchange(self):
         if self.change_label:
             self.remove_widget(self.change_label)
+
     def cleardelete(self):
         if self.delete_label:
             self.remove_widget(self.delete_label)
@@ -279,11 +294,12 @@ class LandingWindow(Screen):
                 self.liked_animal_item = TwoLineAvatarIconListItem(
                     IconRightWidget(
                         icon="minus",
-                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(
+                            id)
                     ),
                     secondary_text=shelter_name,
                     bg_color=(255/255, 233/255, 234/255, 1),
-                    text_color= (56/255, 45/255, 94/255, 1),
+                    text_color=(56/255, 45/255, 94/255, 1),
                     text=f"[size=54]{animal_name}[/size]"
                 )
                 dog_dictionary[id_animal] = self.liked_animal_item
@@ -294,7 +310,7 @@ class LandingWindow(Screen):
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
         self.ids.liked_list.remove_widget(dog_dictionary[id])
         # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
+        print(liked_animal_list)  # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
@@ -311,18 +327,18 @@ class DogBrowseWindow(Screen):
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.delete_label = Label(text="Account Deleted. Please Log Out.",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.no_results_label = Label(text="No matches were found!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2,
-                              pos_hint = {"center_x": 0.5, "center_y": .5})
+                                      color=(255/255, 0/255, 0/255, 1),
+                                      size_hint=(.2, .2),
+                                      font_size=self.width/2,
+                                      pos_hint={"center_x": 0.5, "center_y": .5})
         self.dog_card_present = 0
         self.liked_card_present = 0
         super(DogBrowseWindow, self).__init__(**kwargs)
@@ -355,7 +371,8 @@ class DogBrowseWindow(Screen):
             accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
-                print('Error: Failed to update account email. Email is already registered to an account.')
+                print(
+                    'Error: Failed to update account email. Email is already registered to an account.')
             else:
                 update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
@@ -394,6 +411,7 @@ class DogBrowseWindow(Screen):
     def clearchange(self):
         if self.change_label:
             self.remove_widget(self.change_label)
+
     def cleardelete(self):
         if self.delete_label:
             self.remove_widget(self.delete_label)
@@ -411,7 +429,8 @@ class DogBrowseWindow(Screen):
     def add_dog(self):
         # Retrieve matching dogs
         dog_search_info = self.parent.ids['dog_search']
-        dog_list = get_dogs(dog_search_info.get_breed(), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
+        dog_list = get_dogs(dog_search_info.get_breed(
+        ), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
         # PLACEHOLDER: no matching dogs message
         if not dog_list:
             self.add_widget(self.no_results_label)
@@ -423,12 +442,12 @@ class DogBrowseWindow(Screen):
                 dog_id = dog[0]
                 dog_name = dog[1]
                 self.dog_card = Button(text=dog_name,
-                                       color = (1,1,1,1),
-                                        background_normal = '../images/5.jpg')
-                self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+                                       color=(1, 1, 1, 1),
+                                       background_normal='../images/5.jpg')
+                self.dog_card.bind(on_release=lambda x,
+                                   id=dog_id: self.show_dog_profile(id))
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
-
 
     def remove_dog(self):
         self.dog_card_present = 0
@@ -452,11 +471,12 @@ class DogBrowseWindow(Screen):
                 self.liked_animal_item = TwoLineAvatarIconListItem(
                     IconRightWidget(
                         icon="minus",
-                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(
+                            id)
                     ),
                     secondary_text=shelter_name,
                     bg_color=(255/255, 233/255, 234/255, 1),
-                    text_color= (56/255, 45/255, 94/255, 1),
+                    text_color=(56/255, 45/255, 94/255, 1),
                     text=f"[size=54]{animal_name}[/size]"
                 )
                 dog_dictionary[id_animal] = self.liked_animal_item
@@ -467,14 +487,13 @@ class DogBrowseWindow(Screen):
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
         self.ids.liked_list.remove_widget(dog_dictionary[id])
         # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
+        print(liked_animal_list)  # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
         if self.liked_animal_card_list:
             for liked_cards in self.liked_animal_card_list:
                 self.ids.liked_list.remove_widget(liked_cards)
-
 
 
 class DogProfile(Screen):
@@ -490,10 +509,10 @@ class DogProfile(Screen):
 
     def __init__(self, **kwargs):
         self.added_to_liked = Label(text="Successfully added to your liked list!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2.3,
-                              pos_hint = {"center_x": 0.5, "center_y": .16})
+                                    color=(255/255, 0/255, 0/255, 1),
+                                    size_hint=(.2, .2),
+                                    font_size=self.width/2.3,
+                                    pos_hint={"center_x": 0.5, "center_y": .16})
         super(DogProfile, self).__init__(**kwargs)
 
     def set_id(self, id):
@@ -514,12 +533,14 @@ class DogProfile(Screen):
     def add_liked_animal(self):
         self.add_widget(self.added_to_liked)
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
-        liked_animal_list = [liked_animal[0] for liked_animal in liked_animal_list]
+        liked_animal_list = [liked_animal[0]
+                             for liked_animal in liked_animal_list]
         if self.id_dog not in liked_animal_list:
             add_liked_animal(MainApp.id_account, self.id_dog, MainApp.db)
 
     def remove_added_msg(self):
         self.remove_widget(self.added_to_liked)
+
 
 class DogSearch(Screen):
     # Store selected breed, disposition(s), and recency
@@ -528,7 +549,8 @@ class DogSearch(Screen):
     selected_recency = None         # True if most recent, False if least recent
     # Retrieve breeds and dispositions to display
     breeds = [breed[1] for breed in get_dog_breeds(MainApp.db)]
-    dispositions = [disposition[1] for disposition in get_dispositions(MainApp.db)]
+    dispositions = [disposition[1]
+                    for disposition in get_dispositions(MainApp.db)]
 
     def get_breed(self):
         return self.selected_breed
@@ -562,9 +584,9 @@ class Dispositions(Button):
     chosen_dispositions = ListProperty([])  # selected dispositions
 
     def __init__(self, **kwargs):
-        self.text="Click here for dispositions"
-        self.background_normal= ''
-        self.background_color=(0, 187/255, 224/255, 1)
+        self.text = "Click here for dispositions"
+        self.background_normal = ''
+        self.background_color = (0, 187/255, 224/255, 1)
         self.bind(dropdown=self.update_dropdown)
         self.bind(values=self.update_dropdown)
         super(Dispositions, self).__init__(**kwargs)
@@ -621,18 +643,18 @@ class CatBrowseWindow(Screen):
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.delete_label = Label(text="Account Deleted. Please Log Out.",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.no_results_label = Label(text="No matches were found!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2,
-                              pos_hint = {"center_x": 0.5, "center_y": .5})
+                                      color=(255/255, 0/255, 0/255, 1),
+                                      size_hint=(.2, .2),
+                                      font_size=self.width/2,
+                                      pos_hint={"center_x": 0.5, "center_y": .5})
         self.cat_card_present = 0
         self.liked_card_present = 0
         super(CatBrowseWindow, self).__init__(**kwargs)
@@ -665,7 +687,8 @@ class CatBrowseWindow(Screen):
             accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
-                print('Error: Failed to update account email. Email is already registered to an account.')
+                print(
+                    'Error: Failed to update account email. Email is already registered to an account.')
             else:
                 update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
@@ -704,6 +727,7 @@ class CatBrowseWindow(Screen):
     def clearchange(self):
         if self.change_label:
             self.remove_widget(self.change_label)
+
     def cleardelete(self):
         if self.delete_label:
             self.remove_widget(self.delete_label)
@@ -721,7 +745,8 @@ class CatBrowseWindow(Screen):
     def add_cat(self):
         # Retrieve matching dogs
         cat_search_info = self.parent.ids['dog_search']
-        cat_list = get_dogs(dog_search_info.get_breed(), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
+        cat_list = get_dogs(dog_search_info.get_breed(
+        ), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
         # PLACEHOLDER: no matching dogs message
         if not cat_list:
             self.add_widget(self.no_results_label)
@@ -733,12 +758,12 @@ class CatBrowseWindow(Screen):
                 cat_id = cat[0]
                 cat_name = cat[1]
                 self.cat_card = Button(text=cat_name,
-                                       color = (1,1,1,1),
-                                        background_normal = '../images/5.jpg')
-                self.cat_card.bind(on_release = lambda x, id=cat_id: self.show_cat_profile(id))
+                                       color=(1, 1, 1, 1),
+                                       background_normal='../images/5.jpg')
+                self.cat_card.bind(on_release=lambda x,
+                                   id=cat_id: self.show_cat_profile(id))
                 self.cat_card_list.append(self.cat_card)
                 self.ids.cat_grid.add_widget(self.cat_card)
-
 
     def remove_cat(self):
         self.cat_card_present = 0
@@ -762,11 +787,12 @@ class CatBrowseWindow(Screen):
                 self.liked_animal_item = TwoLineAvatarIconListItem(
                     IconRightWidget(
                         icon="minus",
-                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(
+                            id)
                     ),
                     secondary_text=shelter_name,
                     bg_color=(255/255, 233/255, 234/255, 1),
-                    text_color= (56/255, 45/255, 94/255, 1),
+                    text_color=(56/255, 45/255, 94/255, 1),
                     text=f"[size=54]{animal_name}[/size]"
                 )
                 cat_dictionary[id_animal] = self.liked_animal_item
@@ -777,14 +803,13 @@ class CatBrowseWindow(Screen):
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
         self.ids.liked_list.remove_widget(cat_dictionary[id])
         # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
+        print(liked_animal_list)  # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
         if self.liked_animal_card_list:
             for liked_cards in self.liked_animal_card_list:
                 self.ids.liked_list.remove_widget(liked_cards)
-
 
 
 class CatProfile(Screen):
@@ -800,10 +825,10 @@ class CatProfile(Screen):
 
     def __init__(self, **kwargs):
         self.added_to_liked = Label(text="Successfully added to your liked list!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2.3,
-                              pos_hint = {"center_x": 0.5, "center_y": .16})
+                                    color=(255/255, 0/255, 0/255, 1),
+                                    size_hint=(.2, .2),
+                                    font_size=self.width/2.3,
+                                    pos_hint={"center_x": 0.5, "center_y": .16})
         super(CatProfile, self).__init__(**kwargs)
 
     def set_id(self, id):
@@ -824,12 +849,14 @@ class CatProfile(Screen):
     def add_liked_animal(self):
         self.add_widget(self.added_to_liked)
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
-        liked_animal_list = [liked_animal[0] for liked_animal in liked_animal_list]
+        liked_animal_list = [liked_animal[0]
+                             for liked_animal in liked_animal_list]
         if self.id_dog not in liked_animal_list:
             add_liked_animal(MainApp.id_account, self.id_dog, MainApp.db)
 
     def remove_added_msg(self):
         self.remove_widget(self.added_to_liked)
+
 
 class CatSearch(Screen):
     # Store selected breed, disposition(s), and recency
@@ -838,7 +865,8 @@ class CatSearch(Screen):
     selected_recency = None         # True if most recent, False if least recent
     # Retrieve breeds and dispositions to display
     breeds = [breed[1] for breed in get_dog_breeds(MainApp.db)]
-    dispositions = [disposition[1] for disposition in get_dispositions(MainApp.db)]
+    dispositions = [disposition[1]
+                    for disposition in get_dispositions(MainApp.db)]
 
     def get_breed(self):
         return self.selected_breed
@@ -870,6 +898,7 @@ class CatSearch(Screen):
 ##########################################################
 ##########################################################
 
+
 class OtherBrowseWindow(Screen):
     name_input = ObjectProperty(None)       # update account form - name
     email_input = ObjectProperty(None)      # update account form - email
@@ -878,18 +907,18 @@ class OtherBrowseWindow(Screen):
     def __init__(self, **kwargs):
         (self.news_title, self.news_body) = self.get_news()
         self.change_label = Label(text="Changes Submitted!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.delete_label = Label(text="Account Deleted. Please Log Out.",
-                              color = (255/255, 0/255, 0/255, 1),
-                              font_size = 25,
-                              pos_hint = {"center_x": 0.5, "center_y": .95})
+                                  color=(255/255, 0/255, 0/255, 1),
+                                  font_size=25,
+                                  pos_hint={"center_x": 0.5, "center_y": .95})
         self.no_results_label = Label(text="No matches were found!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2,
-                              pos_hint = {"center_x": 0.5, "center_y": .5})
+                                      color=(255/255, 0/255, 0/255, 1),
+                                      size_hint=(.2, .2),
+                                      font_size=self.width/2,
+                                      pos_hint={"center_x": 0.5, "center_y": .5})
         self.other_card_present = 0
         self.liked_card_present = 0
         super(OtherBrowseWindow, self).__init__(**kwargs)
@@ -922,7 +951,8 @@ class OtherBrowseWindow(Screen):
             accounts = find_account(email, MainApp.db)
             if len(accounts) > 0:
                 # PLACEHOLDER: error message
-                print('Error: Failed to update account email. Email is already registered to an account.')
+                print(
+                    'Error: Failed to update account email. Email is already registered to an account.')
             else:
                 update_account_email(MainApp.id_account, email, MainApp.db)
                 # PLACEHOLDER: success message
@@ -961,6 +991,7 @@ class OtherBrowseWindow(Screen):
     def clearchange(self):
         if self.change_label:
             self.remove_widget(self.change_label)
+
     def cleardelete(self):
         if self.delete_label:
             self.remove_widget(self.delete_label)
@@ -978,7 +1009,8 @@ class OtherBrowseWindow(Screen):
     def add_other(self):
         # Retrieve matching dogs
         other_search_info = self.parent.ids['dog_search']
-        other_list = get_dogs(dog_search_info.get_breed(), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
+        other_list = get_dogs(dog_search_info.get_breed(
+        ), dog_search_info.get_dispositions(), dog_search_info.get_recency(), MainApp.db)
         # PLACEHOLDER: no matching dogs message
         if not other_list:
             self.add_widget(self.no_results_label)
@@ -990,12 +1022,12 @@ class OtherBrowseWindow(Screen):
                 other_id = other[0]
                 other_name = other[1]
                 self.other_card = Button(text=other_name,
-                                       color = (1,1,1,1),
-                                        background_normal = '../images/5.jpg')
-                self.other_card.bind(on_release = lambda x, id=other_id: self.show_other_profile(id))
+                                         color=(1, 1, 1, 1),
+                                         background_normal='../images/5.jpg')
+                self.other_card.bind(on_release=lambda x,
+                                     id=other_id: self.show_other_profile(id))
                 self.other_card_list.append(self.other_card)
                 self.ids.other_grid.add_widget(self.other_card)
-
 
     def remove_other(self):
         self.other_card_present = 0
@@ -1019,11 +1051,12 @@ class OtherBrowseWindow(Screen):
                 self.liked_animal_item = TwoLineAvatarIconListItem(
                     IconRightWidget(
                         icon="minus",
-                        on_release=lambda x, id=id_animal: self.remove_liked_animal(id)
+                        on_release=lambda x, id=id_animal: self.remove_liked_animal(
+                            id)
                     ),
                     secondary_text=shelter_name,
                     bg_color=(255/255, 233/255, 234/255, 1),
-                    text_color= (56/255, 45/255, 94/255, 1),
+                    text_color=(56/255, 45/255, 94/255, 1),
                     text=f"[size=54]{animal_name}[/size]"
                 )
                 other_dictionary[id_animal] = self.liked_animal_item
@@ -1034,14 +1067,13 @@ class OtherBrowseWindow(Screen):
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
         self.ids.liked_list.remove_widget(other_dictionary[id])
         # Sammie - line to delete can be placed here - placeholder: liked_animal_list.remove(id)
-        print(liked_animal_list) # tester
+        print(liked_animal_list)  # tester
 
     def reset_liked_list(self):
         self.liked_card_present = 0
         if self.liked_animal_card_list:
             for liked_cards in self.liked_animal_card_list:
                 self.ids.liked_list.remove_widget(liked_cards)
-
 
 
 class OtherProfile(Screen):
@@ -1057,10 +1089,10 @@ class OtherProfile(Screen):
 
     def __init__(self, **kwargs):
         self.added_to_liked = Label(text="Successfully added to your liked list!",
-                              color = (255/255, 0/255, 0/255, 1),
-                              size_hint = (.2,.2),
-                              font_size = self.width/2.3,
-                              pos_hint = {"center_x": 0.5, "center_y": .16})
+                                    color=(255/255, 0/255, 0/255, 1),
+                                    size_hint=(.2, .2),
+                                    font_size=self.width/2.3,
+                                    pos_hint={"center_x": 0.5, "center_y": .16})
         super(OtherProfile, self).__init__(**kwargs)
 
     def set_id(self, id):
@@ -1081,12 +1113,14 @@ class OtherProfile(Screen):
     def add_liked_animal(self):
         self.add_widget(self.added_to_liked)
         liked_animal_list = get_liked_animals(MainApp.id_account, MainApp.db)
-        liked_animal_list = [liked_animal[0] for liked_animal in liked_animal_list]
+        liked_animal_list = [liked_animal[0]
+                             for liked_animal in liked_animal_list]
         if self.id_other not in liked_animal_list:
             add_liked_animal(MainApp.id_account, self.id_dog, MainApp.db)
 
     def remove_added_msg(self):
         self.remove_widget(self.added_to_liked)
+
 
 class OtherSearch(Screen):
     # Store selected breed, disposition(s), and recency
@@ -1095,7 +1129,8 @@ class OtherSearch(Screen):
     selected_recency = None         # True if most recent, False if least recent
     # Retrieve breeds and dispositions to display
     breeds = [breed[1] for breed in get_dog_breeds(MainApp.db)]
-    dispositions = [disposition[1] for disposition in get_dispositions(MainApp.db)]
+    dispositions = [disposition[1]
+                    for disposition in get_dispositions(MainApp.db)]
 
     def get_breed(self):
         return self.selected_breed
@@ -1120,7 +1155,6 @@ class OtherSearch(Screen):
         """Sets selected_breed and displays it as the dropdown label's text"""
         self.ids.click_label = value
         self.selected_breed = value
-
 
 
 class WindowManager(ScreenManager):
