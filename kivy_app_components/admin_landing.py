@@ -1,7 +1,3 @@
-# from kivy_app_components.admin_update_news import admin_update_news
-# from kivy_app_components.admin_add_animal import admin_add_animal
-# from kivy_app_components.admin_browse_animals import admin_browse_animals
-# from kivy_app_components.admin_edit_delete_animal import admin_edit_delete_animal
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import os
@@ -12,8 +8,6 @@ from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from database.db_interface import Database
 from database.accounts_dml import *
-
-# *** run through terminal from CS467-PETPALS-CAPSTONE: python3 -m kivy_app_components.admin_landing
 
 # --- Set Up ---#
 
@@ -36,13 +30,3 @@ class admin_landing(Screen):
         self.DB_USER = DB_USER
         self.DB_PASSWORD = DB_PASSWORD
         self.DB_NAME = DB_NAME
-
-    # def build(self):
-    #     # for temporary rendering, expect screen to adapt to device res
-    #     Window.size = (295, 620)
-    #     # Window.size = (720, 1280)
-    #     return Builder.load_file('../kv_design_language/admin_landing.kv')
-
-
-# if __name__ == '__main__':
-#     admin_landing().run()

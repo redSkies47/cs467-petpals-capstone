@@ -468,25 +468,6 @@ class admin_add_animal(Screen):
         screen_search.ids.dispositions.text = 'DISPOSITIONS'
         screen_search.ids.shelter.text = 'SHELTER'
 
-        # screen_species = self.manager.get_screen(
-        #     'admin_add_animal_species_popup')
-        # screen_species.ids.selection_species.text = self.species[self.curr_species]
-        # screen_breed = self.manager.get_screen(
-        #     'admin_add_animal_breed_popup')
-        # screen_breed.ids.selection_breed.text = self.breeds[self.curr_species][self.curr_breed][1]
-        # screen_gender = self.manager.get_screen(
-        #     'admin_add_animal_gender_popup')
-        # screen_gender.ids.selection_gender.text = self.gender[self.curr_gender]
-        # screen_availability = self.manager.get_screen(
-        #     'admin_add_animal_availability_popup')
-        # screen_availability.ids.selection_availability.text = self.availability[
-        #     self.curr_availability]
-        # screen_dispositions = self.manager.get_screen(
-        #     'admin_add_animal_shelter_popup')
-        # screen_dispositions.ids.selection_shelter.text = self.shelter[
-        #     self.curr_shelter]
-        # screen_url = self.manager.get_screen('admin_add_animal_url_popup')
-        # screen_url.ids.image_url.text = ''
         screen_species = self.manager.get_screen(
             'admin_add_animal_species_popup')
         screen_species.ids.selection_species.text = 'SPECIES'
@@ -542,32 +523,3 @@ class admin_add_animal(Screen):
             print("Git pull successful. ", result)
         except subprocess.CalledProcessError as e:
             print(f"Error during git pull: {e}")
-
-
-# class FileChoose(Button):
-#     '''
-#     Button that triggers 'filechooser.open_file()' and processes
-#     the data response from filechooser Activity.
-#     '''
-
-#     selection = ListProperty([])
-
-#     def choose(self):
-#         '''
-#         Call plyer filechooser API to run a filechooser Activity.
-#         '''
-#         filechooser.open_file(on_selection=self.handle_selection)
-
-#     def handle_selection(self, selection):
-#         '''
-#         Callback function for handling the selection response from Activity.
-#         '''
-#         self.selection = selection
-
-#     def on_selection(self, *a, **k):
-#         '''
-#         Update TextInput.text after FileChoose.selection is changed
-#         via FileChoose.handle_selection.
-#         '''
-#         # App.get_running_app().root.ids.result.text = str(self.selection)
-#         pass
