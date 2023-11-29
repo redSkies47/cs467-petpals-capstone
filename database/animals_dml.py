@@ -62,7 +62,7 @@ def delete_animal(id_animal, db):
     :param Database db: database to be queried
     :return: None
     """
-    deleteAnimal_cmd = "DELETE FROM News WHERE id_news = %s"
+    deleteAnimal_cmd = "DELETE FROM Animals WHERE id_animal = %s"
     deleteAnimal_params = (id_animal,)
     db.query(deleteAnimal_cmd, deleteAnimal_params)
 
@@ -158,7 +158,7 @@ def get_animals_by_species_breed_gender_availability_dispositions(id_species, id
     :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, list(id_dispositions))]
     """
 
-    selectAnimals_cmd = "select id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, summary, date_created, id_shelter, group_concat(c.id_disposition) as dispositions from \
+    selectAnimals_cmd = "select id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, group_concat(c.id_disposition) as dispositions from \
                             (select a.*, b.id_disposition from Animals a left join Animal_Dispositions b on a.id_animal = b.id_animal) c "
     first_clause = 1
     selectAnimals_params = []
@@ -394,6 +394,23 @@ def get_dispositions(db):
     return selectDispositions_result
 
 
+def delete_dispositions(id_animal, db):
+    """
+    Delete all Dispositions by id_animal.
+
+    :param int id_animal: id of animal 
+    :param Database db: database to be queried
+    :return: None
+    """
+    deleteDispositions_cmd = "delete from Animal_Dispositions where id_animal = %s"
+    deleteDispositions_params = (id_animal,)
+    deleteDispositions_result = db.query(
+        deleteDispositions_cmd, deleteDispositions_params)
+    return deleteDispositions_result
+
+# delete from Animal_Dispositions where id_animal = 1000000;
+
+
 def get_genders(db):
     """
     Returns a list containing all Genders. Returns an empty list if none exist.
@@ -420,7 +437,7 @@ def get_species(db):
     return selectSpecies_result
 
 
-def update_animal(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, db):
+def update_animal(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter, db):
     """
     Updates an Animal matching the id_animal from the Animals. Must receive all arguments. Returns an empty list if no such Animal exists.
 
@@ -434,12 +451,13 @@ def update_animal(id_animal, id_availability, id_species, id_breed, name, birth_
     :param int size: size of the Animal
     :param str summary: summary of the Animal
     :param str date_created: formatted as YYYY-MM-DD
+    :param int shelter: shelter of the Animal
     :param Database db: database to be queried
-    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created)]
+    :return: [(id_animal, id_availability, id_species, id_breed, name, birth_date, id_gender, size, summary, date_created, id_shelter)]
     """
-    updateIDAnimal_cmd = "UPDATE Animals SET id_availability = %s, id_species = %s, id_breed = %s, name = %s, birth_date = %s, id_gender = %s, size = %s, summary = %s, date_created = %s WHERE id_animal = %s"
+    updateIDAnimal_cmd = "UPDATE Animals SET id_availability = %s, id_species = %s, id_breed = %s, name = %s, birth_date = %s, id_gender = %s, size = %s, summary = %s, date_created = %s, id_shelter = %s WHERE id_animal = %s"
     updateIDAnimal_params = (id_availability, id_species, id_breed, name,
-                             birth_date, id_gender, size, summary, date_created, id_animal)
+                             birth_date, id_gender, size, summary, date_created, id_shelter, id_animal)
     updateIDAnimal_result = db.query(updateIDAnimal_cmd, updateIDAnimal_params)
     return updateIDAnimal_result
 
