@@ -108,6 +108,8 @@
                             root.remove_added_msg()
                             app.root.current = "dogbrowse"
                             root.manager.transition.direction = "right"
+            AsyncImage:
+                source: '../images/' + str(root.id_image) + '.jpg'
             Image:
 				source: '../images/petpals_logo.png'
 
@@ -477,7 +479,7 @@
                     Rectangle:
                         size: self.size
                         pos: self.pos
-            Dispositions:
+            DogDispositions:
                 id: Dispositions
                 values: root.dispositions
             Label:

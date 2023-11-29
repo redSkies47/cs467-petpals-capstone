@@ -37,7 +37,7 @@
                         color: (56/255, 45/255, 94/255, 1)
                     # Name
                     Label:
-                        text: "Name: " + root.dog_name
+                        text: "Name: " + root.cat_name
                         color: (56/255, 45/255, 94/255, 1)
                     # Birthdate
                     Label:
@@ -103,6 +103,8 @@
                             root.remove_added_msg()
                             app.root.current = "catbrowse"
                             root.manager.transition.direction = "right"
+            AsyncImage:
+                source: '../images/' + str(root.id_image) + '.jpg'
             Image:
 				source: '../images/petpals_logo.png'
 
@@ -472,7 +474,7 @@
                     Rectangle:
                         size: self.size
                         pos: self.pos
-            Dispositions:
+            CatDispositions:
                 id: Dispositions
                 values: root.dispositions
             Label:
