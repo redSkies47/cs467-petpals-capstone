@@ -108,10 +108,10 @@
                             root.remove_added_msg()
                             app.root.current = "dogbrowse"
                             root.manager.transition.direction = "right"
-			Image:
-				source: '../images/petpals_logo.png'
 			AsyncImage:
-				source: 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/1.jpg'
+				source: 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/' + str(root.id_image) + '.jpg'
+            Image:
+				source: '../images/petpals_logo.png'
 
 
 

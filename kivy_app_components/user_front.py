@@ -407,9 +407,10 @@ class DogBrowseWindow(Screen):
             for dog in dog_list:
                 dog_id = dog[0]
                 dog_name = dog[1]
+                image_id = find_latest_image_id_by_animal(dog_id, MainApp.db)[0]
                 self.dog_card = Button(text=dog_name,
                                        color = (1,1,1,1),
-                                        background_normal = '../images/5.jpg')
+                                        background_normal = '../images/' + str(image_id) + '.jpg')
                 self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
@@ -466,6 +467,7 @@ class DogBrowseWindow(Screen):
 
 class DogProfile(Screen):
     id_dog = NumericProperty(None)
+    id_image = NumericProperty(None)
     availability = StringProperty('')
     dog_name = StringProperty('')
     birthdate = StringProperty('')
@@ -497,6 +499,7 @@ class DogProfile(Screen):
         self.size_in_lbs = str(dog_info[7])
         self.summary = dog_info[8]
         self.date_created = str(dog_info[9])
+        self.id_image = find_latest_image_id_by_animal(self.id_dog, MainApp.db)[0]
 
     def add_liked_animal(self):
         self.add_widget(self.added_to_liked)
