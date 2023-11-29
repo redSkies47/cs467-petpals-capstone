@@ -44,6 +44,9 @@ DROP TABLE `Genders`;
 -- Delete Images table
 DROP Table `Images`;
 
+-- Delete Liked Animals table
+DROP TABLE `Liked_Animals`;
+
 -- Delete News table
 DROP TABLE `News`;
 
