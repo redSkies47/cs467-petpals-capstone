@@ -348,7 +348,7 @@ class DogBrowseWindow(NavigationTab):
                 image_id = find_latest_image_id_by_animal(dog_id, MainApp.db)[0]
                 self.dog_card = Button(text=dog_name,
                                        color = (1,1,1,1),
-                                        background_normal = '../images/' + str(image_id) + '.jpg')
+                                        background_normal = './images/' + str(image_id) + '.jpg')
                 self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
@@ -476,7 +476,7 @@ class CatBrowseWindow(NavigationTab):
                 image_id = find_latest_image_id_by_animal(cat_id, MainApp.db)[0]
                 self.cat_card = Button(text=cat_name,
                                        color = (1,1,1,1),
-                                        background_normal = '../images/' + str(image_id) + '.jpg')
+                                        background_normal = './images/' + str(image_id) + '.jpg')
                 self.cat_card.bind(on_release = lambda x, id=cat_id: self.show_cat_profile(id))
                 self.cat_card_list.append(self.cat_card)
                 self.ids.cat_grid.add_widget(self.cat_card)
@@ -601,7 +601,7 @@ class OtherBrowseWindow(NavigationTab):
                 image_id = find_latest_image_id_by_animal(other_id, MainApp.db)[0]
                 self.other_card = Button(text=other_name,
                                        color = (1,1,1,1),
-                                        background_normal = '../images/' + str(image_id) + '.jpg')
+                                        background_normal = './images/' + str(image_id) + '.jpg')
                 self.other_card.bind(on_release = lambda x, id=other_id: self.show_other_profile(id))
                 self.other_card_list.append(self.other_card)
                 self.ids.other_grid.add_widget(self.other_card)
