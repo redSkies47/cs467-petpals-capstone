@@ -1,7 +1,4 @@
 # --- Imports --- #
-import os
-from dotenv import load_dotenv
-
 import kivy
 from kivy.lang import Builder
 from kivy.lang.builder import Builder
@@ -36,13 +33,11 @@ from kivy_app_components.admin_browse_animals import admin_browse_animals
 from kivy_app_components.admin_edit_delete_animal import admin_edit_delete_animal
 
 # --- Set Up ---#
-
-# Assign environment variables
-load_dotenv()
-DB_HOST = os.getenv('DB_HOST')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_NAME = os.getenv('DB_NAME')
+DB_HOST = "classmysql.engr.oregonstate.edu"
+DB_USER = "capstone_2023_petpals"
+DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
+DB_NAME = "capstone_2023_petpals"
+TOKEN = "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"
 
 dog_dictionary = {}
 cat_dictionary = {}
