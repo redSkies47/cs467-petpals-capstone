@@ -297,7 +297,7 @@ class NavigationTab(Screen):
                     secondary_text=shelter_name,
                     bg_color=(255/255, 233/255, 234/255, 1),
                     text_color=(56/255, 45/255, 94/255, 1),
-                    text=f"[size=54]{animal_name}[/size]"
+                    text=f"[size=30]{animal_name}[/size]"
                 )
                 dog_dictionary[id_animal] = self.liked_animal_item
                 self.liked_animal_card_list.append(self.liked_animal_item)

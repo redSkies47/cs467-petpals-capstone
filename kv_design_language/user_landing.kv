@@ -29,13 +29,13 @@
                 
                     MDBoxLayout:
                         radius: [0,0,0,0]
-                        size_hint_x: .7
-                        size_hint_y: .7
-                        pos_hint: {"center_x": 0.5, "center_y": 0.75}
-                        FitImage:
+                        size_hint_x: .8
+                        size_hint_y: .8
+                        pos_hint: {"center_x": 0.5, "center_y": 0.8}
+                        Image:
                             source: './images/petpals_logo.png'
                             size_hint: .3, .3
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
                 MDLabel:
                     text: root.news_title + '\n' + root.news_body
@@ -43,7 +43,7 @@
                     text_color: (56/255, 45/255, 94/255, 1)
                     size_hint: None, None
                     width: root.width*0.5
-                    height: root.height*0.25
+                    height: root.height*0.2
                     md_bg_color: (255/255, 233/255, 234/255, 1)
                     pos_hint: {"center_x": 0.5, "center_y": 0.55}
 
@@ -248,10 +248,10 @@
                         anchor_x: 'center'
                         anchor_y: 'top'
                         padding: 20
-                        FitImage:
+                        Image:
                             source: './images/petpals_logo.png'
-                            size_hint: .3, .3
-                            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                            size_hint: .45, .45
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'top'
