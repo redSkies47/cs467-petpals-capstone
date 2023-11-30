@@ -1,7 +1,7 @@
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen
@@ -12,13 +12,13 @@ from database.accounts_dml import *
 # --- Set Up ---#
 
 # Assign environment variables
-load_dotenv()
+# load_dotenv()
 
-DB_HOST = os.getenv('DB_HOST')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_NAME = os.getenv('DB_NAME')
-TOKEN = os.getenv('TOKEN')
+DB_HOST = "classmysql.engr.oregonstate.edu"
+DB_USER = "capstone_2023_petpals"
+DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
+DB_NAME = "capstone_2023_petpals"
+TOKEN = "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"
 BRANCH = "main"
 
 
