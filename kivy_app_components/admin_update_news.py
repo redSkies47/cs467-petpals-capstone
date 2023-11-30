@@ -4,17 +4,18 @@ from kivymd.app import MDApp
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from database.db_interface import Database
 from database.accounts_dml import *
 from database import news_dml
 # --- Set Up ---#
 
 # Assign environment variables
-load_dotenv()
-DB_HOST = os.getenv('DB_HOST')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
+# load_dotenv()
+DB_HOST = "classmysql.engr.oregonstate.edu"
+DB_USER = "capstone_2023_petpals"
+DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
+DB_NAME = "capstone_2023_petpals"
 DB_NAME = os.getenv('DB_NAME')
 TOKEN = os.getenv('TOKEN')
 
