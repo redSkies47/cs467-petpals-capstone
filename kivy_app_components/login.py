@@ -32,7 +32,7 @@ class MainApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
-        return Builder.load_file('../kv_design_language/login.kv')
+        return Builder.load_file('./kv_design_language/login.kv')
 
 
 class LoginScreen(Screen):

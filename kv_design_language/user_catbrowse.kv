@@ -104,9 +104,9 @@
                             app.root.current = "catbrowse"
                             root.manager.transition.direction = "right"
             AsyncImage:
-                source: '../images/' + str(root.id_image) + '.jpg'
+                source: './images/' + str(root.id_image) + '.jpg'
             Image:
-				source: '../images/petpals_logo.png'
+				source: './images/petpals_logo.png'
 
 
 
@@ -186,7 +186,7 @@
                         anchor_y: 'top'
                         padding: 20
                         FitImage:
-                            source: '../images/petpals_logo.png'
+                            source: './images/petpals_logo.png'
                             size_hint: .3, .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
 
@@ -386,7 +386,7 @@
                         anchor_y: 'top'
                         padding: 20
                         FitImage:
-                            source: '../images/petpals_logo.png'
+                            source: './images/petpals_logo.png'
                             size_hint: .3, .3
                             pos_hint: {'center_x': 0.5, 'center_y': 0.75}
                 AnchorLayout:

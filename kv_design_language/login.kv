@@ -17,14 +17,12 @@
         MDBoxLayout:
             orientation: 'vertical'
             md_bg_color: (171/255, 196/255, 212/255, 1)
-            AnchorLayout:
-                anchor_x: 'center'
-                anchor_y: 'top'
-                padding: 20
-                FitImage:
-                    source: '../images/petpals_logo.png'
-                    size_hint: .5,.5
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+            size_hint: .7,.7
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+            Image:
+                source: './images/petpals_logo.png'
+                size_hint: .9,.9
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
 
         MDBoxLayout:
             radius: [0,0,0,0]

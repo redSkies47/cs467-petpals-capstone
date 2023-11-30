@@ -28,7 +28,7 @@ DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
 # Load kv files
-Builder.load_file('../kv_design_language/create_account_user.kv')
+Builder.load_file('./kv_design_language/create_account_user.kv')
 
 
 # --- App Components --- #
