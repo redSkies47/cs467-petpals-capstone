@@ -18,6 +18,8 @@ from kivy.uix.image import AsyncImage
 from kivymd.uix.list import TwoLineAvatarIconListItem, IconRightWidget
 from kivy.factory import Factory
 from kivy.uix.button import Button
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ListProperty, ObjectProperty
 
 import database
@@ -313,6 +315,9 @@ class LandingWindow(NavigationTab):
     def __init__(self, **kwargs):
         super(LandingWindow, self).__init__(**kwargs)
 
+class AnimalButton(ButtonBehavior, AsyncImage):
+    pass
+
 class DogBrowseWindow(NavigationTab):
     def __init__(self, **kwargs):
         self.no_results_label = Label(text="No matches were found!",
@@ -344,13 +349,19 @@ class DogBrowseWindow(NavigationTab):
         if self.dog_card_present == 0:
             self.dog_card_present = 1
             for dog in dog_list:
+                # Retrieve dog information
                 dog_id = dog[0]
                 dog_name = dog[1]
                 image_id = find_latest_image_id_by_animal(dog_id, MainApp.db)[0]
-                self.dog_card = Button(text=dog_name,
-                                       color = (1,1,1,1),
-                                        background_normal = './images/' + str(image_id) + '.jpg')
-                self.dog_card.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+                image_url = 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/' + str(image_id) + '.jpg'
+                # Create dog card
+                card_image = AsyncImage(source = image_url)
+                card_name = Button(text = dog_name, color = (1,1,1), font_size = 20, background_color = (255/255, 233/255, 234/255), size_hint_y = None, height = 50)
+                card_name.bind(on_release = lambda x, id=dog_id: self.show_dog_profile(id))
+                self.dog_card = GridLayout(rows = 2)
+                self.dog_card.add_widget(card_image)
+                self.dog_card.add_widget(card_name)
+                # Add dog card to grid
                 self.dog_card_list.append(self.dog_card)
                 self.ids.dog_grid.add_widget(self.dog_card)
 
@@ -472,13 +483,19 @@ class CatBrowseWindow(NavigationTab):
         if self.cat_card_present == 0:
             self.cat_card_present = 1
             for cat in cat_list:
+                # Retrieve cat information
                 cat_id = cat[0]
                 cat_name = cat[1]
                 image_id = find_latest_image_id_by_animal(cat_id, MainApp.db)[0]
-                self.cat_card = Button(text=cat_name,
-                                       color = (1,1,1,1),
-                                        background_normal = './images/' + str(image_id) + '.jpg')
-                self.cat_card.bind(on_release = lambda x, id=cat_id: self.show_cat_profile(id))
+                image_url = 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/' + str(image_id) + '.jpg'
+                # Create cat card
+                card_image = AsyncImage(source = image_url)
+                card_name = Button(text = cat_name, color = (1,1,1), font_size = 20, background_color = (255/255, 233/255, 234/255), size_hint_y = None, height = 50)
+                card_name.bind(on_release = lambda x, id=cat_id: self.show_cat_profile(id))
+                self.cat_card = GridLayout(rows = 2)
+                self.cat_card.add_widget(card_image)
+                self.cat_card.add_widget(card_name)
+                # Add cat card to grid
                 self.cat_card_list.append(self.cat_card)
                 self.ids.cat_grid.add_widget(self.cat_card)
 
@@ -597,13 +614,19 @@ class OtherBrowseWindow(NavigationTab):
         if self.other_card_present == 0:
             self.other_card_present = 1
             for other in other_list:
+                # Retrieve other information
                 other_id = other[0]
                 other_name = other[1]
                 image_id = find_latest_image_id_by_animal(other_id, MainApp.db)[0]
-                self.other_card = Button(text=other_name,
-                                       color = (1,1,1,1),
-                                        background_normal = './images/' + str(image_id) + '.jpg')
-                self.other_card.bind(on_release = lambda x, id=other_id: self.show_other_profile(id))
+                image_url = 'https://raw.githubusercontent.com/redSkies47/cs467-petpals-capstone/main/images/' + str(image_id) + '.jpg'
+                # Create other card
+                card_image = AsyncImage(source = image_url)
+                card_name = Button(text = other_name, color = (1,1,1), font_size = 20, background_color = (255/255, 233/255, 234/255), size_hint_y = None, height = 50)
+                card_name.bind(on_release = lambda x, id=other_id: self.show_other_profile(id))
+                self.other_card = GridLayout(rows = 2)
+                self.other_card.add_widget(card_image)
+                self.other_card.add_widget(card_name)
+                # Add other card to grid
                 self.other_card_list.append(self.other_card)
                 self.ids.other_grid.add_widget(self.other_card)
 
