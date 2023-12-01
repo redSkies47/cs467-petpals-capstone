@@ -49,7 +49,8 @@ class MainApp(MDApp):
     id_account = None
 
     def build(self):
-        Window.size = (1080, 2400)
+        # Window.size = (1080, 2400)
+        Window.size = (1080, 2200)
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
         return Builder.load_file('./kv_design_language/main.kv')
