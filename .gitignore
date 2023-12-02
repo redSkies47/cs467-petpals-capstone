@@ -2,4 +2,7 @@ __pycache__
 .env
 .vscode
 .buildozer
+/adb.exe
+/AdbWinApi.dll
+/AdbWinUsbApi.dll
 bin
