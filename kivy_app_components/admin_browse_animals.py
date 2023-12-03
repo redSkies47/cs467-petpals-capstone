@@ -51,7 +51,7 @@ DB_NAME = 'capstone'
 
 
 TOKEN = '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'
-BRANCH = "admin_browse_animals"
+BRANCH = "demo_instace"
 
 
 class admin_browse_animals_breed_popup(Screen):

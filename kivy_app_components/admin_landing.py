@@ -30,7 +30,7 @@ DB_NAME = 'capstone'
 
 
 TOKEN = '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'
-BRANCH = "admin_browse_animals"
+BRANCH = "demo_instance"
 
 
 class admin_landing(Screen):

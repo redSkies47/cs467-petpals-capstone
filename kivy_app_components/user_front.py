@@ -48,7 +48,7 @@ DB_NAME = 'capstone'
 
 
 TOKEN = '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'
-BRANCH = "local_instance"
+BRANCH = "demo_instance"
 
 
 dog_dictionary = {}
