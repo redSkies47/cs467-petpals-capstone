@@ -42,6 +42,18 @@ MESSAGE = "upload image"
 BRANCH = "main"
 
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "admin_browse_animals"
+
+
 class admin_edit_delete_animal_breed_popup(Screen):
 
     def __init__(self, **kwargs):

@@ -27,6 +27,18 @@ DB_USER = os.getenv('DB_USER')
 DB_PASSWORD = os.getenv('DB_PASSWORD')
 DB_NAME = os.getenv('DB_NAME')
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "local_instance"
+
+
 # Load kv files
 Builder.load_file('./kv_design_language/create_account_user.kv')
 

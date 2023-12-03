@@ -19,11 +19,24 @@ DB_NAME = "capstone_2023_petpals"
 TOKEN = "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"
 
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "admin_browse_animals"
+
+
 # --- App Components ---#
 class MainApp(MDApp):
     """
     Represents the main app.
     """
+
     def build(self):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "LightBlue"
@@ -34,6 +47,7 @@ class LoginScreen(Screen):
     """
     Represents the Login page. Contains all of its structure and functionality.
     """
+
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.db = Database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)

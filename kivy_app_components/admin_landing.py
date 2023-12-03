@@ -21,6 +21,17 @@ DB_NAME = "capstone_2023_petpals"
 TOKEN = "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"
 BRANCH = "main"
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "admin_browse_animals"
+
 
 class admin_landing(Screen):
 

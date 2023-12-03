@@ -39,6 +39,18 @@ DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
 DB_NAME = "capstone_2023_petpals"
 TOKEN = "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"
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "local_instance"
+
+
 dog_dictionary = {}
 cat_dictionary = {}
 other_dictionary = {}

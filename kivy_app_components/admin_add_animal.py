@@ -41,6 +41,17 @@ REPO_PATH = "images/"
 MESSAGE = "upload image"
 BRANCH = "main"
 
+# local
+DB_HOST = 'localhost'
+DB_USER = 'shukie'
+DB_PASSWORD = 'Gummyw0rm5!Gummy'
+DB_NAME = 'capstone'
+# local
+
+
+TOKEN = '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'
+BRANCH = "local_instance"
+
 
 class admin_add_animal_breed_popup(Screen):
 
