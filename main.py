@@ -23,6 +23,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ListProperty, ObjectProperty
 
 import database
+from database.credentials import *
 from database.db_interface import Database
 from database.accounts_dml import *
 from database.news_dml import *
@@ -35,12 +36,6 @@ from kivy_app_components.admin_browse_animals import admin_browse_animals
 from kivy_app_components.admin_edit_delete_animal import admin_edit_delete_animal
 
 # --- Set Up ---#
-DB_HOST = "classmysql.engr.oregonstate.edu"
-DB_USER = "capstone_2023_petpals"
-DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
-DB_NAME = "capstone_2023_petpals"
-TOKEN = "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"
-
 dog_dictionary = {}
 cat_dictionary = {}
 other_dictionary = {}
