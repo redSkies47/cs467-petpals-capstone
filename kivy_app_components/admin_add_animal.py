@@ -23,18 +23,13 @@ import time
 import random
 import subprocess
 
+
 # --- Set Up ---#
 
 # Assign environment variables
 # load_dotenv()
-DB_HOST = "classmysql.engr.oregonstate.edu"
-DB_USER = "capstone_2023_petpals"
-DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
-DB_NAME = "capstone_2023_petpals"
+from database.credentials import *
 
-
-# Assign Github variables
-TOKEN = os.getenv('TOKEN')
 DOMAIN = "https://github.com/"
 REPO = "redSkies47/cs467-petpals-capstone"
 REPO_PATH = "images/"

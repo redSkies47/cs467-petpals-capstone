@@ -1,3 +1,4 @@
+from database.credentials import *
 from kivy.metrics import dp
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
@@ -26,13 +27,6 @@ import time
 import random
 import subprocess
 # --- Set Up ---#
-
-# Assign environment variables
-# load_dotenv()
-DB_HOST = "classmysql.engr.oregonstate.edu"
-DB_USER = "capstone_2023_petpals"
-DB_PASSWORD = "ph[r2cZ[QXqX9Ag8"
-DB_NAME = "capstone_2023_petpals"
 
 # Assign Github variables
 TOKEN = os.getenv('TOKEN')

@@ -1,3 +1,4 @@
+from database.credentials import *
 from kivy_app_components.admin_landing import admin_landing
 from kivy_app_components.admin_update_news import admin_update_news
 from kivy_app_components.admin_add_animal import admin_add_animal
@@ -21,11 +22,6 @@ from database.accounts_dml import *
 # Assign environment variables
 load_dotenv()
 
-DB_HOST = os.getenv('DB_HOST')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_NAME = os.getenv('DB_NAME')
-TOKEN = os.getenv('TOKEN')
 BRANCH = os.getenv('BRANCH')
 
 
