@@ -11,9 +11,6 @@ from database import news_dml
 from database.credentials import *
 # --- Set Up ---#
 
-# Assign environment variables
-# load_dotenv()
-
 
 class admin_update_news(Screen):
 

@@ -29,7 +29,7 @@ import subprocess
 # --- Set Up ---#
 
 # Assign Github variables
-TOKEN = os.getenv('TOKEN')
+
 DOMAIN = "https://github.com/"
 REPO = "redSkies47/cs467-petpals-capstone"
 REPO_PATH = "images/"
